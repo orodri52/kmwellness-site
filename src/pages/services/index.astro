@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+const seo = {
+  title: 'Wellness Center El Paso TX | Services | KM Wellness Center',
+  description:
+    'Discover holistic services at our wellness center in El Paso, TX, dedicated to revitalizing your mind, body, and spirit for optimal health.',
+};
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }]} />
+  <h1>Services</h1>
+
+  <section>
+    <h2>Comprehensive Wellness Center in El Paso, TX</h2>
+    <p>
+      At KM Wellness Center, our mission is to promote holistic health and well-being through a range
+      of integrative services. As a premier wellness center in El Paso, TX, we offer a variety of
+      services tailored to meet your individual health needs.
+    </p>
+  </section>
+
+  <section>
+    <h2>Our Services</h2>
+    <ul>
+      <li>
+        <a href="/services/medical-nutrition-therapy-and-nutrition-counseling/">Medical Nutrition Therapy and Nutrition Counseling</a>
+        — personalized nutrition plans and counseling from registered dietitians.
+      </li>
+      <li>
+        <a href="/metabolic-assessment-el-paso/">Metabolic Assessment &amp; Body Composition</a>
+        — resting metabolic rate testing and body composition analysis.
+      </li>
+      <li>
+        <a href="/services/weight-loss-prescription-disease-management/">Weight Loss Prescription &amp; Disease Management</a>
+        — medically supervised programs and chronic-condition management.
+      </li>
+      <li>
+        <a href="/services/weight-management/">Weight Management</a>
+        — clinically supervised, medically guided weight loss.
+      </li>
+      <li>
+        <a href="/services/exercise-classes-and-personal-training/">Exercise Classes and Personal Training</a>
+        — group classes and individualized workout plans.
+      </li>
+      <li>
+        <a href="/personal-training/">Personal Training</a>
+        — certified personal trainers and custom fitness plans.
+      </li>
+      <li>
+        <a href="/services/medical-nutrition/">Medical Nutrition Therapy</a>
+        — therapeutic nutrition for chronic disease and weight management.
+      </li>
+      <li>
+        <a href="/services/additional-services/">Additional Services</a>
+        — meal prep, smoothie bar, and supplements.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>What people say about us</h2>
+    <blockquote>
+      <p>
+        Daniel is the first dietitian that is really teaching me how to have a proper healthy diet
+        without starving myself. The personal trainer, Aaron, is awesome and makes working out fun!
+        Great staff! Highly recommend this clinic!
+      </p>
+      <footer>— Karen D. Martinez Franco, Google Review</footer>
+    </blockquote>
+    <blockquote>
+      <p>
+        I definitely recommend this place to anyone looking to start their weight loss journey. Daniel
+        is a very knowledgeable and compassionate dietitian. Not only am I losing weight, but also
+        learning better eating habits and unlearning toxic diet culture.
+      </p>
+      <footer>— Amber Mejia, Google Review</footer>
+    </blockquote>
+  </section>
+</BaseLayout>

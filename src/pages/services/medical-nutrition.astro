@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+const seo = {
+  title: 'Medical Nutrition Therapy | Kingsway Wellness Center | El Paso, TX',
+  description:
+    'Optimize your health with personalized medical nutrition therapy at KM Wellness Center. Discover tailored plans for lasting wellness.',
+};
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }, { name: 'Medical Nutrition Therapy', href: '/services/medical-nutrition/' }]} />
+  <h1>Medical Nutrition Therapy: A Personalized Approach to Health</h1>
+
+  <p>
+    At KM Wellness Center, we work to improve health by using medical nutrition therapy (MNT) as a
+    therapeutic tool. This personalized approach helps address various health conditions like
+    diabetes, cardiovascular disease, and obesity. MNT goes beyond typical dietary advice, focusing on
+    how tailored nutrition plans can address specific medical needs.
+  </p>
+
+  <section>
+    <h2>What Is Medical Nutrition Therapy?</h2>
+    <p>
+      Medical Nutrition Therapy involves a comprehensive nutritional assessment performed by a
+      registered dietitian or nutrition professional. The goal is to understand a patient's current
+      dietary habits, health status, and medical history to create a customized nutrition plan. By
+      using evidence-based nutrition science, MNT is effective in managing chronic diseases and
+      improving overall wellness.
+    </p>
+  </section>
+
+  <section>
+    <h2>The Benefits of Nutrition Therapy</h2>
+    <ul>
+      <li><strong>Improved Disease Management:</strong> Tailored meal plans help regulate blood sugar, cholesterol, and other important markers for conditions like diabetes, high blood pressure, and kidney disease.</li>
+      <li><strong>Personalized Care:</strong> Individualized diet plans address each patient's unique health challenges.</li>
+      <li><strong>Preventative Care:</strong> MNT can help prevent future health issues by promoting balanced nutrition and a healthy lifestyle.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Nutritional Diagnosis and Assessment</h2>
+    <p>
+      A critical part of MNT is performing a nutritional diagnosis to identify underlying issues
+      related to poor diet. The nutritionist evaluates weight history, food intake, physical activity,
+      and medical conditions, and reviews lab results, medications, and a complete health profile to
+      determine the best dietary intervention.
+    </p>
+  </section>
+
+  <section>
+    <h2>Medical Nutrition Therapy for Weight Loss</h2>
+    <p>
+      Obesity is often linked to other health conditions such as Type 2 diabetes, heart disease, and
+      metabolic syndrome. Our team provides metabolic assessments that help patients understand how
+      their bodies process food and burn energy, emphasizing sustainable changes rather than crash
+      diets.
+    </p>
+  </section>
+
+  <section>
+    <h2>Why Choose KM Wellness Center for Nutrition Therapy?</h2>
+    <ul>
+      <li>Comprehensive nutritional assessments</li>
+      <li>Personalized nutrition plans</li>
+      <li>Continuous monitoring and support</li>
+      <li>Evidence-based care</li>
+    </ul>
+    <p><a href="/contact-us/">Make an appointment</a></p>
+  </section>
+</BaseLayout>

@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { business } from '../config/site';
+
+const seo = {
+  title: 'Best Dietitian in El Paso, Texas | Kingsway Wellness Center',
+  description:
+    'Meet Daniel Chavez, winner of Best Dietitian in El Paso two years in a row. Transform your health with our dedicated dietitians and trainers.',
+};
+
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Best Dietitian in El Paso, Texas',
+  datePublished: '2024-06-04',
+  dateModified: '2025-10-29',
+  author: { '@type': 'Person', name: 'Daniel Chavez' },
+  publisher: { '@id': `${site}/#organization` },
+  mainEntityOfPage: `${site}/best-dietitian-and-training-in-el-paso/`,
+};
+---
+<BaseLayout {...seo}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  </Fragment>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Best Dietitian in El Paso, Texas', href: '/best-dietitian-and-training-in-el-paso/' }]} />
+
+  <article>
+    <h1>Best Dietitian in El Paso, Texas</h1>
+    <p><small>Published June 4, 2024</small></p>
+    <p>
+      At KM Wellness Center, we have the best dietitians in El Paso, Texas. We ensure to take your
+      nutrition and training to the next level along with Daniel Chavez, nominated best nutritionist in
+      El Paso, and our certified personal trainers who are up for a challenge. Come and live the full
+      Wellness experience.
+    </p>
+    <p><a href={`tel:${business.phoneRaw}`}>Call us: {business.phone}</a></p>
+  </article>
+</BaseLayout>

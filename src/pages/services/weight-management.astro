@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+const seo = {
+  title: 'Weight Management Clinic | KM Wellness Center | El Paso, TX',
+  description:
+    'Join our weight management clinic for expert guidance and personalized plans to help you achieve your weight loss goals and improve health.',
+};
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }, { name: 'Weight Management', href: '/services/weight-management/' }]} />
+  <h1>Weight Management Clinic in El Paso</h1>
+
+  <p>
+    Struggling with weight can affect more than just your appearance — it can impact your energy,
+    confidence, and overall health. At KM Wellness Center, we are a trusted weight management clinic in
+    El Paso offering safe, medically guided solutions for long-term results. Our approach is built on
+    science, support, and sustainable change.
+  </p>
+
+  <section>
+    <h2>Medical Weight Loss El Paso Residents Can Rely On</h2>
+    <p>
+      We specialize in medical weight loss in El Paso, helping patients lose weight under the care of
+      experienced medical professionals. Our plans are clinically designed and supervised to improve
+      your health from the inside out, while addressing related conditions like high blood pressure,
+      diabetes, or joint pain.
+    </p>
+  </section>
+
+  <section>
+    <h2>Prescription Weight Loss Programs That Work</h2>
+    <p>
+      We offer prescription weight loss programs for patients who qualify. These FDA-approved
+      medications can help reduce hunger, boost metabolism, and make it easier to stick to a healthier
+      lifestyle, with regular check-ins and progress tracking.
+    </p>
+  </section>
+
+  <section>
+    <h2>Clinically Supervised Weight Loss</h2>
+    <p>
+      Our program includes thorough medical evaluations, lab work when needed, and one-on-one
+      coaching. This structured approach keeps your progress safe and steady while minimizing side
+      effects and setbacks.
+    </p>
+  </section>
+
+  <section>
+    <h2>Doctor Supervised, Non-Surgical Solutions</h2>
+    <p>
+      Working with a healthcare provider means you're never alone in your journey. We believe in
+      healthy weight loss solutions that work with your body — non-invasive treatments designed to
+      help you lose weight without surgery or extreme measures, with personalized plans for every
+      body.
+    </p>
+    <p><a href="/contact-us/">Make an appointment</a></p>
+  </section>
+</BaseLayout>

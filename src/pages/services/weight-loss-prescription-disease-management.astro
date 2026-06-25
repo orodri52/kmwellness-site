@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+const seo = {
+  title: 'Weight Loss Prescription & Meal Prep | KM Wellness Center | El Paso',
+  description:
+    'Medically supervised weight loss prescription and disease management in El Paso. Personalized, evidence-based plans for sustainable results.',
+};
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }, { name: 'Weight Loss Prescription & Meal Preps', href: '/services/weight-loss-prescription-disease-management/' }]} />
+  <h1>Weight Loss Prescription &amp; Meal Prep</h1>
+
+  <p>
+    At KM Wellness Center, our Weight Loss Prescription &amp; Disease Management services are designed
+    to help you achieve sustainable weight loss and effectively manage chronic diseases. Our
+    board-certified medical practitioners specialize in weight management and disease prevention,
+    providing comprehensive assessments and personalized strategies to help you reach your health
+    goals.
+  </p>
+
+  <section>
+    <h2>Why Choose Our Services?</h2>
+    <ul>
+      <li><strong>Comprehensive Assessments:</strong> Thorough medical evaluations to understand your unique health needs and weight loss goals.</li>
+      <li><strong>Personalized Strategies:</strong> Tailored plans based on your medical history, lifestyle, and preferences.</li>
+      <li><strong>Expert Guidance:</strong> Support from board-certified medical practitioners experienced in weight management and chronic disease prevention.</li>
+      <li><strong>Ongoing Support:</strong> Continuous monitoring and adjustments to keep you on track.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Our Approach</h2>
+    <ol>
+      <li><strong>Initial Consultation:</strong> An in-depth assessment of your health status, goals, and any underlying medical conditions.</li>
+      <li><strong>Customized Plan:</strong> Dietary recommendations, exercise guidelines, and, if necessary, weight loss medications.</li>
+      <li><strong>Implementation and Monitoring:</strong> Regular follow-ups to monitor progress and make adjustments.</li>
+      <li><strong>Long-Term Maintenance:</strong> Strategies and support for maintaining weight loss and managing health over the long term.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Benefits</h2>
+    <ul>
+      <li><strong>Effective Weight Loss</strong> through personalized, evidence-based strategies.</li>
+      <li><strong>Chronic Disease Management</strong> for diabetes, hypertension, and cardiovascular disease.</li>
+      <li><strong>Improved Health Outcomes</strong> with better overall health and increased energy.</li>
+      <li><strong>Professional Support</strong> from dedicated medical practitioners.</li>
+    </ul>
+    <p><a href="/contact-us/">Make an appointment</a></p>
+  </section>
+</BaseLayout>

@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const seo = {
+  title: 'Privacy Policy | KM Wellness Center | El Paso, TX',
+  description:
+    'KM Wellness Center privacy policy: how we collect, use, and protect your personal and protected health information.',
+};
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Privacy Policy', href: '/privacy-policy/' }]} />
+  <h1>Privacy Policy</h1>
+  <p>
+    See also our downloadable documents: Privacy Policy and Informed Consent (link the PDFs from
+    /Website-Backup/documents/ once uploaded).
+  </p>
+
+  <section>
+    <h2>Who We Are</h2>
+    <p>Our website address is: https://kmwellnesscenter.com</p>
+  </section>
+
+  <section>
+    <h2>What Personal Data We Collect and Why</h2>
+    <p>
+      <strong>Contact Forms.</strong> We collect information entered in our contact forms for customer
+      service purposes, which may include your name, email address, phone number, and any other
+      details you provide.
+    </p>
+    <p>
+      <strong>Email Marketing and SMS.</strong> When you sign up for our newsletter or enter your
+      email and/or phone number in our forms, you consent to receive email and SMS communications for
+      marketing purposes. You can opt out at any time.
+    </p>
+    <p>
+      <strong>Analytics.</strong> Our website uses Google Analytics 4 to collect information about the
+      use of our site to help us improve it. Google Analytics collects the IP address assigned to you
+      on the date you visit, not your name or other identifying information.
+    </p>
+    <p>
+      <strong>Advertising.</strong> We use the Meta Pixel and Google Ads remarketing to measure and
+      serve advertising. You can opt out via Google Ads Settings and the Network Advertising Initiative
+      opt-out page.
+    </p>
+  </section>
+
+  <section>
+    <h2>How We Protect Your Data</h2>
+    <p>
+      We implement security measures including secure servers, encrypted network communications,
+      regular software updates, and malware protection. Staff are trained in data protection best
+      practices.
+    </p>
+  </section>
+
+  <section>
+    <h2>Your Rights &amp; Contact</h2>
+    <p>
+      You have the right to access the personal data we hold about you and request corrections or
+      erasure (subject to data we must keep for legal, administrative, or security purposes).
+    </p>
+    <p>
+      For privacy questions or data requests, contact: privacy@monsterlinkmarketing.com ·
+      (915) 229-6606 · 1601 N Mesa, 2nd Floor, El Paso, Texas, 79902 (Mon–Fri 9AM–6PM).
+    </p>
+    <p>
+      <em>This page summarizes the web privacy policy. The full HIPAA Notice of Privacy Practices
+      (protected health information uses, disclosures, and patient rights) is captured verbatim in the
+      project archive at /Website-Backup/documents/Privacy-Policies-KMC.md.</em>
+    </p>
+  </section>
+</BaseLayout>

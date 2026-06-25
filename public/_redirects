@@ -1,0 +1,17 @@
+# Cloudflare Pages redirects. Format: <from>  <to>  <status>
+# https://developers.cloudflare.com/pages/configuration/redirects/
+
+# --- SEO consolidation: duplicate nutrition pages -> canonical nutritionist page ---
+/services/nutrition-counseling/   /services/nutritionist-el-paso/   301
+/services/metabolism/             /services/nutritionist-el-paso/   301
+
+# --- Legacy / malformed URLs found on the current site ---
+/about/        /about-us/      301
+/contact/      /contact-us/    301
+/sample-page/  /               301
+
+# --- Normalize non-trailing-slash hits to the canonical trailing-slash URL ---
+# (Astro builds directory-format pages; these catch common variants.)
+/about-us      /about-us/      301
+/contact-us    /contact-us/    301
+/services      /services/      301

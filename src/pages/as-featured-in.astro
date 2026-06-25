@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const seo = {
+  title: 'As Featured In | Daniel Chavez, RD | KM Wellness Center El Paso',
+  description:
+    'Daniel Chavez, RD, LD, CSCS has been featured in Forbes Health, GQ, Men’s Journal, Parade, and more. See the press behind KM Wellness Center.',
+};
+
+const press = [
+  { name: 'Forbes Health', url: 'https://www.forbes.com/health/weight-loss/lose-fat-and-gain-muscle/' },
+  { name: 'GQ', url: 'https://www.gq.com/story/alcohol-athletic-performance' },
+  { name: "Men's Journal", url: 'https://www.mensjournal.com/food-drink/healthiest-protein-bars' },
+  { name: 'Parade', url: 'https://parade.com/health/what-happens-if-you-dont-eat-vegetables' },
+  { name: 'The Manual', url: 'https://www.themanual.com/food-and-drink/best-foods-with-creatine/' },
+  { name: 'The Everygirl', url: 'https://theeverygirl.com/how-to-choose-a-protein-powder/' },
+  { name: 'Vitamin Shoppe', url: 'https://whatsgood.vitaminshoppe.com/creatine-bloating-tips/' },
+  { name: 'Barbend', url: 'https://barbend.com/running-fuel/' },
+  { name: 'Generation Iron', url: 'https://generationiron.com/should-lifters-go-keto/' },
+  { name: 'El Paso Inc.', url: 'https://www.elpasoinc.com/magazine/how-to-pack-protein-in-your-diet/article_1e9fa9fa-e027-11ee-9c68-0fa047b7271b.html' },
+];
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'About', href: '/about-us/' }, { name: 'As Featured In', href: '/as-featured-in/' }]} />
+  <h1>Daniel Chavez, RD, LD, CSCS</h1>
+  <p>
+    Daniel's accomplishments include several inclusions and mentions in nationally published articles
+    and posts. Here is a sample of some of those:
+  </p>
+  <ul>
+    {press.map((p) => (
+      <li><a href={p.url} rel="noopener nofollow" target="_blank">{p.name}</a></li>
+    ))}
+  </ul>
+</BaseLayout>

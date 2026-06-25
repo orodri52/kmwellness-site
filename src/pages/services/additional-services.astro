@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+const seo = {
+  title: 'Additional Services | Meal Prep, Smoothie Bar & Supplements | KM Wellness',
+  description:
+    'Complement your wellness journey with KM Wellness Center extras: convenient meal prep, nutrient-dense smoothies, and high-quality supplements in El Paso.',
+};
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }, { name: 'Additional Services', href: '/services/additional-services/' }]} />
+  <h1>Our Additional Services</h1>
+
+  <p>
+    At KM Wellness Center, we offer a range of additional services designed to complement our primary
+    wellness programs and support your overall health. These services are tailored to meet your
+    dietary needs, provide convenient nutrition options, and ensure you have access to high-quality
+    supplements.
+  </p>
+
+  <section>
+    <h2>Wholesome Meals: Convenient Meal Prep Services</h2>
+    <ul>
+      <li><strong>Customized Meal Plans:</strong> Designed to meet your specific dietary preferences and health goals.</li>
+      <li><strong>Nutrient-Dense Ingredients:</strong> Fresh, high-quality ingredients for balanced meals.</li>
+      <li><strong>Convenience:</strong> Ready-to-eat meals, perfect for busy lifestyles.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Smoothie Bar: Nutrient-Dense Smoothies</h2>
+    <ul>
+      <li><strong>Health-Focused Recipes:</strong> Each smoothie is crafted for maximum nutritional benefit.</li>
+      <li><strong>Fresh Ingredients:</strong> Only the freshest fruits, vegetables, and superfoods.</li>
+      <li><strong>On-the-Go Nutrition:</strong> A quick, healthy snack or meal replacement anytime.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>High-Quality Supplements</h2>
+    <ul>
+      <li><strong>Trusted Brands:</strong> Supplements known for their purity and potency.</li>
+      <li><strong>Personalized Recommendations:</strong> Our experts help you choose the right supplements for your needs.</li>
+      <li><strong>Comprehensive Support:</strong> Enhance your diet and support your health.</li>
+    </ul>
+    <p><a href="/contact-us/">Make an appointment</a></p>
+  </section>
+</BaseLayout>

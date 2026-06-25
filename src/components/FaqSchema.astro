@@ -1,0 +1,19 @@
+---
+// FAQPage JSON-LD. Pass an array of { question, answer } and it emits valid
+// structured data so the FAQ content is eligible for rich results.
+interface Props {
+  items: { question: string; answer: string }[];
+}
+const { items } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((i) => ({
+    '@type': 'Question',
+    name: i.question,
+    acceptedAnswer: { '@type': 'Answer', text: i.answer },
+  })),
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

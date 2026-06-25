@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const seo = {
+  title: 'Terms & Conditions | KM Wellness Center | El Paso, TX',
+  description:
+    'Terms and conditions for using KM Wellness Center services, including eligibility, appointments, payments, and liability.',
+};
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Terms & Conditions', href: '/terms-conditions/' }]} />
+  <h1>Terms and Conditions</h1>
+  <p><small>Effective Date: May 1, 2024</small></p>
+
+  <h2>1. Introduction</h2>
+  <p>By accessing or using our services, website, or facilities, you agree to be bound by these Terms and Conditions. If you do not agree, please refrain from using our services.</p>
+
+  <h2>2. Eligibility</h2>
+  <p>You must be at least 18 years old or have parental consent to receive our services. Some treatments may require medical clearance or consultation prior to administration.</p>
+
+  <h2>3. Medical Disclaimer</h2>
+  <p>Our services support health and wellness but do not replace medical advice, diagnosis, or treatment from a licensed physician. Always consult your healthcare provider before starting any treatment or program.</p>
+
+  <h2>4. Appointments and Cancellations</h2>
+  <p>Appointments must be scheduled in advance. We require at least 48 hours' notice for cancellations. Missed appointments or late cancellations may be subject to a fee.</p>
+
+  <h2>5. Payments and Refunds</h2>
+  <p>Payment is due at the time of service unless otherwise agreed. We accept cash, credit/debit cards, and authorized third-party payments. All sales for treatments and services are final; refunds are issued only in cases of service error or medical contraindication, at the discretion of management.</p>
+
+  <h2>6. Service Modifications</h2>
+  <p>We reserve the right to modify, suspend, or discontinue any service or pricing at any time without prior notice.</p>
+
+  <h2>7. Conduct</h2>
+  <p>You agree to act respectfully and responsibly while on our premises. We reserve the right to refuse service to anyone behaving inappropriately or posing a safety risk.</p>
+
+  <h2>8. Liability</h2>
+  <p>By using our services, you acknowledge and accept any potential risks involved. KM Wellness Center and its staff are not liable for adverse outcomes unless resulting from gross negligence.</p>
+
+  <h2>9. Intellectual Property</h2>
+  <p>All content provided on our website, brochures, or materials is the property of KM Wellness Center and may not be copied or reproduced without permission.</p>
+
+  <h2>10. Changes to Terms</h2>
+  <p>We reserve the right to modify these Terms and Conditions at any time. Continued use of our services signifies your acceptance of any changes.</p>
+
+  <p><small>SMS consent: If you consent to receive SMS from KM Wellness Center, you agree to receive messages for the sole purpose of communication with KM Wellness Center. Reply STOP to unsubscribe; reply HELP for help. Msg &amp; data rates may apply; messaging frequency may vary.</small></p>
+</BaseLayout>

@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const seo = {
+  title: 'Insurances We Accept | KM Wellness Center | El Paso, TX',
+  description:
+    'KM Wellness Center accepts Aetna, Alignment Health Plan, Blue Cross Blue Shield, WellMed, Cigna, Ambetter, Humana, and UnitedHealthcare.',
+};
+
+const insurers = [
+  'Aetna',
+  'Alignment Health Plan',
+  'Blue Cross Blue Shield',
+  'WellMed',
+  'Cigna',
+  'Ambetter Health',
+  'Humana',
+  'UnitedHealthcare',
+];
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'About', href: '/about-us/' }, { name: 'Insurances we Accept', href: '/insurances-we-accept/' }]} />
+  <h1>Insurances We Accept</h1>
+  <ul>
+    {insurers.map((i) => <li>{i}</li>)}
+  </ul>
+  <p>
+    Coverage varies by plan. <a href="/contact-us/">Contact us</a> and we'll help verify your benefits
+    before you begin care.
+  </p>
+</BaseLayout>

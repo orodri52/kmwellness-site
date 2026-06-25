@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const seo = {
+  title: 'Wellness Center Near Me | Success Stories | Kingsway Wellness Center | El Paso, TX',
+  description:
+    'Looking for a wellness center near me? Read inspiring success stories from KM Wellness Center clients who transformed their health and wellness.',
+};
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Success Stories', href: '/success-stories/' }]} />
+  <h1>Success Stories</h1>
+
+  <p>
+    Get faster results with GLP-1 medications. <a href="tel:+19154445110">Call us to get started:
+    (915) 444-5110</a>.
+  </p>
+
+  <!--
+    NOTE: the live site shows a gallery of ~75 client/before-and-after photos here.
+    Image URLs (alt: "wellness center near me") are catalogued in
+    /Website-Backup/images/image-catalog.md. Insert <img> / a gallery component when assets are
+    downloaded. Placeholder grid below.
+  -->
+  <section aria-label="Client results gallery">
+    <h2>Client Results</h2>
+    <p><!-- Gallery placeholder — populate from image-catalog.md --></p>
+  </section>
+
+  <section>
+    <h2>Discover the Best Wellness Center Near You</h2>
+    <p>
+      If you're searching for a wellness center in El Paso, Texas, KM Wellness Center is your
+      destination for achieving holistic health and well-being. Our expert team offers a wide range of
+      services designed to help you live a healthier, happier life.
+    </p>
+    <ul>
+      <li><strong>Medical Nutrition Therapy</strong> and personalized nutrition plans.</li>
+      <li><strong>Exercise Classes and Personal Training</strong> led by certified kinesiologists.</li>
+      <li><strong>Weight Loss Programs</strong> and chronic condition management.</li>
+      <li><strong>Body Composition Analysis and Metabolic Assessments</strong> using advanced testing.</li>
+    </ul>
+    <p><a href="/contact-us/">Make an appointment</a></p>
+  </section>
+</BaseLayout>

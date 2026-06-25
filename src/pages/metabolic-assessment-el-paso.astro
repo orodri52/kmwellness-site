@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FaqSchema from '../components/FaqSchema.astro';
+
+const seo = {
+  title: 'Metabolic Assessment El Paso | Accurate Testing for Weight Loss',
+  description:
+    'Metabolic assessment in El Paso at KM Wellness Center. Measure your resting metabolic rate and body composition to guide effective, data-driven weight loss.',
+};
+
+const faqs = [
+  { question: 'What is a metabolic assessment used for?', answer: 'A metabolic assessment measures how your body converts food calories into energy and determines your resting metabolic rate. This helps create personalized plans for weight loss, energy improvement, and overall health.' },
+  { question: 'How accurate is a resting metabolic rate test?', answer: 'A resting metabolic rate test is one of the most accurate ways to understand how many calories your body burns at rest. It provides valuable data that helps guide nutrition and fitness decisions.' },
+  { question: 'Can a metabolic assessment help with weight loss?', answer: 'Yes. By understanding how your body burns calories and stores fat, a metabolic assessment allows for a more personalized and effective weight loss strategy.' },
+  { question: 'What does metabolic testing measure?', answer: 'Metabolic testing may measure calorie burn, body fat, lean mass distribution, and overall metabolic efficiency, creating a clearer picture of your health.' },
+  { question: "Do I need a doctor's referral for metabolic testing?", answer: 'Some tests may require a physician or an order, depending on the type of assessment. Our team will guide you through what is needed.' },
+  { question: 'Is metabolic testing worth it?', answer: 'If you want real answers instead of guesswork, metabolic testing provides valuable insights that can accelerate your progress.' },
+];
+---
+<BaseLayout {...seo}>
+  <FaqSchema slot="head" items={faqs} />
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }, { name: 'Metabolic Assessment El Paso', href: '/metabolic-assessment-el-paso/' }]} />
+  <h1>Metabolic Assessment in El Paso</h1>
+
+  <p>
+    Your body is not broken — it just hasn't been fully understood yet. At KM Wellness Center, our
+    metabolic assessment in El Paso is designed to uncover how your body converts food calories into
+    energy, how efficiently you burn fat, and what may be slowing down your progress. Instead of
+    guessing your way through another diet, we give you real data to guide your health journey with
+    precision.
+  </p>
+
+  <section>
+    <h2>What Is a Metabolic Assessment?</h2>
+    <p>This insight helps us understand:</p>
+    <ul>
+      <li>How your metabolism functions</li>
+      <li>How your body burns calories</li>
+      <li>How efficiently you convert food into energy</li>
+      <li>What adjustments are needed for weight loss or performance</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>What Can a Metabolic Assessment Reveal?</h2>
+    <ul>
+      <li>Resting metabolic rate</li>
+      <li>Calorie needs for weight loss</li>
+      <li>Body fat levels</li>
+      <li>Lean mass distribution</li>
+      <li>Energy efficiency</li>
+      <li>Metabolic health indicators</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Who Should Get a Metabolic Assessment?</h2>
+    <p>This service is ideal if you:</p>
+    <ul>
+      <li>Struggle to lose weight despite effort</li>
+      <li>Feel like your metabolism is slow</li>
+      <li>Want a data-driven health journey</li>
+      <li>Need guidance for weight management</li>
+      <li>Are concerned about metabolic conditions like type 2 diabetes</li>
+      <li>Want to improve performance, energy, or body composition</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Frequently Asked Questions</h2>
+    {faqs.map((f) => (
+      <details>
+        <summary>{f.question}</summary>
+        <p>{f.answer}</p>
+      </details>
+    ))}
+    <p><a href="/contact-us/">Schedule your assessment today</a></p>
+  </section>
+</BaseLayout>

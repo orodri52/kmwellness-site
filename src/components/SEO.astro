@@ -1,0 +1,52 @@
+---
+// Per-page SEO head tags: title, description, canonical, robots, Open Graph,
+// Twitter. Canonical + OG URLs are built from Astro.site so they're correct
+// in every environment. Non-production hosts are auto-noindexed.
+import { business, PROD_HOSTNAME } from '../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Per-page OG image (absolute or site-relative). Falls back to brand image. */
+  image?: string;
+  /** og:type — 'website' for home, 'article' for everything else. */
+  type?: 'website' | 'article';
+  /** Force-hide a page from search engines (e.g. /thank-you/). */
+  noindex?: boolean;
+}
+
+const { title, description, image, type = 'article', noindex = false } = Astro.props;
+
+// Canonical URL for this exact page (respects trailingSlash config).
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+// Auto-noindex any non-production host (pages.dev previews, localhost) so test
+// deploys never get indexed. Combined with the explicit per-page flag.
+const isProd = Astro.site?.hostname === PROD_HOSTNAME;
+const robots = noindex || !isProd ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+
+const ogImage = new URL(image ?? '/images/og-default.jpg', Astro.site).href;
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="robots" content={robots} />
+
+<!-- Local SEO geo hints -->
+<meta name="geo.placename" content="El Paso" />
+<meta name="geo.region" content="US-TX" />
+
+<!-- Open Graph -->
+<meta property="og:site_name" content={business.legalName} />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />

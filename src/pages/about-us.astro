@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const seo = {
+  title: 'Wellness Center | About | Kingsway Wellness Center | El Paso, TX',
+  description:
+    'Meet the KM Wellness Center team—dedicated dietitians, trainers, and specialists helping El Paso reach long-term wellness.',
+};
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'About Us', href: '/about-us/' }]} />
+  <h1>About Us</h1>
+
+  <section>
+    <h2>Discover KM Wellness Center: Your Premier Wellness Destination in El Paso</h2>
+    <p>
+      Welcome to KM Wellness Center in El Paso, where we believe that true wellness encompasses
+      physical and nutritional well-being. Our integrated approach and evidence-based practices ensure
+      that each client receives the highest quality of care tailored to their unique needs and goals.
+    </p>
+  </section>
+
+  <section>
+    <h2>Why Choose KM Wellness Center?</h2>
+    <p>
+      At KM Wellness Center, we are committed to providing the highest quality care to our clients.
+      Our team of experienced professionals is dedicated to helping you achieve your health and
+      wellness goals through personalized care and comprehensive services. We believe in a holistic
+      approach to health, addressing the physical, mental, emotional, and spiritual aspects of
+      well-being.
+    </p>
+  </section>
+
+  <section>
+    <h2>Meet the Doctor — Daniel Chavez, RD</h2>
+    <p>Dietitian Nutritionist</p>
+    <p>
+      As a Registered and Licensed Dietitian and Certified Strength &amp; Conditioning Specialist with
+      over a decade of experience in the health and wellness industry, I have developed a deep
+      commitment to improving people's lives. My early work as a kinesiologist and certified sports
+      nutritionist gave me valuable experience working with individuals from diverse backgrounds. I
+      pursued a dietetics degree from the University of Alabama, where I graduated Summa Cum Laude.
+      Today, I work as a clinical dietitian, managing over a hundred inpatient beds while running a
+      successful private practice. I have earned recognition from major online publications such as
+      Forbes Health, Generation Iron, and T-Nation. I remain committed to staying up-to-date with the
+      latest research and best practices, attending conferences, workshops, and other professional
+      development opportunities to ensure I continue providing my patients and clients with the
+      highest level of care.
+    </p>
+  </section>
+
+  <section>
+    <h2>Our Mission</h2>
+    <p>
+      Our mission is to empower individuals to lead healthier, happier, and more fulfilling lives by
+      addressing the physical, nutritional, mental, and emotional aspects of well-being. We aim to
+      treat the root cause of health issues through personalized care and evidence-based practices.
+    </p>
+    <h3>Our Vision</h3>
+    <p>
+      We envision a world where everyone has access to the resources and support they need to lead a
+      healthy and fulfilling life. We are committed to being a leader in the wellness industry,
+      providing innovative and effective health and wellness solutions.
+    </p>
+    <h3>Our Values</h3>
+    <ul>
+      <li><strong>Holistic Approach:</strong> We believe in treating the whole person, not just the symptoms.</li>
+      <li><strong>Personalized Care:</strong> We provide customized care tailored to your individual needs.</li>
+      <li><strong>Empowerment:</strong> We empower you to take control of your health and wellness.</li>
+      <li><strong>Compassion:</strong> We provide compassionate care and support to all our clients.</li>
+      <li><strong>Excellence:</strong> We strive for excellence in everything we do.</li>
+    </ul>
+    <p><a href="/contact-us/">Make an appointment</a></p>
+  </section>
+
+  <section>
+    <h2>Comprehensive Wellness Services</h2>
+    <h3>Wellness Clinic</h3>
+    <p>
+      At our wellness clinic, we offer a wide range of health and wellness services designed to cater
+      to your individual needs, staffed with experienced professionals committed to personalized care.
+    </p>
+    <h3>Holistic Health</h3>
+    <p>
+      Our holistic health approach addresses not just the physical aspects of well-being but also the
+      mental, emotional, and spiritual dimensions.
+    </p>
+    <h3>Physical Fitness</h3>
+    <p>
+      Our wellness center offers a variety of fitness programs tailored to meet different fitness
+      levels and goals, from personal training sessions to group fitness classes.
+    </p>
+    <h3>Health and Wellness Coaching</h3>
+    <p>
+      Our certified wellness coaches work with you to set realistic goals, create personalized
+      wellness plans, and provide ongoing support and motivation.
+    </p>
+    <h3>Nutrition and Wellness</h3>
+    <p>
+      Our registered dietitians and nutrition experts work with you to develop healthy eating habits
+      that support your overall wellness, including weight management and dietary restrictions.
+    </p>
+  </section>
+</BaseLayout>

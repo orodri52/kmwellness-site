@@ -1,0 +1,195 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business } from '../config/site';
+
+const seo = {
+  title: 'Weight Loss Clinic El Paso | KM Wellness Center',
+  description:
+    'A trusted weight loss clinic in El Paso. KM Wellness offers personalized nutrition, fitness training, and holistic weight management.',
+  type: 'website' as const,
+};
+
+const principles = [
+  {
+    title: 'Evidence-based guidance',
+    text: 'Nutrition and weight-loss plans grounded in current research and clinical standards.',
+  },
+  {
+    title: 'Personalized plans',
+    text: 'Nutrition, movement, and lifestyle strategies built around your body and goals.',
+  },
+  {
+    title: 'Compassionate support',
+    text: 'Judgment-free coaching so you feel heard, supported, and prepared.',
+  },
+  {
+    title: 'Sustainable results',
+    text: 'Practical habits that fit real life instead of another short-term reset.',
+  },
+];
+
+const services = [
+  {
+    title: 'Medical Nutrition Therapy',
+    href: '/services/medical-nutrition-therapy-and-nutrition-counseling/',
+    text: 'Registered dietitian support for weight management, metabolic health, chronic conditions, and long-term wellness.',
+  },
+  {
+    title: 'Weight Loss Prescription',
+    href: '/services/weight-loss-prescription-disease-management/',
+    text: 'Medically supervised weight-loss programs, metabolic assessments, and structured follow-up for safe progress.',
+  },
+  {
+    title: 'Exercise Classes and Personal Training',
+    href: '/services/exercise-classes-and-personal-training/',
+    text: 'Personalized workout plans, strength training, Pilates, and guided movement for every fitness level.',
+  },
+  {
+    title: 'Meal Prep Services',
+    href: '/services/additional-services/',
+    text: 'Convenient nutrition support that helps make healthy choices easier during the week.',
+  },
+];
+---
+<BaseLayout {...seo}>
+  <div class="home-page">
+    <section class="hero-panel" aria-labelledby="home-title">
+      <div class="hero-art">
+        <img
+          src="/images/placeholder-nutrition-counseling.jpg"
+          alt="A generic nutrition counseling consultation with a client writing in a notebook"
+          width="1536"
+          height="1024"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+
+      <div class="hero-copy">
+        <p class="eyebrow">Holistic Weight Loss Clinic in El Paso</p>
+        <h1 id="home-title">Personalized nutrition counseling <em>that fits your life.</em></h1>
+        <p>
+          Evidence-based guidance to help you improve your health, build sustainable habits, and
+          feel your best.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-dark" href="/contact-us/">Book your consultation</a>
+          <a class="text-link" href="/services/">View services</a>
+        </div>
+      </div>
+
+      <div class="hero-trust" aria-label="Clinic highlights">
+        <p><strong>15+</strong><span>Years of experience</span></p>
+        <p><strong>1000+</strong><span>Happy clients</span></p>
+        <p><strong>{business.awards}</strong><span>Local recognition</span></p>
+      </div>
+    </section>
+
+    <section class="principles-section" aria-labelledby="principles-title">
+      <div class="principles-heading">
+        <p class="eyebrow">How care works</p>
+        <h2 id="principles-title">Nutrition care that goes beyond the food on your plate.</h2>
+      </div>
+      <div class="principle-grid">
+        {principles.map((item, index) => (
+          <article>
+            <span class={`principle-icon principle-icon-${index + 1}`} aria-hidden="true"></span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="approach-section" aria-labelledby="approach-title">
+      <div class="approach-copy">
+        <p class="eyebrow">Our approach</p>
+        <h2 id="approach-title">Whole-person care. Real-life results.</h2>
+        <p>
+          We take a functional and evidence-based approach to help you reach your goals and feel your
+          best.
+        </p>
+        <a class="button button-light" href="/about-us/">Learn more about our approach</a>
+      </div>
+      <div class="approach-image">
+        <img
+          src="/images/placeholder-consult-room.jpg"
+          alt="A generic quiet wellness consultation room with a lounge chair and side table"
+          width="1536"
+          height="1024"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </section>
+
+    <section class="content-section intro-section" aria-labelledby="journey-title">
+      <div>
+        <p class="eyebrow">KM Wellness Center is now open and taking new patients</p>
+        <h2 id="journey-title">Embark on a journey with our wellness pros.</h2>
+      </div>
+      <div>
+        <p>
+          At KM Wellness Center, our mission is to help the El Paso community achieve sustainable
+          health through our holistic weight loss clinic and personalized weight management programs.
+          We combine nutrition counseling, medical nutrition therapy, fitness training, and
+          lifestyle-based weight loss solutions to address the root causes of weight gain and
+          metabolic challenges.
+        </p>
+        <a class="text-link" href="/about-us/">More about us</a>
+      </div>
+    </section>
+
+    <section class="content-section services-section" aria-labelledby="services-title">
+      <div class="section-heading">
+        <p class="eyebrow">Our services</p>
+        <h2 id="services-title">Comprehensive weight loss and nutrition care.</h2>
+        <p>
+          From private nutrition counseling to supervised weight-loss programs and fitness coaching,
+          we provide a supportive environment to help you reach your goals.
+        </p>
+      </div>
+
+      <div class="service-grid">
+        {services.map((service, index) => (
+          <article class:list={[{ 'service-featured': index === 0 }]}>
+            <h3>{service.title}</h3>
+            <p>{service.text}</p>
+            <a class="text-link" href={service.href}>Read more</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="proof-section" aria-labelledby="proof-title">
+      <div>
+        <p class="eyebrow">Why choose us</p>
+        <h2 id="proof-title">A weight-loss clinic built for sustainable change.</h2>
+      </div>
+      <ul>
+        <li>Holistic weight loss center focused on sustainable results</li>
+        <li>Personalized weight loss programs tailored to your lifestyle</li>
+        <li>Experienced nutritionists and registered dietitians</li>
+        <li>Medical nutrition therapy for metabolic and chronic conditions</li>
+        <li>Fitness coaching and personal training support</li>
+        <li>{business.awards} Award Winner</li>
+      </ul>
+      <div class="stats-card" aria-label="Clinic experience and client count">
+        <p><strong>15+</strong><span>Years of experience</span></p>
+        <p><strong>1000+</strong><span>Happy clients</span></p>
+      </div>
+    </section>
+
+    <section class="booking-strip" aria-label="Schedule consultation">
+      <div>
+        <p class="eyebrow">Insurance accepted.</p>
+        <p>We accept most PPO insurance plans.</p>
+      </div>
+      <div>
+        <p class="eyebrow">Ready to get started?</p>
+        <p>Book your consultation today.</p>
+      </div>
+      <a class="button button-dark" href="/contact-us/">Book now</a>
+    </section>
+  </div>
+</BaseLayout>

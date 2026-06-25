@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+const seo = {
+  title: 'Exercise Classes | KM Wellness Center | El Paso, TX',
+  description:
+    'Find top-rated exercise classes near El Paso at KM Wellness Center—boost strength, flexibility, and overall wellness today.',
+};
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }, { name: 'Exercise Classes', href: '/services/exercise-classes-and-personal-training/' }]} />
+  <h1>Exercise Classes and Personal Training</h1>
+
+  <p>
+    Looking for exercise classes near El Paso that do more than just burn calories? At KM Wellness
+    Center, we offer a unique and supportive environment designed to help you thrive. Our team of
+    experts, including certified kinesiologists, creates personalized exercise programs tailored to
+    your individual goals, fitness level, and overall health.
+  </p>
+
+  <section>
+    <h2>A Holistic Fitness Approach to Wellness</h2>
+    <p>
+      We're not your typical gym. KM Wellness Center embraces a holistic fitness approach that
+      integrates physical activity, nutrition, and mental well-being — your workout routine is one
+      piece of a complete wellness strategy focused on long-term health and balance.
+    </p>
+  </section>
+
+  <section>
+    <h2>Wide Variety of Group Fitness Classes</h2>
+    <ul>
+      <li>Strength training classes to build muscle and boost metabolism</li>
+      <li>Functional fitness for flexibility and mobility</li>
+      <li>Cardio workouts that support cardiovascular health improvement</li>
+      <li>Balance and core training to reduce injury risk</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Customized Exercise Plans Just for You</h2>
+    <p>
+      We design customized exercise plans based on your personal goals, body composition, and health
+      history. Our certified kinesiologists perform assessments to understand your current fitness
+      level and physical needs, ensuring your workouts are effective, safe, and targeted.
+    </p>
+    <p><a href="/contact-us/">Make an appointment</a></p>
+  </section>
+</BaseLayout>

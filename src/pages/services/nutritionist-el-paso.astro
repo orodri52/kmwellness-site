@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FaqSchema from '../../components/FaqSchema.astro';
+
+const seo = {
+  title: 'Nutritionist El Paso | Registered Dietitian Services',
+  description:
+    'Looking for a trusted nutritionist in El Paso? Our registered dietitians offer personalized nutrition counseling, medical nutrition therapy, and customized meal plans.',
+};
+
+const faqs = [
+  { question: 'What is nutrition counseling?', answer: 'Nutrition counseling is a structured process where a registered dietitian helps you improve food choices, manage health conditions, and create a sustainable lifestyle through personalized guidance.' },
+  { question: 'Can nutrition counseling help control blood sugar levels?', answer: 'Yes. Medical nutrition therapy is highly effective for improving blood sugar levels and supporting individuals with diabetes or prediabetes.' },
+  { question: 'How do I find a dietitian in El Paso, TX?', answer: 'Look for a registered and licensed professional who provides evidence-based services and works alongside a care team. KM Wellness Center offers comprehensive nutrition counseling in El Paso.' },
+  { question: 'How much does nutrition counseling in El Paso cost?', answer: 'Cost can vary depending on the length of the session and your specific needs. Some insurance plans cover medical nutrition therapy for certain conditions such as diabetes or high blood pressure. Our team will review your benefits and explain pricing options before you begin care.' },
+  { question: 'Is nutrition counseling only for weight loss?', answer: 'No. While weight loss is common, nutrition counseling also helps with heart health, medical conditions, digestive issues, hormone balance, and many other health conditions.' },
+  { question: 'Do I need a referral to schedule nutrition counseling in El Paso?', answer: 'In most cases you do not need a referral to begin. However, some insurance plans may require one. Our team can help verify your benefits and guide you through the process.' },
+];
+---
+<BaseLayout {...seo}>
+  <FaqSchema slot="head" items={faqs} />
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }, { name: 'Our Nutritionist', href: '/services/nutritionist-el-paso/' }]} />
+  <h1>Nutritionist in El Paso, TX</h1>
+
+  <p>
+    If you are looking for a trusted nutritionist in El Paso, TX, our team is here to help. At KM
+    Wellness Center, we provide professional nutrition counseling in El Paso designed to support your
+    health goals and long-term success. Our experienced registered dietitians create personalized
+    nutrition plans based on your goals, medical history, and daily routine.
+  </p>
+
+  <section>
+    <h2>What Does a Nutritionist Do?</h2>
+    <p>Through structured nutrition counseling, we help you:</p>
+    <ul>
+      <li>Improve blood sugar levels</li>
+      <li>Support heart health</li>
+      <li>Manage digestive concerns</li>
+      <li>Address hormonal imbalances</li>
+      <li>Strengthen your relationship with food</li>
+      <li>Build confidence around healthy eating</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Registered Dietitian Services for Medical Nutrition Therapy</h2>
+    <p>Our licensed dietitians offer medical nutrition therapy in El Paso to help manage:</p>
+    <ul>
+      <li>Type 2 diabetes</li>
+      <li>Prediabetes</li>
+      <li>High blood pressure</li>
+      <li>Cardiovascular disease</li>
+      <li>Obesity</li>
+      <li>PCOS</li>
+      <li>Digestive disorders</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Why Choose Our Nutritionist in El Paso, TX?</h2>
+    <ul>
+      <li>Experienced registered dietitians</li>
+      <li>Evidence-based nutrition therapy</li>
+      <li>Personalized meal planning</li>
+      <li>Collaboration with a full care team</li>
+      <li>Holistic and medical integration</li>
+      <li>Support for complex health conditions</li>
+      <li>Focus on sustainable lifestyle changes</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Frequently Asked Questions</h2>
+    {faqs.map((f) => (
+      <details>
+        <summary>{f.question}</summary>
+        <p>{f.answer}</p>
+      </details>
+    ))}
+    <p><a href="/contact-us/">Make an appointment</a></p>
+  </section>
+</BaseLayout>

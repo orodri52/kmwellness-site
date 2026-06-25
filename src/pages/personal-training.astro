@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const seo = {
+  title: 'El Paso Personal Trainer | KM Wellness Center | El Paso, TX',
+  description:
+    'Achieve your fitness goals with an expert El Paso personal trainer at KM Wellness Center. Customized strength, cardio, and holistic fitness programs for all levels.',
+};
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }, { name: 'Personal Training', href: '/personal-training/' }]} />
+  <h1>El Paso Personal Trainer: Achieve Your Fitness Goals</h1>
+
+  <p>
+    Are you looking for a certified personal trainer in El Paso to help you achieve your fitness and
+    wellness goals? At KM Wellness Center, we specialize in personalized exercise classes and
+    one-on-one training programs tailored to meet your needs — whether you're working toward weight
+    loss, strength building, or overall health.
+  </p>
+
+  <section>
+    <h2>Custom Fitness Plans in El Paso</h2>
+    <ul>
+      <li><strong>Strength Training:</strong> Build muscle and improve endurance with expert guidance.</li>
+      <li><strong>Cardio Workouts:</strong> Boost cardiovascular health and burn calories effectively.</li>
+      <li><strong>Flexibility and Balance Exercises:</strong> Enhance mobility and prevent injury through targeted sessions.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Holistic Fitness in El Paso</h2>
+    <ul>
+      <li><strong>Initial Fitness Assessments:</strong> Understand your current health and fitness levels to set realistic goals.</li>
+      <li><strong>Nutritional Support:</strong> Guidance on healthy eating to complement your exercise plan.</li>
+      <li><strong>Mental and Emotional Support:</strong> Stay motivated and focused on achieving long-term results.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Weight Loss Coach in El Paso</h2>
+    <p>
+      Our weight loss coach in El Paso provides expert support to help you shed pounds safely and
+      sustainably. We combine personalized fitness plans with nutrition strategies to create a program
+      that fits your lifestyle, with a medically supervised approach to keep you on track.
+    </p>
+    <p><a href="/contact-us/">Make an appointment</a></p>
+  </section>
+</BaseLayout>

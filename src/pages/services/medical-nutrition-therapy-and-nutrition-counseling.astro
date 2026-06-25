@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+const seo = {
+  title: 'Medical Nutrition Therapy and Nutrition Counseling | KM Wellness',
+  description:
+    'Achieve your health goals with expert nutritional counseling at KM Wellness Center. Personalized plans for optimal wellness.',
+};
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }, { name: 'Nutrition Counseling', href: '/services/medical-nutrition-therapy-and-nutrition-counseling/' }]} />
+  <h1>Nutritional Counseling: Your Path to Healthier Living</h1>
+
+  <p>
+    Achieving and maintaining good nutrition is essential for long-term overall health. At KM Wellness
+    Center in El Paso, we offer personalized nutritional counseling to support your unique health
+    goals — whether you're looking for weight loss, managing a chronic condition, or simply working
+    toward a balanced lifestyle. Our experienced registered dietitian and nutritional counselors guide
+    you toward healthier living and sustainable wellness.
+  </p>
+
+  <section>
+    <h2>What is Nutritional Counseling?</h2>
+    <p>
+      Nutritional counseling is a personalized service that connects clients with a registered
+      dietitian or nutritional counselor to assess and improve eating habits, food choices, and
+      nutrition plans. Unlike generic diet advice, it is tailored to each client's individual needs,
+      health goals, and medical history.
+    </p>
+  </section>
+
+  <section>
+    <h2>Benefits of Nutritional Counseling</h2>
+    <ol>
+      <li><strong>Personalized Nutrition Plans</strong> — customized for you based on age, lifestyle, medical history, and specific health goals.</li>
+      <li><strong>Long-Term Weight Loss Support</strong> — sustainable strategies to achieve and maintain a healthy weight.</li>
+      <li><strong>Chronic Disease Management</strong> — diets that align with medical requirements for diabetes, hypertension, or high cholesterol.</li>
+      <li><strong>Improved Eating Habits and Food Choices</strong> — practical advice for balanced, enjoyable, nutritious meals.</li>
+      <li><strong>Support for Mental and Physical Well-being</strong> — foods that support energy, focus, and mood, plus physical activity guidance.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>What to Expect from Counseling Sessions</h2>
+    <p>
+      Your initial session includes a thorough assessment of your health history, lifestyle, and
+      dietary habits, followed by a customized nutrition plan tailored to your goals. Each session is
+      a learning experience that empowers you to make healthier choices and build a sustainable
+      lifestyle rooted in good nutrition.
+    </p>
+    <p><a href="/contact-us/">Make an appointment</a></p>
+  </section>
+</BaseLayout>

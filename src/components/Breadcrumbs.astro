@@ -1,0 +1,29 @@
+---
+// Visible breadcrumb trail + matching BreadcrumbList JSON-LD.
+// Pass crumbs as [{ name, href }]; the last item is treated as the current page.
+interface Crumb { name: string; href: string; }
+interface Props { crumbs: Crumb[]; }
+const { crumbs } = Astro.props;
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.name,
+    item: `${site}${c.href}`,
+  })),
+};
+---
+<nav aria-label="Breadcrumb">
+  <ol>
+    {crumbs.map((c, i) => (
+      <li>
+        {i < crumbs.length - 1 ? <a href={c.href}>{c.name}</a> : <span aria-current="page">{c.name}</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

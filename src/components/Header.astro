@@ -1,0 +1,36 @@
+---
+import { business, nav } from '../config/site';
+---
+<header class="site-header">
+  <div class="utility-bar" aria-label="Clinic contact details">
+    <a href={`tel:${business.phoneRaw}`}>{business.phone}</a>
+    <span>{business.hoursHuman}</span>
+    <a href={`mailto:${business.email}`}>{business.email}</a>
+  </div>
+
+  <div class="nav-shell">
+    <a class="brand-mark" href="/" rel="home" aria-label={`${business.name} home`}>
+      <span class="brand-km">KM</span>
+      <span class="brand-wellness">Wellness</span>
+    </a>
+
+    <nav class="primary-nav" aria-label="Primary">
+      <ul>
+        {nav.map((item) => (
+          <li class:list={[{'has-children': 'children' in item && item.children}]}>
+            <a href={item.href}>{item.label}</a>
+            {'children' in item && item.children && (
+              <ul>
+                {item.children.map((child) => (
+                  <li><a href={child.href}>{child.label}</a></li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <a class="button button-dark nav-cta" href="/contact-us/">Book a Consult</a>
+  </div>
+</header>

@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business } from '../config/site';
+
+// noindex: confirmation pages should never be indexed (fixes an issue on the
+// current live site, where /thank-you/ is indexable).
+const seo = {
+  title: 'Thank You | KM Wellness Center',
+  description: 'Your message has been sent. A member of our team will be in contact.',
+  noindex: true,
+};
+---
+<BaseLayout {...seo}>
+  <h1>Thank You</h1>
+  <p>Your message has been sent. A member of our team will be in contact.</p>
+  <p>
+    If you require immediate assistance, please call our office at
+    <a href={`tel:${business.phoneRaw}`}>{business.phone}</a>.
+  </p>
+  <p><a href="/">Return home</a></p>
+</BaseLayout>

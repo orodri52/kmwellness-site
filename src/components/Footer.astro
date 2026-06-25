@@ -1,0 +1,57 @@
+---
+import { business, nav } from '../config/site';
+const year = new Date().getFullYear();
+const a = business.address;
+---
+<footer class="site-footer">
+  <div class="footer-cta">
+    <div>
+      <p class="eyebrow">Ready to begin?</p>
+      <h2>Personalized nutrition and training in El Paso.</h2>
+    </div>
+    <a class="button button-light" href="/contact-us/">Book now</a>
+  </div>
+
+  <div class="footer-grid">
+    <section>
+      <a class="brand-mark footer-brand" href="/" rel="home">
+        <span class="brand-km">KM</span>
+        <span class="brand-wellness">Wellness</span>
+      </a>
+      <p>
+        Evidence-based nutrition, medically guided weight management, and personal training for
+        sustainable health outcomes.
+      </p>
+    </section>
+
+    <section aria-label="Contact">
+      <h2>Contact</h2>
+      <address>
+        <strong>{a.plaza}</strong><br />
+        {a.street}<br />
+        {a.locality}, {a.region} {a.postalCode}<br />
+        <a href={`tel:${business.phoneRaw}`}>{business.phone}</a><br />
+        <a href={`mailto:${business.email}`}>{business.email}</a>
+      </address>
+    </section>
+
+    <nav aria-label="Footer navigation">
+      <h2>Explore</h2>
+      <ul>
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav aria-label="Social and legal links">
+      <h2>Connect</h2>
+      <ul>
+        <li><a href={business.social.facebook} rel="noopener" target="_blank">Facebook</a></li>
+        <li><a href={business.social.instagram} rel="noopener" target="_blank">Instagram</a></li>
+        <li><a href="/privacy-policy/">Privacy Policy</a></li>
+        <li><a href="/terms-conditions/">Terms &amp; Conditions</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <p class="copyright"><small>Copyright {year} © {business.legalName}. All rights reserved.</small></p>
+</footer>
