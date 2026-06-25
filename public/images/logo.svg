@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="200" viewBox="0 0 520 200" role="img" aria-label="KM Wellness Center">
+  <!-- Brand wordmark. Recolored from the original light-gray "KM" to the
+       brand ink (#1d1a15) with a clay accent (#b88766) so it stands out on
+       the warm cream (#f4eadc) site background. -->
+  <rect width="520" height="200" fill="none"/>
+  <g font-family="Palatino, 'Palatino Linotype', Georgia, 'Times New Roman', serif" font-weight="700">
+    <text x="50%" y="96" text-anchor="middle" font-size="120" letter-spacing="-6" fill="#1d1a15">K<tspan fill="#b88766">M</tspan></text>
+  </g>
+  <g font-family="'Avenir Next', 'Gill Sans', 'Helvetica Neue', Arial, sans-serif" font-weight="800">
+    <text x="50%" y="150" text-anchor="middle" font-size="30" letter-spacing="14" fill="#1d1a15">WELLNESS</text>
+  </g>
+  <text x="50%" y="180" text-anchor="middle" font-family="'Avenir Next', 'Gill Sans', Arial, sans-serif" font-weight="600" font-size="15" letter-spacing="7" fill="#5f574c">EL&#160;PASO,&#160;TX</text>
+</svg>

@@ -1,0 +1,57 @@
+---
+// Blog landing page: lists every published post, newest first.
+// getCollection() reads the typed entries defined in src/content.config.ts.
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const seo = {
+  title: 'Nutrition & Wellness Blog | KM Wellness Center El Paso',
+  description:
+    'Expert nutrition, weight loss, and metabolic health tips from the registered dietitians at KM Wellness Center in El Paso, TX.',
+  type: 'website' as const,
+};
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Blog', href: '/blog/' }]} />
+
+  <section class="content-section">
+    <p class="eyebrow">Nutrition &amp; Wellness Blog</p>
+    <h1>Insights from our El Paso dietitians</h1>
+    <p>
+      Evidence-based guidance on nutrition, weight management, and metabolic health from the team at
+      KM Wellness Center.
+    </p>
+
+    {posts.length === 0 ? (
+      <p>New articles are on the way — check back soon.</p>
+    ) : (
+      <ul class="blog-list">
+        {posts.map((post) => (
+          <li class="blog-card">
+            <p class="post-meta"><time datetime={post.data.pubDate.toISOString()}>{fmt(post.data.pubDate)}</time></p>
+            <h2><a href={`/blog/${post.id}/`}>{post.data.title}</a></h2>
+            <p>{post.data.description}</p>
+            <a class="text-link" href={`/blog/${post.id}/`}>Read article</a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-list { list-style: none; padding: 0; display: grid; gap: 1.75rem; margin-top: 2rem; }
+  .blog-card { padding-bottom: 1.75rem; border-bottom: 1px solid var(--line); }
+  .blog-card h2 { margin: 0.35rem 0 0.5rem; }
+  .blog-card h2 a { text-decoration: none; color: var(--ink); }
+  .blog-card h2 a:hover { color: var(--clay); }
+  .post-meta { font-size: 0.85rem; color: var(--ink-soft); margin: 0; text-transform: uppercase; letter-spacing: 0.08em; }
+</style>

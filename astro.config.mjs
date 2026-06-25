@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
+import mdx from '@astrojs/mdx';
 
 // Production canonical domain. Override per-environment with PUBLIC_SITE_URL
 // (e.g. set it to your *.pages.dev preview URL while testing).
@@ -19,6 +20,7 @@ export default defineConfig({
 
   integrations: [
     react(),
+    mdx(),
     sitemap({
       // Keep utility/confirmation pages out of the sitemap.
       filter: (page) => !page.includes('/thank-you'),

@@ -1,0 +1,77 @@
+---
+// Renders a single blog post. One static HTML page is generated per entry at
+// build time (getStaticPaths), so the blog stays fully static for Cloudflare.
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ArticleSchema from '../../components/ArticleSchema.astro';
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const canonical = new URL(`/blog/${post.id}/`, Astro.site).href;
+const ogImage = post.data.heroImage
+  ? new URL(post.data.heroImage, Astro.site).href
+  : undefined;
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+<BaseLayout
+  title={`${post.data.title} | KM Wellness Center`}
+  description={post.data.description}
+  type="article"
+  image={post.data.heroImage}
+>
+  <ArticleSchema
+    slot="head"
+    title={post.data.title}
+    description={post.data.description}
+    url={canonical}
+    datePublished={post.data.pubDate.toISOString()}
+    dateModified={post.data.updatedDate?.toISOString()}
+    image={ogImage}
+    author={post.data.author}
+  />
+
+  <Breadcrumbs
+    crumbs={[
+      { name: 'Home', href: '/' },
+      { name: 'Blog', href: '/blog/' },
+      { name: post.data.title, href: `/blog/${post.id}/` },
+    ]}
+  />
+
+  <article class="blog-post">
+    <header>
+      <h1>{post.data.title}</h1>
+      <p class="post-meta">
+        <time datetime={post.data.pubDate.toISOString()}>{fmt(post.data.pubDate)}</time>
+        {post.data.updatedDate && <> · Updated {fmt(post.data.updatedDate)}</>}
+        {' · '}{post.data.author}
+      </p>
+    </header>
+
+    <div class="post-body">
+      <Content />
+    </div>
+
+    <footer class="post-footer">
+      <p>Ready to put this into practice? <a href="/contact-us/">Book a consultation</a> with our El Paso dietitians.</p>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .blog-post { max-width: 720px; }
+  .post-meta { font-size: 0.85rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.08em; }
+  .post-body :global(h2) { margin-top: 2.25rem; }
+  .post-body :global(ul), .post-body :global(ol) { padding-left: 1.25rem; }
+  .post-footer { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+</style>

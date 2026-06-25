@@ -1,0 +1,33 @@
+---
+// BlogPosting JSON-LD for individual articles. Makes posts eligible for
+// article rich results and ties authorship/publisher back to the site-wide
+// Organization node emitted in Schema.astro.
+import { business } from '../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  url: string;          // absolute canonical URL of the post
+  datePublished: string; // ISO 8601
+  dateModified?: string; // ISO 8601
+  image?: string;        // absolute image URL
+  author?: string;
+}
+const { title, description, url, datePublished, dateModified, image, author } = Astro.props;
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+  url,
+  datePublished,
+  dateModified: dateModified ?? datePublished,
+  ...(image ? { image } : {}),
+  author: { '@type': 'Organization', name: author ?? business.name, url: `${site}/` },
+  publisher: { '@id': `${site}/#organization` },
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

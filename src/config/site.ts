@@ -54,6 +54,7 @@ export const nav = [
     ],
   },
   { label: 'Success Stories', href: '/success-stories/' },
+  { label: 'Blog', href: '/blog/' },
   {
     label: 'About',
     href: '/about-us/',

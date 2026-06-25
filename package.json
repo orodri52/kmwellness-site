@@ -9,9 +9,11 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "gen:images": "node scripts/gen-brand-images.mjs",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.3.14",
     "@astrojs/react": "^4.2.0",
     "@astrojs/sitemap": "^3.2.1",
     "astro": "^5.6.0",
