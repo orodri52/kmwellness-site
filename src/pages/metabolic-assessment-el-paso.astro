@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadForm from "../components/LeadForm.astro";
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import FaqSchema from '../components/FaqSchema.astro';
 
@@ -77,4 +78,6 @@ const faqs = [
     ))}
     <p><a href="/contact-us/">Schedule your assessment today</a></p>
   </section>
+
+  <LeadForm source="metabolic-assessment" service="Metabolic Assessment" />
 </BaseLayout>

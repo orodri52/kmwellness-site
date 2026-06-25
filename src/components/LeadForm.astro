@@ -1,0 +1,142 @@
+---
+// Compact lead-capture form for high-intent pages (home, service pages).
+// Posts to the Cloudflare Function at /api/lead. Plain HTML so it adds no
+// client JS by default; a tiny inline script enhances it to submit via fetch
+// (no full-page reload) and falls back to a native POST if JS is unavailable.
+//
+// Props:
+//   source  — identifies which page the lead came from (sent to your inbox)
+//   service — optional pre-selected service interest
+//   heading / subheading — optional copy overrides
+interface Props {
+  source: string;
+  service?: string;
+  heading?: string;
+  subheading?: string;
+}
+const {
+  source,
+  service,
+  heading = 'Request your free consultation',
+  subheading = 'Tell us a bit about your goals and our El Paso team will reach out.',
+} = Astro.props;
+
+const services = [
+  'Nutrition Counseling',
+  'Medical Nutrition Therapy',
+  'Weight Loss Program',
+  'Metabolic Assessment',
+  'Personal Training',
+  'Not sure yet',
+];
+---
+<section class="lead-form" aria-labelledby="lead-form-title">
+  <div class="lead-form-intro">
+    <p class="eyebrow">Get started</p>
+    <h2 id="lead-form-title">{heading}</h2>
+    <p>{subheading}</p>
+    <p class="lead-form-call">
+      Prefer to talk now? Call <a href="tel:+19154445110">(915) 444-5110</a>.
+    </p>
+  </div>
+
+  <form class="lead-form-fields" method="POST" action="/api/lead" data-lead-form>
+    <input type="hidden" name="source" value={source} />
+    <!-- Honeypot: hidden from users; bots that fill it are rejected server-side. -->
+    <div class="hp" aria-hidden="true">
+      <label>Company<input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+    </div>
+
+    <p>
+      <label for="lf-name">Name *</label>
+      <input id="lf-name" name="name" type="text" required autocomplete="name" />
+    </p>
+    <div class="lead-form-row">
+      <p>
+        <label for="lf-phone">Phone *</label>
+        <input id="lf-phone" name="phone" type="tel" required autocomplete="tel" />
+      </p>
+      <p>
+        <label for="lf-email">Email *</label>
+        <input id="lf-email" name="email" type="email" required autocomplete="email" />
+      </p>
+    </div>
+    <p>
+      <label for="lf-service">I'm interested in</label>
+      <select id="lf-service" name="service">
+        {services.map((s) => (
+          <option value={s} selected={s === service}>{s}</option>
+        ))}
+      </select>
+    </p>
+    <p>
+      <button class="button button-dark" type="submit">Request my consultation</button>
+    </p>
+    <p class="lead-form-status" role="alert" hidden></p>
+    <p class="lead-form-fineprint">By submitting, you agree to be contacted by KM Wellness Center. We respect your privacy.</p>
+  </form>
+</section>
+
+<script>
+  // Progressive enhancement: submit via fetch, then redirect to /thank-you/.
+  document.querySelectorAll('form[data-lead-form]').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const f = e.currentTarget as HTMLFormElement;
+      const btn = f.querySelector('button[type=submit]') as HTMLButtonElement | null;
+      const status = f.querySelector('.lead-form-status') as HTMLElement | null;
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+      try {
+        const res = await fetch('/api/lead', {
+          method: 'POST',
+          body: new FormData(f),
+          headers: { Accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error('failed');
+        window.location.href = '/thank-you/';
+      } catch {
+        if (btn) { btn.disabled = false; btn.textContent = 'Request my consultation'; }
+        if (status) {
+          status.hidden = false;
+          status.innerHTML = 'Sorry, something went wrong. Please call <a href="tel:+19154445110">(915) 444-5110</a>.';
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+  .lead-form {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    margin: 3rem 0;
+  }
+  @media (min-width: 820px) {
+    .lead-form { grid-template-columns: 0.9fr 1.1fr; align-items: start; }
+  }
+  .lead-form-intro h2 { margin: 0.35rem 0 0.6rem; }
+  .lead-form-intro p { margin: 0 0 0.6rem; }
+  .lead-form-call { font-weight: 700; }
+  .lead-form-fields p { margin: 0 0 1rem; display: grid; gap: 0.35rem; }
+  .lead-form-row { display: grid; gap: 1rem; }
+  @media (min-width: 520px) { .lead-form-row { grid-template-columns: 1fr 1fr; } }
+  .lead-form label { font-weight: 700; font-size: 0.9rem; }
+  .lead-form input, .lead-form select {
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    font: inherit;
+    width: 100%;
+  }
+  .lead-form button { width: 100%; cursor: pointer; }
+  .lead-form-status { color: #9a2b2b; font-weight: 600; }
+  .lead-form-fineprint { font-size: 0.78rem; color: var(--ink-soft); }
+  /* Honeypot stays in the DOM for bots but hidden from people + AT. */
+  .hp { position: absolute; left: -5000px; width: 1px; height: 1px; overflow: hidden; }
+</style>

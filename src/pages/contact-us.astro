@@ -39,7 +39,7 @@ const a = business.address;
 
   <section>
     <h2>Send Us a Message</h2>
-    <!-- React island: hydrates client-side; wire `action` to your form handler. -->
-    <ContactForm client:load action="" />
+    <!-- React island: posts to the Cloudflare Pages Function at /api/lead. -->
+    <ContactForm client:load action="/api/lead" />
   </section>
 </BaseLayout>

@@ -50,6 +50,11 @@ export default function ContactForm({ action = '' }: Props) {
 
   return (
     <form onSubmit={handleSubmit} method="POST" action={action || undefined}>
+      <input type="hidden" name="source" value="contact-page" />
+      {/* Honeypot: hidden from users; bots that fill it are rejected server-side. */}
+      <p aria-hidden="true" style={{ position: 'absolute', left: '-5000px' }}>
+        <label>Company<input type="text" name="company" tabIndex={-1} autoComplete="off" /></label>
+      </p>
       <p>
         <label htmlFor="firstName">First name *</label>
         <input id="firstName" name="firstName" type="text" required autoComplete="given-name" />
@@ -86,8 +91,7 @@ export default function ContactForm({ action = '' }: Props) {
       </p>
       {status === 'error' && (
         <p role="alert">
-          Form is not wired to a handler yet. Set the <code>action</code> prop to your Formspree or
-          Cloudflare Pages Function endpoint. Meanwhile, call {''}
+          Sorry, your message couldn't be sent. Please try again or call{' '}
           <a href="tel:+19154445110">(915) 444-5110</a>.
         </p>
       )}

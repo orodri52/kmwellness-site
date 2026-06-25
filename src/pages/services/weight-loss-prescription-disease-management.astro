@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import LeadForm from "../../components/LeadForm.astro";
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
 const seo = {
@@ -50,4 +51,6 @@ const seo = {
     </ul>
     <p><a href="/contact-us/">Make an appointment</a></p>
   </section>
+
+  <LeadForm source="weight-loss-prescription" service="Weight Loss Program" />
 </BaseLayout>

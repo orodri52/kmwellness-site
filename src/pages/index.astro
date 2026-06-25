@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadForm from '../components/LeadForm.astro';
 import { business } from '../config/site';
 
 const seo = {
@@ -191,5 +192,7 @@ const services = [
       </div>
       <a class="button button-dark" href="/contact-us/">Book now</a>
     </section>
+
+    <LeadForm source="homepage" />
   </div>
 </BaseLayout>

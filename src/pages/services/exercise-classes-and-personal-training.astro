@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import LeadForm from "../../components/LeadForm.astro";
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
 const seo = {
@@ -47,4 +48,6 @@ const seo = {
     </p>
     <p><a href="/contact-us/">Make an appointment</a></p>
   </section>
+
+  <LeadForm source="exercise-classes" service="Personal Training" />
 </BaseLayout>
