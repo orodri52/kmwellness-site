@@ -20,12 +20,12 @@ const principles = [
     text: 'Nutrition, movement, and lifestyle strategies built around your body and goals.',
   },
   {
-    title: 'Compassionate support',
-    text: 'Judgment-free coaching so you feel heard, supported, and prepared.',
+    title: 'Weight management',
+    text: 'Sustainable approaches to help you reach and maintain a healthy weight.',
   },
   {
-    title: 'Sustainable results',
-    text: 'Practical habits that fit real life instead of another short-term reset.',
+    title: 'Compassionate care',
+    text: 'A supportive, judgment-free space to help you create lasting change.',
   },
 ];
 
@@ -50,6 +50,37 @@ const services = [
     href: '/services/additional-services/',
     text: 'Convenient nutrition support that helps make healthy choices easier during the week.',
   },
+];
+
+const processSteps = [
+  {
+    number: '01',
+    title: 'Connect',
+    text: 'Tell us about your goals.',
+  },
+  {
+    number: '02',
+    title: 'Personalized Plan',
+    text: 'We create a plan tailored to you.',
+  },
+  {
+    number: '03',
+    title: 'Ongoing Support',
+    text: 'We support you every step of the way.',
+  },
+  {
+    number: '04',
+    title: 'Lasting Results',
+    text: 'Build habits that last a lifetime.',
+  },
+];
+
+const supportItems = [
+  'Insurance accepted',
+  'Virtual & in-person appointments',
+  'Registered dietitians',
+  'Judgment-free support',
+  'Flexible plans for real life',
 ];
 ---
 <BaseLayout {...seo}>
@@ -80,16 +111,33 @@ const services = [
       </div>
 
       <div class="hero-trust" aria-label="Clinic highlights">
-        <p><strong>15+</strong><span>Years of experience</span></p>
-        <p><strong>1000+</strong><span>Happy clients</span></p>
-        <p><strong>{business.awards}</strong><span>Local recognition</span></p>
+        <p>
+          <span class="trust-icon trust-icon-shield" aria-hidden="true"></span>
+          <strong>15+</strong>
+          <span>Years of experience</span>
+        </p>
+        <p>
+          <span class="trust-icon trust-icon-people" aria-hidden="true"></span>
+          <strong>1000+</strong>
+          <span>Happy clients</span>
+        </p>
+        <p>
+          <span class="trust-icon trust-icon-award" aria-hidden="true"></span>
+          <strong>Best of El Paso<br />2024 &amp; 2025</strong>
+          <span>Local recognition</span>
+        </p>
       </div>
     </section>
 
     <section class="principles-section" aria-labelledby="principles-title">
       <div class="principles-heading">
-        <p class="eyebrow">How care works</p>
+        <p class="eyebrow">Our approach</p>
         <h2 id="principles-title">Nutrition care that goes beyond the food on your plate.</h2>
+        <p>
+          We take a functional and evidence-based approach to help you reach your goals and feel
+          your best.
+        </p>
+        <a class="button button-outline" href="/about-us/">Learn more about our approach</a>
       </div>
       <div class="principle-grid">
         {principles.map((item, index) => (
@@ -102,26 +150,44 @@ const services = [
       </div>
     </section>
 
-    <section class="approach-section" aria-labelledby="approach-title">
-      <div class="approach-copy">
-        <p class="eyebrow">Our approach</p>
-        <h2 id="approach-title">Whole-person care. Real-life results.</h2>
+    <section class="home-detail-grid" aria-label="What to expect from KM Wellness">
+      <figure class="quote-card">
+        <blockquote>
+          <p>The best diets don’t feel like diets. They feel like you.</p>
+        </blockquote>
+        <figcaption>KM Wellness</figcaption>
+      </figure>
+
+      <div class="expect-card">
+        <h2>What to expect</h2>
+        <div class="expect-steps">
+          {processSteps.map((step) => (
+            <article>
+              <span>{step.number}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <div class="ready-card">
+        <div class="ready-image" aria-hidden="true"></div>
+        <div>
+          <h2>Ready to take the next step?</h2>
+          <p>Book your consultation and let’s create a plan that works for you.</p>
+          <a class="button button-dark" href="/contact-us/">Book now</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="support-strip" aria-label="Patient support highlights">
+      {supportItems.map((item, index) => (
         <p>
-          We take a functional and evidence-based approach to help you reach your goals and feel your
-          best.
+          <span class={`support-icon support-icon-${index + 1}`} aria-hidden="true"></span>
+          <span>{item}</span>
         </p>
-        <a class="button button-light" href="/about-us/">Learn more about our approach</a>
-      </div>
-      <div class="approach-image">
-        <img
-          src="/images/placeholder-consult-room.jpg"
-          alt="A generic quiet wellness consultation room with a lounge chair and side table"
-          width="1536"
-          height="1024"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
+      ))}
     </section>
 
     <section class="content-section intro-section" aria-labelledby="journey-title">

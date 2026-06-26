@@ -1,5 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#1f6f54"/>
-  <text x="16" y="22" font-family="Arial, sans-serif" font-size="16" font-weight="bold"
-        text-anchor="middle" fill="#ffffff">KM</text>
+  <!-- Brand favicon: ink square with letter-spaced "KM" in soil, the site's
+       accent color. High contrast for legibility at 16px. -->
+  <rect width="32" height="32" rx="6" fill="#1d1a15"/>
+  <text x="16" y="22" text-anchor="middle"
+        font-family="'Avenir Next', 'Helvetica Neue', Arial, sans-serif"
+        font-size="15" font-weight="700" letter-spacing="1" fill="#b88766">KM</text>
 </svg>
