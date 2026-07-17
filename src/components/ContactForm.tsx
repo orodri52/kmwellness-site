@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 
 /**
  * React island (the Astro + React integration in action).
@@ -15,6 +15,20 @@ interface Props {
   action?: string;
 }
 
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (container: HTMLElement, options: Record<string, unknown>) => string;
+      reset: (widgetId: string) => void;
+      remove: (widgetId: string) => void;
+    };
+  }
+}
+
+const TURNSTILE_SCRIPT_ID = 'cf-turnstile-script';
+const TURNSTILE_SCRIPT_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+
 const HEAR_OPTIONS = [
   'Google Search',
   'Social Media',
@@ -26,6 +40,49 @@ const HEAR_OPTIONS = [
 
 export default function ContactForm({ action = '' }: Props) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'error'>('idle');
+  const [formError, setFormError] = useState('');
+  const [token, setToken] = useState('');
+  const turnstileRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY || !turnstileRef.current) return;
+
+    const renderWidget = () => {
+      if (!window.turnstile || !turnstileRef.current || widgetIdRef.current) return;
+      widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
+        sitekey: TURNSTILE_SITE_KEY,
+        theme: 'light',
+        size: 'flexible',
+        appearance: 'interaction-only',
+        callback: (t: string) => setToken(t),
+        'expired-callback': () => setToken(''),
+        'error-callback': () => setToken(''),
+      });
+    };
+
+    if (window.turnstile) {
+      renderWidget();
+    } else {
+      let script = document.getElementById(TURNSTILE_SCRIPT_ID) as HTMLScriptElement | null;
+      if (!script) {
+        script = document.createElement('script');
+        script.id = TURNSTILE_SCRIPT_ID;
+        script.src = TURNSTILE_SCRIPT_SRC;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+      }
+      script.addEventListener('load', renderWidget);
+    }
+
+    return () => {
+      if (window.turnstile && widgetIdRef.current) {
+        window.turnstile.remove(widgetIdRef.current);
+        widgetIdRef.current = null;
+      }
+    };
+  }, []);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -33,9 +90,21 @@ export default function ContactForm({ action = '' }: Props) {
       setStatus('error');
       return;
     }
+    if (!TURNSTILE_SITE_KEY) {
+      setFormError('Verification is not configured. Please call us instead.');
+      setStatus('error');
+      return;
+    }
+    if (!token) {
+      setFormError('Please complete the verification challenge.');
+      setStatus('error');
+      return;
+    }
+    setFormError('');
     setStatus('submitting');
     try {
       const data = new FormData(e.currentTarget);
+      data.set('cf-turnstile-response', token);
       const res = await fetch(action, {
         method: 'POST',
         body: data,
@@ -45,6 +114,9 @@ export default function ContactForm({ action = '' }: Props) {
       window.location.href = '/thank-you/';
     } catch {
       setStatus('error');
+    } finally {
+      if (window.turnstile && widgetIdRef.current) window.turnstile.reset(widgetIdRef.current);
+      setToken('');
     }
   }
 
@@ -85,14 +157,25 @@ export default function ContactForm({ action = '' }: Props) {
         <textarea id="message" name="message" rows={5} required></textarea>
       </p>
       <p>
+        {TURNSTILE_SITE_KEY ? (
+          <div ref={turnstileRef} />
+        ) : (
+          <span role="alert">Verification is not configured.</span>
+        )}
+      </p>
+      <p>
         <button type="submit" disabled={status === 'submitting'}>
           {status === 'submitting' ? 'Sending…' : 'Submit'}
         </button>
       </p>
       {status === 'error' && (
         <p role="alert">
-          Sorry, your message couldn't be sent. Please try again or call{' '}
-          <a href="tel:+19154445110">(915) 444-5110</a>.
+          {formError || (
+            <>
+              Sorry, your message couldn't be sent. Please try again or call{' '}
+              <a href="tel:+19154445110">(915) 444-5110</a>.
+            </>
+          )}
         </p>
       )}
     </form>

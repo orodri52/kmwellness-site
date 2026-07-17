@@ -5,9 +5,10 @@
 // edge function alongside the static site.
 //
 // Required environment variables (Cloudflare Pages > Settings > Variables):
-//   RESEND_API_KEY   — your Resend API key (Secret)
-//   LEAD_TO_EMAIL    — where leads are delivered (default: info@kmwellnesscenter.com)
-//   LEAD_FROM_EMAIL  — verified Resend sender (default: leads@kmwellnesscenter.com)
+//   RESEND_API_KEY       — your Resend API key (Secret)
+//   LEAD_TO_EMAIL        — where leads are delivered (default: info@kmwellnesscenter.com)
+//   LEAD_FROM_EMAIL      — verified Resend sender (default: leads@kmwellnesscenter.com)
+//   TURNSTILE_SECRET_KEY — Cloudflare Turnstile secret key (Secret)
 //
 // Progressive enhancement: JS clients send `Accept: application/json` and get
 // JSON back (then redirect to /thank-you/). Plain HTML form posts (no JS) get a
@@ -17,10 +18,27 @@ interface Env {
   RESEND_API_KEY: string;
   LEAD_TO_EMAIL?: string;
   LEAD_FROM_EMAIL?: string;
+  TURNSTILE_SECRET_KEY: string;
 }
 
 const esc = (s: string) =>
   s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string));
+
+async function verifyTurnstile(token: string, secret: string, remoteip?: string): Promise<boolean> {
+  const body = new URLSearchParams({ secret, response: token });
+  if (remoteip) body.set('remoteip', remoteip);
+  try {
+    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body,
+    });
+    const data = (await res.json()) as { success?: boolean };
+    return data.success === true;
+  } catch {
+    return false;
+  }
+}
 
 export const onRequestPost: (ctx: {
   request: Request;
@@ -48,7 +66,7 @@ export const onRequestPost: (ctx: {
   } catch {
     return fail('Invalid form submission.');
   }
-  const get = (k: string) => (form.get(k)?.toString() ?? '').trim();
+  const get = (k: string) => (form.get(k)?.toString() ?? '').trim().slice(0, 2000);
 
   // Honeypot: real users never fill this hidden field. Silently "succeed" so
   // bots don't learn they were blocked, but send nothing.
@@ -62,9 +80,15 @@ export const onRequestPost: (ctx: {
   const hear = get('hear');
   const message = get('message');
   const source = get('source') || 'website';
+  const turnstileToken = get('cf-turnstile-response');
 
   if (!name || !email || !phone) return fail('Please provide your name, email, and phone.');
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail('Please provide a valid email.');
+
+  if (!env.TURNSTILE_SECRET_KEY || !turnstileToken) return fail('Verification failed. Please try again.', 403);
+  const remoteip = request.headers.get('CF-Connecting-IP') || undefined;
+  const verified = await verifyTurnstile(turnstileToken, env.TURNSTILE_SECRET_KEY, remoteip);
+  if (!verified) return fail('Verification failed. Please try again.', 403);
 
   if (!env.RESEND_API_KEY) return fail('Email service is not configured.', 500);
 

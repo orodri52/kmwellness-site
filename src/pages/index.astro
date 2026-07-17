@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadForm from '../components/LeadForm.astro';
 import { business } from '../config/site';
-import consultationMealPlan from '../assets/images/consultation-meal-plan.jpg';
+import danielGymPortrait from '../assets/images/daniel-gym-portrait.webp';
 
 const seo = {
   title: 'Weight Loss Clinic El Paso | KM Wellness Center',
@@ -90,8 +90,8 @@ const supportItems = [
     <section class="hero-panel" aria-labelledby="home-title">
       <div class="hero-art">
         <Image
-          src={consultationMealPlan}
-          alt="Registered dietitian at KM Wellness Center reviewing a personalized meal plan with a client in El Paso"
+          src={danielGymPortrait}
+          alt="Daniel Chavez, RD, LD, CSCS, CISSN, co-founder and lead dietitian at KM Wellness Center in El Paso"
           widths={[500, 800, 1200]}
           sizes="(min-width: 900px) 500px, 100vw"
           format="webp"
