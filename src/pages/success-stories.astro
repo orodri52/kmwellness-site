@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import LeadForm from '../components/LeadForm.astro';
@@ -10,11 +11,15 @@ const seo = {
     'Looking for a wellness center near me? Read inspiring success stories from KM Wellness Center clients who transformed their health and wellness.',
 };
 
-// 74 optimized client photos live in /public/images/success (000.jpg … 073.jpg).
-const gallery = Array.from(
-  { length: 74 },
-  (_, i) => `/images/success/${String(i).padStart(3, '0')}.jpg`,
+// 74 client photos live in src/assets/images/success (000.jpg … 073.jpg),
+// imported through the Astro image pipeline for on-the-fly WebP + resizing.
+const successPhotos = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/images/success/*.jpg',
+  { eager: true },
 );
+const gallery = Object.keys(successPhotos)
+  .sort()
+  .map((path) => successPhotos[path].default);
 ---
 <BaseLayout {...seo}>
   <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Success Stories', href: '/success-stories/' }]} />
@@ -46,9 +51,13 @@ const gallery = Array.from(
     <ul class="results-gallery">
       {gallery.map((src, i) => (
         <li>
-          <img
+          <Image
             src={src}
             alt={`KM Wellness Center client success story in El Paso (${i + 1})`}
+            widths={[240, 480]}
+            sizes="(min-width: 600px) 240px, 45vw"
+            format="webp"
+            quality={70}
             loading={i < 4 ? 'eager' : 'lazy'}
             decoding="async"
           />
@@ -97,6 +106,7 @@ const gallery = Array.from(
   .results-gallery li { margin: 0; }
   .results-gallery img {
     width: 100%;
+    height: auto;
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 8px;

@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import bestOfElPaso from '../assets/images/best-of-el-paso.png';
 
 const seo = {
   title: 'Wellness Center | About | Kingsway Wellness Center | El Paso, TX',
@@ -44,10 +46,14 @@ const aboutSchema = {
       approach to health, addressing the physical, mental, emotional, and spiritual aspects of
       well-being.
     </p>
-    <img
+    <Image
       class="award-badge"
-      src="/images/best-of-el-paso.png"
+      src={bestOfElPaso}
       alt="Best of El Paso 2024 and 2025 award winner — KM Wellness Center"
+      widths={[180, 360]}
+      sizes="180px"
+      format="webp"
+      quality={80}
       loading="lazy"
       decoding="async"
     />

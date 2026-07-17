@@ -1,6 +1,15 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import aetna from '../assets/images/insurance/aetna.png';
+import alignmentHealth from '../assets/images/insurance/alignment-health.png';
+import blueCrossBlueShield from '../assets/images/insurance/blue-cross-blue-shield.png';
+import wellmed from '../assets/images/insurance/wellmed.png';
+import cigna from '../assets/images/insurance/cigna.png';
+import ambetter from '../assets/images/insurance/ambetter.jpg';
+import humana from '../assets/images/insurance/humana.png';
+import unitedhealthcare from '../assets/images/insurance/unitedhealthcare.png';
 
 const seo = {
   title: 'Insurances We Accept | KM Wellness Center | El Paso, TX',
@@ -9,14 +18,14 @@ const seo = {
 };
 
 const insurers = [
-  { name: 'Aetna', logo: '/images/insurance/aetna.png' },
-  { name: 'Alignment Health Plan', logo: '/images/insurance/alignment-health.png' },
-  { name: 'Blue Cross Blue Shield', logo: '/images/insurance/blue-cross-blue-shield.png' },
-  { name: 'WellMed', logo: '/images/insurance/wellmed.png' },
-  { name: 'Cigna', logo: '/images/insurance/cigna.png' },
-  { name: 'Ambetter Health', logo: '/images/insurance/ambetter.jpg' },
-  { name: 'Humana', logo: '/images/insurance/humana.png' },
-  { name: 'UnitedHealthcare', logo: '/images/insurance/unitedhealthcare.png' },
+  { name: 'Aetna', logo: aetna },
+  { name: 'Alignment Health Plan', logo: alignmentHealth },
+  { name: 'Blue Cross Blue Shield', logo: blueCrossBlueShield },
+  { name: 'WellMed', logo: wellmed },
+  { name: 'Cigna', logo: cigna },
+  { name: 'Ambetter Health', logo: ambetter },
+  { name: 'Humana', logo: humana },
+  { name: 'UnitedHealthcare', logo: unitedhealthcare },
 ];
 ---
 <BaseLayout {...seo}>
@@ -28,7 +37,7 @@ const insurers = [
   <ul class="insurer-grid">
     {insurers.map((i) => (
       <li>
-        <img src={i.logo} alt={`${i.name} insurance accepted at KM Wellness Center`} loading="lazy" decoding="async" />
+        <Image src={i.logo} alt={`${i.name} insurance accepted at KM Wellness Center`} height={120} format="webp" quality={80} loading="lazy" decoding="async" />
       </li>
     ))}
   </ul>

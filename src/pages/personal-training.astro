@@ -1,8 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadForm from "../components/LeadForm.astro";
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import RelatedServices from '../components/RelatedServices.astro';
+import personalTrainingPhoto from '../assets/images/personal-training.jpg';
 
 const seo = {
   title: 'El Paso Personal Trainer | KM Wellness Center | El Paso, TX',
@@ -21,12 +23,14 @@ const seo = {
     loss, strength building, or overall health.
   </p>
 
-  <img
+  <Image
     class="feature-photo"
-    src="/images/personal-training.jpg"
+    src={personalTrainingPhoto}
     alt="Personal trainer guiding a client through a strength exercise at KM Wellness Center in El Paso"
-    width="1600"
-    height="1066"
+    widths={[430, 860, 1290]}
+    sizes="(min-width: 900px) 860px, 100vw"
+    format="webp"
+    quality={75}
     loading="lazy"
     decoding="async"
   />
