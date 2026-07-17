@@ -34,13 +34,19 @@ const insurers = [
   <p>
     KM Wellness Center works with most major PPO insurance plans, including the providers below.
   </p>
-  <ul class="insurer-grid">
-    {insurers.map((i) => (
-      <li>
-        <Image src={i.logo} alt={`${i.name} insurance accepted at KM Wellness Center`} height={120} format="webp" quality={80} loading="lazy" decoding="async" />
-      </li>
-    ))}
-  </ul>
+  <div class="insurer-logo-section">
+    <ul class="insurer-grid">
+      {insurers.map((i) => (
+        <li>
+          <Image src={i.logo} alt={`${i.name} insurance accepted at KM Wellness Center`} height={120} format="webp" quality={80} loading="lazy" decoding="async" />
+        </li>
+      ))}
+    </ul>
+  </div>
+  <p class="provider-note">
+    This is not a complete list of our accepted insurance providers. Additional provider logos will
+    be added soon.
+  </p>
   <p>
     Coverage varies by plan. <a href="/contact-us/">Contact us</a> and we'll help verify your benefits
     before you begin care.
@@ -48,12 +54,18 @@ const insurers = [
 </BaseLayout>
 
 <style>
+  .insurer-logo-section {
+    width: min(100%, 960px);
+    margin: 1.5rem auto;
+  }
   .insurer-grid {
     list-style: none;
-    margin: 1.5rem 0;
+    width: 100%;
+    margin: 0;
     padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1.5rem;
     align-items: center;
   }
@@ -61,6 +73,9 @@ const insurers = [
     margin: 0;
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex: 0 0 210px;
+    box-sizing: border-box;
     padding: 1rem;
   }
   .insurer-grid img {
@@ -69,5 +84,9 @@ const insurers = [
     width: auto;
     height: auto;
     object-fit: contain;
+  }
+  .provider-note {
+    text-align: center;
+    font-weight: 700;
   }
 </style>

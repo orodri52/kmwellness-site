@@ -1,8 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Brand favicon: maroon square with letter-spaced "KM" in warm gold.
-       High contrast for legibility at 16px. -->
-  <rect width="32" height="32" rx="6" fill="#741722"/>
+  <!-- Monochrome favicon with high contrast at 16px. -->
+  <rect width="32" height="32" rx="6" fill="#000"/>
   <text x="16" y="22" text-anchor="middle"
         font-family="'Avenir Next', 'Helvetica Neue', Arial, sans-serif"
-        font-size="15" font-weight="700" letter-spacing="1" fill="#c9a24a">KM</text>
+        font-size="15" font-weight="700" letter-spacing="1" fill="#fff">KM</text>
 </svg>

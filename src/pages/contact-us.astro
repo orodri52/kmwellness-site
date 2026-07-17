@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import ContactForm from '../components/ContactForm.tsx';
+import ContactForm from '../components/ContactForm.astro';
 import { business } from '../config/site';
 
 const seo = {
@@ -39,7 +39,6 @@ const a = business.address;
 
   <section>
     <h2>Send Us a Message</h2>
-    <!-- React island: posts to the Cloudflare Pages Function at /api/lead. -->
-    <ContactForm client:load action="/api/lead" />
+    <ContactForm action="/api/lead" />
   </section>
 </BaseLayout>

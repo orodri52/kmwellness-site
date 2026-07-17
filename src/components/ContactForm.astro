@@ -1,0 +1,195 @@
+---
+interface Props {
+  action?: string;
+}
+
+const { action = '/api/lead' } = Astro.props;
+const hearOptions = [
+  'Google Search',
+  'Social Media',
+  'HealthProfs',
+  'Primary Care Referral',
+  'Word-of-Mouth',
+  'Other',
+];
+---
+
+<form class="contact-form" method="POST" action={action} data-contact-form>
+  <input type="hidden" name="source" value="contact-page" />
+
+  <div class="hp" aria-hidden="true">
+    <label>Company<input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="contact-form-row">
+    <p>
+      <label for="firstName">First name *</label>
+      <input id="firstName" name="firstName" type="text" required autocomplete="given-name" />
+    </p>
+    <p>
+      <label for="lastName">Last name *</label>
+      <input id="lastName" name="lastName" type="text" required autocomplete="family-name" />
+    </p>
+  </div>
+
+  <div class="contact-form-row">
+    <p>
+      <label for="email">Email *</label>
+      <input id="email" name="email" type="email" required autocomplete="email" />
+    </p>
+    <p>
+      <label for="phone">Phone *</label>
+      <input id="phone" name="phone" type="tel" required autocomplete="tel" />
+    </p>
+  </div>
+
+  <p>
+    <label for="hear">How did you hear about us? *</label>
+    <select id="hear" name="hear" required>
+      <option value="" selected disabled>--- Select Choice ---</option>
+      {hearOptions.map((option) => <option value={option}>{option}</option>)}
+    </select>
+  </p>
+
+  <p>
+    <label for="message">Message *</label>
+    <textarea id="message" name="message" rows="5" required></textarea>
+  </p>
+
+  <div class="contact-form-turnstile" data-turnstile></div>
+  <p class="contact-form-status" role="alert" hidden></p>
+
+  <p>
+    <button type="submit">Submit</button>
+  </p>
+</form>
+
+<script>
+  declare global {
+    interface Window {
+      turnstile?: {
+        render: (container: HTMLElement, options: Record<string, unknown>) => string;
+        reset: (widgetId: string) => void;
+      };
+    }
+  }
+
+  const SCRIPT_ID = 'cf-turnstile-script';
+  const SCRIPT_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+  const SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+
+  document.querySelectorAll<HTMLFormElement>('form[data-contact-form]').forEach((form) => {
+    const container = form.querySelector('[data-turnstile]') as HTMLElement | null;
+    const status = form.querySelector('.contact-form-status') as HTMLElement | null;
+    let token = '';
+    let widgetId = '';
+
+    const showStatus = (message: string) => {
+      if (!status) return;
+      status.hidden = false;
+      status.textContent = message;
+    };
+
+    const renderWidget = () => {
+      if (!container || !window.turnstile || widgetId) return;
+      widgetId = window.turnstile.render(container, {
+        sitekey: SITE_KEY,
+        theme: 'light',
+        size: 'flexible',
+        appearance: 'interaction-only',
+        callback: (value: string) => { token = value; },
+        'expired-callback': () => { token = ''; },
+        'error-callback': () => { token = ''; },
+      });
+    };
+
+    if (!SITE_KEY) {
+      showStatus('Verification is not configured. Please call us instead.');
+    } else if (window.turnstile) {
+      renderWidget();
+    } else {
+      let script = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null;
+      if (!script) {
+        script = document.createElement('script');
+        script.id = SCRIPT_ID;
+        script.src = SCRIPT_SRC;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+      }
+      script.addEventListener('load', renderWidget);
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+
+      if (!SITE_KEY) {
+        showStatus('Verification is not configured. Please call us instead.');
+        return;
+      }
+      if (!token) {
+        showStatus('Please complete the verification challenge.');
+        return;
+      }
+
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Sending…';
+      }
+      if (status) status.hidden = true;
+
+      try {
+        const data = new FormData(form);
+        data.set('cf-turnstile-response', token);
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        if (!response.ok) throw new Error('Request failed');
+        window.location.href = '/thank-you/';
+      } catch {
+        showStatus("Sorry, your message couldn't be sent. Please try again or call (915) 444-5110.");
+        if (button) {
+          button.disabled = false;
+          button.textContent = 'Submit';
+        }
+      } finally {
+        if (window.turnstile && widgetId) window.turnstile.reset(widgetId);
+        token = '';
+      }
+    });
+  });
+</script>
+
+<style>
+  .contact-form-row {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contact-form button {
+    width: 100%;
+  }
+
+  .contact-form-status {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .hp {
+    position: absolute;
+    left: -5000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 640px) {
+    .contact-form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

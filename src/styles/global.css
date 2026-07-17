@@ -1,19 +1,19 @@
 :root {
-  --paper: #f3eadc;
-  --paper-soft: #fffaf2;
-  --paper-deep: #e4d4bf;
-  --ink: #221b18;
-  --ink-soft: #665950;
-  --line: #ddcdb8;
-  --soil: #8f755d;
-  --sage: #8b9479;
-  --clay: #b98563;
-  --merlot: #741722;
-  --merlot-deep: #4b0d15;
-  --charcoal: #11110f;
+  --paper: #e5e5e5;
+  --paper-soft: #ffffff;
+  --paper-deep: #d4d4d4;
+  --ink: #111111;
+  --ink-soft: #525252;
+  --line: #d4d4d4;
+  --soil: #404040;
+  --sage: #737373;
+  --clay: #737373;
+  --merlot: #000000;
+  --merlot-deep: #262626;
+  --charcoal: #000000;
   --black: var(--charcoal);
-  --white: #fffaf1;
-  --shadow: 0 24px 70px rgb(73 55 36 / 14%);
+  --white: #ffffff;
+  --shadow: 0 24px 70px rgb(0 0 0 / 14%);
   --radius-lg: 22px;
   --radius-md: 14px;
   --radius-sm: 10px;
@@ -41,8 +41,8 @@ body {
   min-width: 320px;
   margin: 0;
   background:
-    radial-gradient(circle at 15% 0%, rgb(255 250 241 / 92%), transparent 32rem),
-    linear-gradient(180deg, var(--paper-soft), var(--paper) 36rem, #efe2d1);
+    radial-gradient(circle at 15% 0%, rgb(255 255 255 / 92%), transparent 32rem),
+    linear-gradient(180deg, var(--paper-soft), var(--paper) 36rem, var(--paper-deep));
   color: var(--ink);
 }
 
@@ -54,8 +54,8 @@ body::before {
   content: "";
   opacity: 0.45;
   background-image:
-    linear-gradient(rgb(91 69 44 / 4%) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(91 69 44 / 4%) 1px, transparent 1px);
+    linear-gradient(rgb(0 0 0 / 4%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(0 0 0 / 4%) 1px, transparent 1px);
   background-size: 26px 26px;
 }
 
@@ -127,7 +127,7 @@ svg {
 
 a {
   color: inherit;
-  text-decoration-color: rgb(29 26 21 / 28%);
+  text-decoration-color: rgb(17 17 17 / 28%);
   text-underline-offset: 0.18em;
   transition: color 160ms ease, background 160ms ease, border-color 160ms ease, transform 160ms ease;
 }
@@ -226,7 +226,7 @@ button:hover {
 }
 
 .button-light {
-  border-color: rgb(255 250 241 / 36%);
+  border-color: rgb(255 255 255 / 36%);
   background: var(--white);
   color: var(--black);
 }
@@ -237,14 +237,14 @@ button:hover {
 }
 
 .button-outline {
-  border-color: rgb(255 250 241 / 38%);
+  border-color: rgb(255 255 255 / 38%);
   background: transparent;
   color: var(--white);
 }
 
 .button-outline:hover {
   border-color: var(--white);
-  background: rgb(255 250 241 / 9%);
+  background: rgb(255 255 255 / 9%);
   color: var(--white);
 }
 
@@ -280,8 +280,8 @@ button:hover {
   position: sticky;
   top: 0;
   z-index: 20;
-  border-bottom: 1px solid rgb(216 199 176 / 70%);
-  background: rgb(255 250 242 / 92%);
+  border-bottom: 1px solid rgb(255 255 255 / 16%);
+  background: var(--black);
   backdrop-filter: blur(18px);
 }
 
@@ -289,36 +289,42 @@ button:hover {
   display: flex;
   justify-content: center;
   gap: 0.85rem;
-  padding: 0.45rem 1rem;
-  border-bottom: 1px solid rgb(255 250 241 / 12%);
-  background: var(--merlot-deep);
-  color: rgb(255 250 241 / 82%);
+  padding: 0.3rem 1rem;
+  border-bottom: 1px solid rgb(255 255 255 / 16%);
+  background: var(--black);
+  color: rgb(255 255 255 / 82%);
   font-size: 0.72rem;
 }
 
 .utility-bar span {
-  color: rgb(255 250 241 / 72%);
+  color: rgb(255 255 255 / 72%);
 }
 
 .utility-bar a {
-  color: rgb(255 250 241 / 86%);
+  color: rgb(255 255 255 / 92%);
+}
+
+.utility-bar a:hover,
+.utility-bar a:focus-visible {
+  color: var(--white);
 }
 
 .nav-shell {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: clamp(1rem, 3vw, 2.4rem);
+  column-gap: clamp(0.85rem, 2vw, 1.75rem);
+  row-gap: 0;
   width: var(--container);
   margin-inline: auto;
-  padding: 0.6rem 0;
+  padding: 0.3rem 0;
 }
 
 .brand-mark {
   display: inline-block;
   position: relative;
-  width: clamp(11rem, 15vw, 14.25rem);
-  color: var(--ink);
+  width: clamp(8.5rem, 11vw, 10.75rem);
+  color: var(--white);
   text-decoration: none;
 }
 
@@ -349,8 +355,8 @@ button:hover {
 .primary-nav a {
   display: inline-flex;
   align-items: center;
-  min-height: 2.3rem;
-  color: var(--ink);
+  min-height: 2rem;
+  color: #e5e5e5;
   font-size: 0.66rem;
   font-weight: 900;
   letter-spacing: 0.1em;
@@ -361,7 +367,7 @@ button:hover {
 .primary-nav .has-children > a::after {
   margin-left: 0.35rem;
   content: "/";
-  color: var(--soil);
+  color: #a3a3a3;
   font-weight: 700;
 }
 
@@ -374,10 +380,10 @@ button:hover {
   min-width: 260px;
   margin: 0;
   padding: 0.65rem;
-  border: 1px solid var(--line);
+  border: 1px solid #404040;
   border-radius: var(--radius-sm);
-  background: var(--paper-soft);
-  box-shadow: var(--shadow);
+  background: #171717;
+  box-shadow: 0 18px 45px rgb(0 0 0 / 34%);
   list-style: none;
   opacity: 0;
   pointer-events: none;
@@ -398,15 +404,40 @@ button:hover {
   width: 100%;
   padding: 0.6rem 0.7rem;
   border-radius: 8px;
-  color: var(--ink-soft);
+  color: #d4d4d4;
   font-size: 0.72rem;
   letter-spacing: 0.04em;
   text-transform: none;
 }
 
 .primary-nav li ul a:hover {
-  background: var(--paper);
-  color: var(--ink);
+  background: #262626;
+  color: var(--white);
+}
+
+.primary-nav > ul > li > a:hover,
+.primary-nav > ul > li > a:focus-visible {
+  color: var(--white);
+}
+
+.site-header a:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 3px;
+}
+
+.site-header .nav-cta {
+  min-height: 36px;
+  padding: 0.62rem 0.9rem;
+  border-color: var(--white);
+  background: var(--white);
+  color: var(--black);
+}
+
+.site-header .nav-cta:hover,
+.site-header .nav-cta:focus-visible {
+  border-color: var(--paper-deep);
+  background: var(--paper-deep);
+  color: var(--black);
 }
 
 .site-main {
@@ -473,10 +504,10 @@ nav[aria-label="Breadcrumb"] a:focus-visible {
 .site-main > article > section {
   margin-top: clamp(2rem, 6vw, 4.5rem);
   padding: clamp(1.5rem, 4vw, 2.5rem);
-  border: 1px solid rgb(216 199 176 / 80%);
+  border: 1px solid rgb(212 212 212 / 80%);
   border-radius: var(--radius-lg);
-  background: rgb(255 250 241 / 54%);
-  box-shadow: 0 16px 45px rgb(73 55 36 / 7%);
+  background: rgb(255 255 255 / 54%);
+  box-shadow: 0 16px 45px rgb(0 0 0 / 7%);
 }
 
 .site-main > section h2,
@@ -556,7 +587,7 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-  outline: 2px solid rgb(139 111 85 / 38%);
+  outline: 2px solid rgb(64 64 64 / 55%);
   outline-offset: 2px;
 }
 
@@ -580,13 +611,13 @@ textarea:focus {
     "trust trust";
   gap: clamp(0.75rem, 1.5vw, 1rem);
   padding: clamp(0.65rem, 1.5vw, 0.9rem);
-  border: 1px solid rgb(221 205 184 / 78%);
+  border: 1px solid rgb(212 212 212 / 78%);
   border-radius: 20px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 92% 20%, rgb(116 23 34 / 8%), transparent 17rem),
-    linear-gradient(135deg, var(--paper-soft), #f2e7d8 68%, #ead8c2);
-  box-shadow: 0 20px 60px rgb(73 55 36 / 12%);
+    radial-gradient(circle at 92% 20%, rgb(0 0 0 / 8%), transparent 17rem),
+    linear-gradient(135deg, var(--paper-soft), var(--paper) 68%, var(--paper-deep));
+  box-shadow: 0 20px 60px rgb(0 0 0 / 12%);
 }
 
 .hero-panel::after,
@@ -636,17 +667,17 @@ textarea:focus {
   justify-content: center;
   margin-left: clamp(-3.7rem, -4.2vw, -2rem);
   padding: clamp(1.45rem, 3vw, 2.35rem);
-  border: 1px solid rgb(221 205 184 / 74%);
+  border: 1px solid rgb(212 212 212 / 74%);
   border-radius: 24px 8px 24px 8px;
-  background: rgb(255 250 242 / 91%);
-  box-shadow: 0 24px 70px rgb(73 55 36 / 16%);
+  background: rgb(255 255 255 / 91%);
+  box-shadow: 0 24px 70px rgb(0 0 0 / 16%);
   backdrop-filter: blur(12px);
 }
 
 .hero-copy h1 {
   max-width: 420px;
   margin-bottom: 0.8rem;
-  color: #281c1a;
+  color: var(--ink);
   font-size: clamp(2.1rem, 3.35vw, 3.2rem);
   line-height: 0.96;
 }
@@ -677,10 +708,10 @@ textarea:focus {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   overflow: hidden;
-  border: 1px solid rgb(255 250 241 / 22%);
+  border: 1px solid rgb(255 255 255 / 22%);
   border-radius: 14px;
-  background: #9b866d;
-  box-shadow: inset 0 1px 0 rgb(255 250 241 / 20%);
+  background: #404040;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 20%);
 }
 
 .hero-trust p {
@@ -692,8 +723,8 @@ textarea:focus {
   align-items: center;
   margin: 0;
   padding: 1.05rem clamp(1rem, 2.8vw, 2.2rem);
-  border-right: 1px solid rgb(255 250 241 / 22%);
-  color: rgb(255 250 241 / 78%);
+  border-right: 1px solid rgb(255 255 255 / 22%);
+  color: rgb(255 255 255 / 78%);
 }
 
 .hero-trust p:last-child {
@@ -706,7 +737,7 @@ textarea:focus {
   display: block;
   width: 2.35rem;
   height: 2.35rem;
-  border: 1px solid rgb(255 250 241 / 46%);
+  border: 1px solid rgb(255 255 255 / 46%);
   border-radius: 50%;
 }
 
@@ -718,7 +749,7 @@ textarea:focus {
 
 .trust-icon-shield::before {
   inset: 0.55rem 0.72rem 0.45rem;
-  border: 1px solid rgb(255 250 241 / 66%);
+  border: 1px solid rgb(255 255 255 / 66%);
   border-radius: 0.75rem 0.75rem 0.95rem 0.95rem;
 }
 
@@ -727,7 +758,7 @@ textarea:focus {
   top: 0.72rem;
   width: 1px;
   height: 1.1rem;
-  background: rgb(255 250 241 / 52%);
+  background: rgb(255 255 255 / 52%);
   transform: rotate(28deg);
 }
 
@@ -736,9 +767,9 @@ textarea:focus {
   top: 0.62rem;
   width: 0.52rem;
   height: 0.52rem;
-  border: 1px solid rgb(255 250 241 / 66%);
+  border: 1px solid rgb(255 255 255 / 66%);
   border-radius: 50%;
-  box-shadow: 0.68rem 0 0 -1px transparent, 0.68rem 0 0 0 rgb(155 134 109), 0.68rem 0 0 1px rgb(255 250 241 / 66%);
+  box-shadow: 0.68rem 0 0 -1px transparent, 0.68rem 0 0 0 rgb(163 163 163), 0.68rem 0 0 1px rgb(255 255 255 / 66%);
 }
 
 .trust-icon-people::after {
@@ -746,7 +777,7 @@ textarea:focus {
   top: 1.24rem;
   width: 1.28rem;
   height: 0.55rem;
-  border: 1px solid rgb(255 250 241 / 66%);
+  border: 1px solid rgb(255 255 255 / 66%);
   border-radius: 50% 50% 0 0;
 }
 
@@ -755,7 +786,7 @@ textarea:focus {
   top: 0.48rem;
   width: 0.9rem;
   height: 0.88rem;
-  border: 1px solid rgb(255 250 241 / 66%);
+  border: 1px solid rgb(255 255 255 / 66%);
   border-radius: 50%;
 }
 
@@ -764,8 +795,8 @@ textarea:focus {
   top: 1.26rem;
   width: 0.52rem;
   height: 0.7rem;
-  border-left: 1px solid rgb(255 250 241 / 66%);
-  border-right: 1px solid rgb(255 250 241 / 66%);
+  border-left: 1px solid rgb(255 255 255 / 66%);
+  border-right: 1px solid rgb(255 255 255 / 66%);
 }
 
 .hero-trust strong,
@@ -784,7 +815,7 @@ textarea:focus {
 
 .hero-trust span:not(.trust-icon) {
   align-self: start;
-  color: rgb(255 250 241 / 78%);
+  color: rgb(255 255 255 / 78%);
   font-size: 0.62rem;
   font-weight: 900;
   letter-spacing: 0.1em;
@@ -804,11 +835,11 @@ textarea:focus {
   grid-template-columns: minmax(240px, 0.74fr) minmax(0, 1.26fr);
   gap: clamp(1.1rem, 3vw, 2.15rem);
   overflow: hidden;
-  border: 1px solid rgb(255 250 241 / 10%);
+  border: 1px solid rgb(255 255 255 / 10%);
   border-radius: 16px;
   background:
-    radial-gradient(circle at 100% 55%, rgb(185 133 99 / 12%), transparent 17rem),
-    linear-gradient(135deg, #11110f, #1f1d18 58%, #13120f);
+    radial-gradient(circle at 100% 55%, rgb(255 255 255 / 10%), transparent 17rem),
+    linear-gradient(135deg, #000000, #171717 58%, #0a0a0a);
   text-align: left;
 }
 
@@ -836,7 +867,7 @@ textarea:focus {
 }
 
 .principles-section .eyebrow {
-  color: #c79a73;
+  color: #d4d4d4;
 }
 
 .principles-section h2 {
@@ -847,7 +878,7 @@ textarea:focus {
 
 .principles-heading p:not(.eyebrow) {
   max-width: 420px;
-  color: rgb(255 250 241 / 76%);
+  color: rgb(255 255 255 / 76%);
   font-size: 0.9rem;
   line-height: 1.55;
 }
@@ -866,10 +897,10 @@ textarea:focus {
   gap: 0.38rem;
   min-height: 124px;
   padding: 1rem;
-  border: 1px solid rgb(255 250 241 / 12%);
+  border: 1px solid rgb(255 255 255 / 12%);
   border-radius: 12px;
-  background: rgb(255 250 241 / 7%);
-  box-shadow: inset 0 1px 0 rgb(255 250 241 / 8%);
+  background: rgb(255 255 255 / 7%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%);
 }
 
 .principle-icon {
@@ -877,7 +908,7 @@ textarea:focus {
   display: block;
   width: 2.15rem;
   height: 2.15rem;
-  border: 1px solid rgb(255 250 241 / 42%);
+  border: 1px solid rgb(255 255 255 / 42%);
   border-radius: 50%;
 }
 
@@ -889,7 +920,7 @@ textarea:focus {
 
 .principle-icon-1::before {
   inset: 0.82rem 1.08rem;
-  border: solid #c79a73;
+  border: solid #d4d4d4;
   border-width: 0 1px 1px 0;
   transform: rotate(38deg);
 }
@@ -899,14 +930,14 @@ textarea:focus {
   left: 0.9rem;
   width: 1.1rem;
   height: 1.8rem;
-  border: 1px solid #c79a73;
+  border: 1px solid #d4d4d4;
   border-radius: 100% 0;
   transform: rotate(-28deg);
 }
 
 .principle-icon-2::before {
   inset: 0.8rem;
-  border: 1px solid #c79a73;
+  border: 1px solid #d4d4d4;
   border-radius: 50%;
 }
 
@@ -915,7 +946,7 @@ textarea:focus {
   bottom: -0.55rem;
   width: 1px;
   height: 1.3rem;
-  background: #c79a73;
+  background: #d4d4d4;
   transform: translateX(-50%);
 }
 
@@ -924,7 +955,7 @@ textarea:focus {
   top: 0.86rem;
   width: 1.2rem;
   height: 1.2rem;
-  border: 1px solid #c79a73;
+  border: 1px solid #d4d4d4;
   border-top-color: transparent;
   border-left-color: transparent;
   transform: rotate(45deg);
@@ -932,7 +963,7 @@ textarea:focus {
 
 .principle-icon-4::before {
   inset: 0.66rem;
-  border: 1px solid #c79a73;
+  border: 1px solid #d4d4d4;
   border-top-color: transparent;
   border-radius: 50%;
 }
@@ -942,8 +973,8 @@ textarea:focus {
   top: 0.58rem;
   width: 0.75rem;
   height: 0.75rem;
-  border-top: 1px solid #c79a73;
-  border-right: 1px solid #c79a73;
+  border-top: 1px solid #d4d4d4;
+  border-right: 1px solid #d4d4d4;
   transform: rotate(28deg);
 }
 
@@ -960,7 +991,7 @@ textarea:focus {
 .principle-grid p {
   max-width: 15rem;
   margin: 0;
-  color: rgb(255 250 241 / 69%);
+  color: rgb(255 255 255 / 69%);
   font-size: 0.72rem;
   line-height: 1.38;
 }
@@ -975,10 +1006,10 @@ textarea:focus {
 .expect-card,
 .ready-card,
 .support-strip {
-  border: 1px solid rgb(221 205 184 / 72%);
+  border: 1px solid rgb(212 212 212 / 72%);
   border-radius: 14px;
-  background: rgb(255 250 242 / 76%);
-  box-shadow: 0 16px 42px rgb(73 55 36 / 7%);
+  background: rgb(255 255 255 / 76%);
+  box-shadow: 0 16px 42px rgb(0 0 0 / 7%);
 }
 
 .quote-card {
@@ -991,7 +1022,7 @@ textarea:focus {
   margin: 0;
   padding: 1.35rem;
   background:
-    linear-gradient(135deg, rgb(116 23 34 / 68%), rgb(155 134 109 / 55%)),
+    linear-gradient(135deg, rgb(0 0 0 / 68%), rgb(64 64 64 / 55%)),
     url("/images/placeholder-consult-room.jpg") center / cover;
   color: var(--white);
 }
@@ -1001,7 +1032,7 @@ textarea:focus {
   bottom: -1.4rem;
   width: 8rem;
   height: 8rem;
-  border: 1px solid rgb(255 250 241 / 26%);
+  border: 1px solid rgb(255 255 255 / 26%);
   border-radius: 50%;
 }
 
@@ -1018,7 +1049,7 @@ textarea:focus {
   display: block;
   margin-bottom: 0.55rem;
   content: "“";
-  color: rgb(255 250 241 / 74%);
+  color: rgb(255 255 255 / 74%);
   font-family: var(--serif);
   font-size: 3.2rem;
   line-height: 0.55;
@@ -1037,7 +1068,7 @@ textarea:focus {
 .quote-card figcaption {
   position: relative;
   z-index: 1;
-  color: rgb(255 250 241 / 74%);
+  color: rgb(255 255 255 / 74%);
   font-size: 0.63rem;
   font-weight: 900;
   letter-spacing: 0.13em;
@@ -1166,7 +1197,7 @@ textarea:focus {
   display: block;
   width: 1.45rem;
   height: 1.45rem;
-  border: 1px solid rgb(102 89 80 / 32%);
+  border: 1px solid rgb(82 82 82 / 32%);
   border-radius: 50%;
 }
 
@@ -1259,9 +1290,9 @@ textarea:focus {
 }
 
 .services-section {
-  border: 1px solid rgb(216 199 176 / 82%);
+  border: 1px solid rgb(212 212 212 / 82%);
   border-radius: var(--radius-lg);
-  background: rgb(251 246 236 / 68%);
+  background: rgb(255 255 255 / 68%);
 }
 
 .section-heading {
@@ -1292,14 +1323,14 @@ textarea:focus {
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: var(--paper-soft);
-  box-shadow: 0 16px 40px rgb(73 55 36 / 7%);
+  box-shadow: 0 16px 40px rgb(0 0 0 / 7%);
 }
 
 .service-grid .service-featured {
   grid-column: span 3;
   min-height: 210px;
   background:
-    linear-gradient(180deg, rgb(17 16 13 / 52%), rgb(17 16 13 / 84%)),
+    linear-gradient(180deg, rgb(0 0 0 / 52%), rgb(0 0 0 / 84%)),
     url("/images/placeholder-consult-room.jpg") center / cover;
 }
 
@@ -1457,7 +1488,7 @@ textarea:focus {
     width: 42%;
     content: "";
     pointer-events: none;
-    background: linear-gradient(90deg, transparent, rgb(255 250 241 / 24%), transparent);
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 24%), transparent);
     animation: quietShine 980ms cubic-bezier(0.65, 0, 0.35, 1) 720ms both;
   }
 
@@ -1555,7 +1586,12 @@ textarea:focus {
 .site-footer a,
 .site-footer address,
 .site-footer li {
-  color: rgb(255 250 241 / 72%);
+  color: rgb(255 255 255 / 72%);
+}
+
+.site-footer a:not(.button):hover,
+.site-footer a:not(.button):focus-visible {
+  color: var(--white);
 }
 
 .footer-cta,
@@ -1571,7 +1607,7 @@ textarea:focus {
   justify-content: space-between;
   gap: 2rem;
   padding: clamp(2rem, 6vw, 4rem) 0;
-  border-bottom: 1px solid rgb(255 250 241 / 13%);
+  border-bottom: 1px solid rgb(255 255 255 / 13%);
 }
 
 .footer-cta h2 {
@@ -1609,7 +1645,7 @@ textarea:focus {
   margin-bottom: 1.1rem;
   padding: 0.35rem 0.45rem;
   border-radius: 0.25rem;
-  background: var(--paper-soft);
+  background: transparent;
   color: var(--white);
 }
 
@@ -1624,7 +1660,7 @@ textarea:focus {
 .copyright {
   margin-bottom: 0;
   padding: 1.2rem 0;
-  border-top: 1px solid rgb(255 250 241 / 13%);
+  border-top: 1px solid rgb(255 255 255 / 13%);
   font-size: 0.85rem;
 }
 
@@ -1635,6 +1671,9 @@ textarea:focus {
 
   .nav-shell {
     grid-template-columns: 1fr auto;
+    column-gap: 1rem;
+    row-gap: 0.2rem;
+    padding: 0.3rem 0 0.25rem;
   }
 
   .primary-nav {
@@ -1727,16 +1766,18 @@ textarea:focus {
   }
 
   .nav-shell {
-    gap: 0.8rem;
+    column-gap: 0.65rem;
+    row-gap: 0.1rem;
+    padding: 0.25rem 0 0.2rem;
   }
 
   .site-header .brand-mark {
-    width: 9.25rem;
+    width: 7.5rem;
   }
 
   .nav-cta {
-    min-height: 38px;
-    padding: 0.75rem 0.85rem;
+    min-height: 34px;
+    padding: 0.6rem 0.7rem;
     font-size: 0.6rem;
   }
 
@@ -1807,7 +1848,7 @@ textarea:focus {
 
   .hero-trust p {
     border-right: 0;
-    border-bottom: 1px solid rgb(255 250 241 / 13%);
+    border-bottom: 1px solid rgb(255 255 255 / 13%);
   }
 
   .hero-trust p:last-child {

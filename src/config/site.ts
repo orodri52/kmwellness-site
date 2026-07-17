@@ -33,8 +33,8 @@ export const business = {
   },
   // Approx. coordinates for 8623 N Loop Dr, El Paso, TX — verify before launch.
   geo: { latitude: 31.6904, longitude: -106.3372 },
-  hours: 'Mo-Sa 09:00-18:00',
-  hoursHuman: 'Mon to Sat: 9:00am – 6:00pm · Sun: Closed',
+  hours: 'Mo-Fr 08:00-17:00',
+  hoursHuman: 'Monday–Friday: 8:00 AM–5:00 PM · Personal training hours by appointment.',
   mapsUrl: 'https://maps.app.goo.gl/y1kCe2foVB62emWr8',
   awards: 'Best of El Paso 2024 & 2025',
   social: {
@@ -116,14 +116,14 @@ export const nav = [
     label: 'Services',
     href: '/services/',
     children: [
-      { label: 'Metabolic Assessment El Paso', href: '/metabolic-assessment-el-paso/' },
       { label: 'Medical Nutrition Therapy', href: '/services/medical-nutrition/' },
+      { label: 'Nutritional Counseling', href: '/services/medical-nutrition-therapy-and-nutrition-counseling/' },
+      { label: 'Personal Training', href: '/personal-training/' },
       { label: 'Exercise Classes', href: '/services/exercise-classes-and-personal-training/' },
       { label: 'Our Nutritionist', href: '/services/nutritionist-el-paso/' },
-      { label: 'Nutrition Counseling', href: '/services/medical-nutrition-therapy-and-nutrition-counseling/' },
       { label: 'Weight Loss Prescription & Meal Preps', href: '/services/weight-loss-prescription-disease-management/' },
       { label: 'Weight Management', href: '/services/weight-management/' },
-      { label: 'Personal Training', href: '/personal-training/' },
+      { label: 'Metabolic & Body Composition Tests', href: '/metabolic-assessment-el-paso/' },
     ],
   },
   { label: 'Success Stories', href: '/success-stories/' },

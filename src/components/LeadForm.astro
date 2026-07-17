@@ -17,7 +17,7 @@ interface Props {
 const {
   source,
   service,
-  heading = 'Request your free consultation',
+  heading = 'Request your consultation',
   subheading = 'Tell us a bit about your goals and our El Paso team will reach out.',
 } = Astro.props;
 
@@ -210,7 +210,7 @@ const services = [
     width: 100%;
   }
   .lead-form button { width: 100%; cursor: pointer; }
-  .lead-form-status { color: #9a2b2b; font-weight: 600; }
+  .lead-form-status { color: var(--ink); font-weight: 600; }
   .lead-form-fineprint { font-size: 0.78rem; color: var(--ink-soft); }
   /* Honeypot stays in the DOM for bots but hidden from people + AT. */
   .hp { position: absolute; left: -5000px; width: 1px; height: 1px; overflow: hidden; }
