@@ -315,30 +315,16 @@ button:hover {
 }
 
 .brand-mark {
-  display: inline-grid;
-  gap: 0.05rem;
-  min-width: max-content;
+  display: inline-block;
+  width: clamp(8.5rem, 13vw, 11rem);
   color: var(--ink);
   text-decoration: none;
-  text-transform: uppercase;
 }
 
-/* Brand wordmark "K M" — sans-serif, letter-spaced to match the client logo,
-   recolored to the site palette: soil "K M" over ink "WELLNESS". */
-.brand-km {
-  font-family: var(--sans);
-  font-size: 1.85rem;
-  font-weight: 500;
-  line-height: 0.9;
-  letter-spacing: 0.06em;
-  color: var(--soil);
-}
-
-.brand-wellness {
-  font-size: 0.58rem;
-  font-weight: 900;
-  letter-spacing: 0.18em;
-  color: var(--ink);
+.brand-logo {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .primary-nav > ul {
@@ -1612,13 +1598,7 @@ textarea:focus {
 .footer-brand {
   margin-bottom: 1.1rem;
   color: var(--white);
-}
-/* On the dark footer, lift the wordmark to legible warm tones. */
-.footer-brand .brand-km {
-  color: var(--clay);
-}
-.footer-brand .brand-wellness {
-  color: var(--paper);
+  filter: invert(1);
 }
 
 .footer-grid ul {
@@ -1738,8 +1718,8 @@ textarea:focus {
     gap: 0.8rem;
   }
 
-  .brand-km {
-    font-size: 1.7rem;
+  .brand-mark {
+    width: 8.25rem;
   }
 
   .nav-cta {
