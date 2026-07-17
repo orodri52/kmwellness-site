@@ -16,17 +16,26 @@ npm run preview    # serve the built ./dist locally
 
 Requires Node 18.20+, 20.3+, or 22+.
 
-## Deploy to Cloudflare Pages
+## Deploy to Cloudflare Workers
+
+This project deploys via Cloudflare **Workers Builds** (git-connected CI/CD), not the classic Pages
+product — the live URL is a `*.workers.dev` domain.
 
 1. Push this folder to a Git repo (GitHub/GitLab).
-2. Cloudflare dashboard → **Workers & Pages → Create → Pages → Connect to Git**.
+2. Cloudflare dashboard → **Workers & Pages → Create → Connect to Git**.
 3. Build settings:
    - **Framework preset:** Astro
    - **Build command:** `npm run build`
    - **Build output directory:** `dist`
-4. (Optional) **Settings → Environment variables:** set `PUBLIC_SITE_URL` to your `*.pages.dev` URL
-   while testing. Non-production hosts are automatically `noindex`ed (see below), so test deploys
-   won't get indexed. Remove it (or set the real domain) for production.
+4. Environment variables — Workers splits these into two separate panels, both under **Settings**:
+   - **Settings → Build → Build variables and secrets:** used only during `npm run build`. Anything
+     referenced via `import.meta.env.PUBLIC_*` (e.g. `PUBLIC_SITE_URL`, `PUBLIC_TURNSTILE_SITE_KEY`)
+     must go here, since Astro/Vite inlines these into the static bundle at build time.
+   - **Settings → Variables and secrets:** used only at runtime by the Pages Function
+     (`functions/api/lead.ts`), e.g. `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`.
+   - (Optional) Set `PUBLIC_SITE_URL` to your `*.workers.dev` URL while testing. Non-production hosts
+     are automatically `noindex`ed (see below), so test deploys won't get indexed. Remove it (or set
+     the real domain) for production.
 5. Deploy. `_redirects` and `_headers` in `public/` are picked up by Cloudflare automatically.
 
 No adapter is needed — this is a pure static build.
