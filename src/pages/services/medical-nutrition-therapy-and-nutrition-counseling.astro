@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LeadForm from "../../components/LeadForm.astro";
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedServices from '../../components/RelatedServices.astro';
 
 const seo = {
   title: 'Medical Nutrition Therapy and Nutrition Counseling | KM Wellness',
@@ -52,6 +53,8 @@ const seo = {
     </p>
     <p><a href="/contact-us/">Make an appointment</a></p>
   </section>
+
+  <RelatedServices current="/services/medical-nutrition-therapy-and-nutrition-counseling/" />
 
   <LeadForm source="nutrition-counseling" service="Nutrition Counseling" />
 </BaseLayout>

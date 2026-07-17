@@ -3,7 +3,7 @@
 // Includes Organization/MedicalBusiness (with NAP, hours, geo, sameAs) and
 // WebSite. Per-page schema (FAQPage, Article) is added separately via FaqSchema
 // / page-level <script type="application/ld+json"> blocks.
-import { business } from '../config/site';
+import { business, practitioner, services, reviews, rating } from '../config/site';
 
 const site = Astro.site?.href.replace(/\/$/, '') ?? '';
 
@@ -21,6 +21,8 @@ const graph = {
       image: `${site}/images/og-default.jpg`,
       logo: `${site}/images/logo.png`,
       priceRange: '$$',
+      medicalSpecialty: 'Dietetics',
+      award: business.awards,
       address: {
         '@type': 'PostalAddress',
         streetAddress: business.address.street,
@@ -34,9 +36,65 @@ const graph = {
         latitude: business.geo.latitude,
         longitude: business.geo.longitude,
       },
-      openingHours: business.hours,
+      hasMap: business.mapsUrl,
+      // Structured hours (Mon–Sat 9–6) in addition to the human string.
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+          opens: '09:00',
+          closes: '18:00',
+        },
+      ],
       areaServed: { '@type': 'City', name: 'El Paso' },
+      // The credentialed expert behind the care — key E-E-A-T signal.
+      founder: { '@id': `${site}/#practitioner` },
+      employee: { '@id': `${site}/#practitioner` },
+      // Real services offered (kept in sync with the on-site pages).
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Nutrition, Weight Management & Fitness Services',
+        itemListElement: services.map((s) => ({
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: s.name,
+            url: `${site}${s.href}`,
+          },
+        })),
+      },
       sameAs: [business.social.facebook, business.social.instagram],
+      // Real client testimonials. AggregateRating only appears once real numbers
+      // are set in config (site.ts `rating`) — never fabricated.
+      review: reviews.map((r) => ({
+        '@type': 'Review',
+        author: { '@type': 'Person', name: r.author },
+        reviewBody: r.body,
+      })),
+      ...(rating
+        ? {
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: rating.value,
+              reviewCount: rating.count,
+            },
+          }
+        : {}),
+    },
+    {
+      // Person entity: one identity, linked across businesses via sameAs so KM
+      // inherits Daniel's authority (national press, etc.).
+      '@type': 'Person',
+      '@id': `${site}/#practitioner`,
+      name: practitioner.name,
+      honorificSuffix: practitioner.honorificSuffix,
+      jobTitle: practitioner.jobTitle,
+      description: practitioner.role,
+      alumniOf: practitioner.alumniOf.map((name) => ({ '@type': 'CollegeOrUniversity', name })),
+      knowsAbout: practitioner.knowsAbout,
+      worksFor: { '@id': `${site}/#organization` },
+      url: `${site}/about-us/`,
+      ...(practitioner.sameAs.length ? { sameAs: practitioner.sameAs } : {}),
     },
     {
       '@type': 'WebSite',

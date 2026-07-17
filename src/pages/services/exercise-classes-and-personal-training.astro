@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LeadForm from "../../components/LeadForm.astro";
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedServices from '../../components/RelatedServices.astro';
 
 const seo = {
   title: 'Exercise Classes | KM Wellness Center | El Paso, TX',
@@ -19,6 +20,16 @@ const seo = {
     experts, including certified kinesiologists, creates personalized exercise programs tailored to
     your individual goals, fitness level, and overall health.
   </p>
+
+  <img
+    class="feature-photo"
+    src="/images/gym-floor.jpg"
+    alt="Certified trainer coaching clients during a workout at KM Wellness Center in El Paso"
+    width="1600"
+    height="1066"
+    loading="lazy"
+    decoding="async"
+  />
 
   <section>
     <h2>A Holistic Fitness Approach to Wellness</h2>
@@ -49,5 +60,16 @@ const seo = {
     <p><a href="/contact-us/">Make an appointment</a></p>
   </section>
 
+  <RelatedServices current="/services/exercise-classes-and-personal-training/" />
+
   <LeadForm source="exercise-classes" service="Personal Training" />
 </BaseLayout>
+
+<style>
+  .feature-photo {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg, 12px);
+    margin: 1.5rem 0;
+  }
+</style>

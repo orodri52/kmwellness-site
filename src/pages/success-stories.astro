@@ -1,31 +1,60 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { reviews, business } from '../config/site';
 
 const seo = {
   title: 'Wellness Center Near Me | Success Stories | Kingsway Wellness Center | El Paso, TX',
   description:
     'Looking for a wellness center near me? Read inspiring success stories from KM Wellness Center clients who transformed their health and wellness.',
 };
+
+// 74 optimized client photos live in /public/images/success (000.jpg … 073.jpg).
+const gallery = Array.from(
+  { length: 74 },
+  (_, i) => `/images/success/${String(i).padStart(3, '0')}.jpg`,
+);
 ---
 <BaseLayout {...seo}>
   <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Success Stories', href: '/success-stories/' }]} />
   <h1>Success Stories</h1>
 
   <p>
-    Get faster results with GLP-1 medications. <a href="tel:+19154445110">Call us to get started:
-    (915) 444-5110</a>.
+    Real clients, real results. See how El Paso residents have transformed their health with
+    personalized nutrition, weight management, and training at KM Wellness Center.
+  </p>
+  <p>
+    Get faster results with GLP-1 medications. <a href={`tel:${business.phoneRaw}`}>Call us to get
+    started: {business.phone}</a>.
   </p>
 
-  <!--
-    NOTE: the live site shows a gallery of ~75 client/before-and-after photos here.
-    Image URLs (alt: "wellness center near me") are catalogued in
-    /Website-Backup/images/image-catalog.md. Insert <img> / a gallery component when assets are
-    downloaded. Placeholder grid below.
-  -->
-  <section aria-label="Client results gallery">
-    <h2>Client Results</h2>
-    <p><!-- Gallery placeholder — populate from image-catalog.md --></p>
+  <section aria-labelledby="reviews-title">
+    <h2 id="reviews-title">What our clients say</h2>
+    <div class="testimonials">
+      {reviews.map((r) => (
+        <figure>
+          <blockquote><p>{r.body}</p></blockquote>
+          <figcaption>— {r.author}, Google Review</figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section aria-labelledby="gallery-title">
+    <h2 id="gallery-title">Client Results</h2>
+    <ul class="results-gallery">
+      {gallery.map((src, i) => (
+        <li>
+          <img
+            src={src}
+            alt={`KM Wellness Center client success story in El Paso (${i + 1})`}
+            loading={i < 4 ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        </li>
+      ))}
+    </ul>
   </section>
 
   <section>
@@ -36,11 +65,41 @@ const seo = {
       services designed to help you live a healthier, happier life.
     </p>
     <ul>
-      <li><strong>Medical Nutrition Therapy</strong> and personalized nutrition plans.</li>
-      <li><strong>Exercise Classes and Personal Training</strong> led by certified kinesiologists.</li>
-      <li><strong>Weight Loss Programs</strong> and chronic condition management.</li>
-      <li><strong>Body Composition Analysis and Metabolic Assessments</strong> using advanced testing.</li>
+      <li><strong><a href="/services/medical-nutrition-therapy-and-nutrition-counseling/">Medical Nutrition Therapy</a></strong> and personalized nutrition plans.</li>
+      <li><strong><a href="/services/exercise-classes-and-personal-training/">Exercise Classes and Personal Training</a></strong> led by certified kinesiologists.</li>
+      <li><strong><a href="/services/weight-management/">Weight Loss Programs</a></strong> and chronic condition management.</li>
+      <li><strong><a href="/metabolic-assessment-el-paso/">Body Composition Analysis and Metabolic Assessments</a></strong> using advanced testing.</li>
     </ul>
     <p><a href="/contact-us/">Make an appointment</a></p>
   </section>
+
+  <LeadForm source="success-stories" service="Not sure yet" />
 </BaseLayout>
+
+<style>
+  .testimonials {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0 2rem;
+  }
+  .testimonials figure { margin: 0; }
+  .testimonials figcaption { margin-top: 0.5rem; font-weight: 600; }
+
+  .results-gallery {
+    list-style: none;
+    margin: 1rem 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.5rem;
+  }
+  .results-gallery li { margin: 0; }
+  .results-gallery img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+  }
+</style>

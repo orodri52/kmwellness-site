@@ -4,6 +4,14 @@
 export const PROD_HOSTNAME = 'kmwellnesscenter.com';
 export const PROD_URL = `https://${PROD_HOSTNAME}`;
 
+// Analytics. Reuses the existing Google Tag Manager container from the current
+// live site, so the GA4 + Meta Pixel tags configured inside it carry over.
+// Only loads on the production host (previews/localhost stay clean). Set to ''
+// to disable entirely.
+export const analytics = {
+  gtmId: 'GTM-5ZSWHWBG',
+} as const;
+
 export const business = {
   // NOTE: site uses both "KM Wellness Center" and "Kingsway Wellness Center".
   // Confirm the canonical name with the client, then keep it consistent here.
@@ -34,6 +42,71 @@ export const business = {
     instagram: 'https://www.instagram.com/kmcwellness/',
   },
 } as const;
+
+// Lead practitioner & co-founder. Drives E-E-A-T: a named, credentialed expert
+// is critical for a medical (YMYL) site. Emitted as a Person node in the schema
+// graph and referenced from /about-us/ + /as-featured-in/.
+//
+// NOTE: Daniel also co-owns Texas Dietetics (texasdietetics.com). `sameAs` links
+// his ONE identity across both businesses so KM inherits his authority (Forbes,
+// GQ, etc.). Keep KM's NAP separate from Texas Dietetics' — never mix them.
+export const practitioner = {
+  name: 'Daniel Chavez',
+  honorificSuffix: 'RD, LD, CSCS, CISSN',
+  role: 'Co-Founder & Registered Dietitian',
+  jobTitle: 'Registered & Licensed Dietitian, Certified Strength & Conditioning Specialist, Certified Sports Nutritionist',
+  alumniOf: ['University of Alabama', 'University of Texas at El Paso'],
+  award: 'Best Dietitian in El Paso (2024 & 2025)',
+  knowsAbout: [
+    'Medical Nutrition Therapy',
+    'Weight Management',
+    'Metabolic Assessment',
+    'Sports Nutrition',
+    'Bariatric Nutrition',
+    'Diabetes Management',
+    'Nutrition Counseling',
+  ],
+  // Consolidates his ONE identity across businesses/directories so KM inherits
+  // his authority. All verified URLs. Add his LinkedIn here if he has one.
+  sameAs: [
+    'https://www.texasdietetics.com/about',
+    'https://www.instagram.com/texasdietetics/',
+    'https://www.healthprofs.com/us/nutritionists-dietitians/daniel-chavez-el-paso-tx/1205157',
+    'https://www.healthgrades.com/providers/daniel-chavez-uppj26',
+  ].filter(Boolean),
+} as const;
+
+// Real client testimonials (named Google reviews). Used on /success-stories/ and
+// emitted as Review schema. Never invent reviews or ratings.
+export const reviews = [
+  {
+    author: 'Karen D. Martinez Franco',
+    body: 'Daniel is the first dietitian that is really teaching me how to have a proper healthy diet without starving myself. The personal trainer, Aaron, is awesome and makes working out fun! Great staff! Highly recommend this clinic!',
+  },
+  {
+    author: 'Amber Mejia',
+    body: 'I definitely recommend this place to anyone looking to start their weight loss journey. Daniel is a very knowledgeable and compassionate dietitian. Not only am I losing weight, but also learning better eating habits and unlearning toxic diet culture.',
+  },
+] as const;
+
+// Aggregate rating from the Google Business Profile. Left null on purpose:
+// AggregateRating schema is only emitted once REAL numbers are set here.
+// TODO(client): set { value, count } from your live Google rating.
+export const rating: { value: number; count: number } | null = null;
+
+// Canonical service catalog. Single source of truth for schema (hasOfferCatalog)
+// and the RelatedServices internal-linking mesh. Order = rough priority.
+export const services = [
+  { name: 'Medical Nutrition Therapy & Nutrition Counseling', href: '/services/medical-nutrition-therapy-and-nutrition-counseling/' },
+  { name: 'Medical Nutrition Therapy', href: '/services/medical-nutrition/' },
+  { name: 'Nutritionist / Registered Dietitian', href: '/services/nutritionist-el-paso/' },
+  { name: 'Weight Management', href: '/services/weight-management/' },
+  { name: 'Weight Loss Prescription & Meal Prep', href: '/services/weight-loss-prescription-disease-management/' },
+  { name: 'Metabolic Assessment', href: '/metabolic-assessment-el-paso/' },
+  { name: 'Exercise Classes & Personal Training', href: '/services/exercise-classes-and-personal-training/' },
+  { name: 'Personal Training', href: '/personal-training/' },
+  { name: 'Additional Services (Meal Prep, Smoothie Bar, Supplements)', href: '/services/additional-services/' },
+] as const;
 
 // Primary navigation. `children` render as a nested <ul> (no UI styling here —
 // semantic structure only).

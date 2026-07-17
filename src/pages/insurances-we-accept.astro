@@ -9,24 +9,56 @@ const seo = {
 };
 
 const insurers = [
-  'Aetna',
-  'Alignment Health Plan',
-  'Blue Cross Blue Shield',
-  'WellMed',
-  'Cigna',
-  'Ambetter Health',
-  'Humana',
-  'UnitedHealthcare',
+  { name: 'Aetna', logo: '/images/insurance/aetna.png' },
+  { name: 'Alignment Health Plan', logo: '/images/insurance/alignment-health.png' },
+  { name: 'Blue Cross Blue Shield', logo: '/images/insurance/blue-cross-blue-shield.png' },
+  { name: 'WellMed', logo: '/images/insurance/wellmed.png' },
+  { name: 'Cigna', logo: '/images/insurance/cigna.png' },
+  { name: 'Ambetter Health', logo: '/images/insurance/ambetter.jpg' },
+  { name: 'Humana', logo: '/images/insurance/humana.png' },
+  { name: 'UnitedHealthcare', logo: '/images/insurance/unitedhealthcare.png' },
 ];
 ---
 <BaseLayout {...seo}>
   <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'About', href: '/about-us/' }, { name: 'Insurances we Accept', href: '/insurances-we-accept/' }]} />
   <h1>Insurances We Accept</h1>
-  <ul>
-    {insurers.map((i) => <li>{i}</li>)}
+  <p>
+    KM Wellness Center works with most major PPO insurance plans, including the providers below.
+  </p>
+  <ul class="insurer-grid">
+    {insurers.map((i) => (
+      <li>
+        <img src={i.logo} alt={`${i.name} insurance accepted at KM Wellness Center`} loading="lazy" decoding="async" />
+      </li>
+    ))}
   </ul>
   <p>
     Coverage varies by plan. <a href="/contact-us/">Contact us</a> and we'll help verify your benefits
     before you begin care.
   </p>
 </BaseLayout>
+
+<style>
+  .insurer-grid {
+    list-style: none;
+    margin: 1.5rem 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .insurer-grid li {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .insurer-grid img {
+    max-width: 100%;
+    max-height: 60px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+</style>

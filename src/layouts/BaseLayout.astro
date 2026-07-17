@@ -3,6 +3,7 @@ import SEO from '../components/SEO.astro';
 import Schema from '../components/Schema.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { analytics, PROD_HOSTNAME } from '../config/site';
 import '../styles/global.css';
 
 interface Props {
@@ -13,12 +14,19 @@ interface Props {
   noindex?: boolean;
 }
 const { title, description, image, type, noindex } = Astro.props;
+
+// Only load GTM on the production host so preview/localhost traffic never
+// pollutes analytics. Indexable production pages only.
+const gtmActive = analytics.gtmId && Astro.site?.hostname === PROD_HOSTNAME && !noindex;
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {gtmActive && (
+      <script is:inline set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${analytics.gtmId}');`} />
+    )}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
@@ -29,6 +37,9 @@ const { title, description, image, type, noindex } = Astro.props;
     <slot name="head" />
   </head>
   <body>
+    {gtmActive && (
+      <noscript set:html={`<iframe src="https://www.googletagmanager.com/ns.html?id=${analytics.gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`} />
+    )}
     <a class="skip-link" href="#main">Skip to content</a>
     <Header />
     <main id="main" class="site-main">

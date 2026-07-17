@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadForm from "../components/LeadForm.astro";
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedServices from '../components/RelatedServices.astro';
 
 const seo = {
   title: 'El Paso Personal Trainer | KM Wellness Center | El Paso, TX',
@@ -19,6 +20,16 @@ const seo = {
     one-on-one training programs tailored to meet your needs — whether you're working toward weight
     loss, strength building, or overall health.
   </p>
+
+  <img
+    class="feature-photo"
+    src="/images/personal-training.jpg"
+    alt="Personal trainer guiding a client through a strength exercise at KM Wellness Center in El Paso"
+    width="1600"
+    height="1066"
+    loading="lazy"
+    decoding="async"
+  />
 
   <section>
     <h2>Custom Fitness Plans in El Paso</h2>
@@ -48,5 +59,16 @@ const seo = {
     <p><a href="/contact-us/">Make an appointment</a></p>
   </section>
 
+  <RelatedServices current="/personal-training/" />
+
   <LeadForm source="personal-training" service="Personal Training" />
 </BaseLayout>
+
+<style>
+  .feature-photo {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg, 12px);
+    margin: 1.5rem 0;
+  }
+</style>

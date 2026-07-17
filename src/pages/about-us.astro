@@ -7,8 +7,22 @@ const seo = {
   description:
     'Meet the KM Wellness Center team—dedicated dietitians, trainers, and specialists helping El Paso reach long-term wellness.',
 };
+
+// Declares this page is ABOUT the practitioner + organization, tying the
+// on-page bio to the Person entity in the site-wide graph (E-E-A-T).
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+const aboutSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  '@id': `${site}/about-us/#webpage`,
+  url: `${site}/about-us/`,
+  name: 'About KM Wellness Center',
+  about: { '@id': `${site}/#organization` },
+  mainEntity: { '@id': `${site}/#practitioner` },
+};
 ---
 <BaseLayout {...seo}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(aboutSchema)} />
   <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'About Us', href: '/about-us/' }]} />
   <h1>About Us</h1>
 
@@ -30,11 +44,18 @@ const seo = {
       approach to health, addressing the physical, mental, emotional, and spiritual aspects of
       well-being.
     </p>
+    <img
+      class="award-badge"
+      src="/images/best-of-el-paso.png"
+      alt="Best of El Paso 2024 and 2025 award winner — KM Wellness Center"
+      loading="lazy"
+      decoding="async"
+    />
   </section>
 
   <section>
-    <h2>Meet the Doctor — Daniel Chavez, RD</h2>
-    <p>Dietitian Nutritionist</p>
+    <h2 id="team">Meet Our Co-Founder — Daniel Chavez, RD, LD, CSCS, CISSN</h2>
+    <p>Co-Founder · Registered &amp; Licensed Dietitian · Certified Strength &amp; Conditioning Specialist · Certified Sports Nutritionist</p>
     <p>
       As a Registered and Licensed Dietitian and Certified Strength &amp; Conditioning Specialist with
       over a decade of experience in the health and wellness industry, I have developed a deep
@@ -48,6 +69,22 @@ const seo = {
       development opportunities to ensure I continue providing my patients and clients with the
       highest level of care.
     </p>
+    <p>
+      Daniel's expertise has been recognized in national publications — see his
+      <a href="/as-featured-in/">press features</a>, including Forbes Health, GQ, and Men's Journal.
+    </p>
+  </section>
+
+  <section>
+    <h2>Our Care Team</h2>
+    <p>
+      Alongside Daniel, KM Wellness Center brings together registered dietitians and certified
+      personal trainers who collaborate as one team. This means your nutrition plan, weight-management
+      program, and fitness coaching all work together — not in isolation — so every part of your care
+      supports the same goal.
+    </p>
+    <!-- TODO(client): add individual bios/credentials for other dietitians and trainers
+         (e.g. Aaron, personal trainer) to strengthen team-wide E-E-A-T. -->
   </section>
 
   <section>
@@ -103,3 +140,11 @@ const seo = {
     </p>
   </section>
 </BaseLayout>
+
+<style>
+  .award-badge {
+    width: 180px;
+    height: auto;
+    margin-top: 1.25rem;
+  }
+</style>
