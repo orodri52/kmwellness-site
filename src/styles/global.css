@@ -311,13 +311,13 @@ button:hover {
   gap: clamp(1rem, 3vw, 2.4rem);
   width: var(--container);
   margin-inline: auto;
-  padding: 1rem 0;
+  padding: 0.6rem 0;
 }
 
 .brand-mark {
   display: inline-block;
   position: relative;
-  width: clamp(10rem, 14vw, 13.25rem);
+  width: clamp(11rem, 15vw, 14.25rem);
   color: var(--ink);
   text-decoration: none;
 }
@@ -1731,7 +1731,7 @@ textarea:focus {
   }
 
   .site-header .brand-mark {
-    width: 8.75rem;
+    width: 9.25rem;
   }
 
   .nav-cta {

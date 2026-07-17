@@ -21,7 +21,7 @@ const boxedLogoMark = `
   <text x="159" y="86" font-family="Georgia, 'Times New Roman', serif" font-size="65" font-weight="500" letter-spacing="-3" fill="#741722">ness</text>
   <text x="43" y="107" font-family="'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="800" letter-spacing="8" fill="#741722">CENTER</text>
   <line x1="125" y1="98" x2="125" y2="108" stroke="#c9a24a" stroke-width="1"/>
-  <text x="133" y="106" font-family="'Helvetica Neue', Arial, sans-serif" font-size="4.8" font-weight="800" letter-spacing="1.4" fill="#741722">NUTRITION COUNSELING &amp; FAMILY FITNESS</text>
+  <text x="166" y="106" font-family="'Helvetica Neue', Arial, sans-serif" font-size="4.5" font-weight="800" letter-spacing=".35" fill="#741722">NUTRITION COUNSELING &amp; FAMILY FITNESS</text>
   <text x="45" y="121" font-family="'Helvetica Neue', Arial, sans-serif" font-size="5.8" font-weight="800" letter-spacing="2.4" fill="#c9a24a">WEIGHT LOSS CLINIC</text>`;
 
 // --- Logo (raster PNG on transparent: boxed gold + maroon wordmark) -------
