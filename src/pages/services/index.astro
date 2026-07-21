@@ -1,88 +1,71 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import LeadForm from "../../components/LeadForm.astro";
+import LeadForm from '../../components/LeadForm.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import consultationImage from '../../assets/images/consultation-meal-plan.jpg';
+import trainingImage from '../../assets/images/personal-training.jpg';
 
 const seo = {
   title: 'Wellness Center El Paso TX | Services | KM Wellness Center',
   description:
-    'Discover holistic services at our wellness center in El Paso, TX, dedicated to revitalizing your mind, body, and spirit for optimal health.',
+    'Explore registered dietitian care, medical nutrition therapy, weight management, and personal training at KM Wellness Center in El Paso, TX.',
 };
+
+const services = [
+  { title: 'Medical Nutrition Therapy', href: '/services/medical-nutrition-therapy-and-nutrition-counseling/', text: 'Personalized, evidence-based nutrition care for health conditions, weight goals, and long-term wellness.', label: 'Dietitian care' },
+  { title: 'Nutrition Counseling', href: '/services/nutritionist-el-paso/', text: 'One-on-one support from registered dietitians for diabetes, PCOS, heart health, digestive concerns, and more.', label: 'Personalized guidance' },
+  { title: 'Personal Training', href: '/personal-training/', text: 'Individualized strength, conditioning, and movement plans created around your abilities and goals.', label: 'Fitness' },
+  { title: 'Exercise Classes', href: '/services/exercise-classes-and-personal-training/', text: 'Supportive group classes and tailored workout plans for a wide range of fitness levels.', label: 'Movement' },
+  { title: 'Weight Loss Prescription', href: '/services/weight-loss-prescription-disease-management/', text: 'Clinically supervised weight-loss and disease-management programs with structured follow-up.', label: 'Medical support' },
+  { title: 'Weight Management', href: '/services/weight-management/', text: 'A sustainable, medically guided approach that combines nutrition, lifestyle, and ongoing accountability.', label: 'Long-term care' },
+  { title: 'Meal Prep & Additional Services', href: '/services/additional-services/', text: 'Practical meal preparation, smoothie, and supplement support to make healthy routines easier.', label: 'Everyday support' },
+  { title: 'Metabolic & Body Composition Tests', href: '/metabolic-assessment-el-paso/', text: 'Objective metabolic and body-composition measurements provided through Texas Dietetics.', label: 'Clinical testing' },
+];
 ---
 <BaseLayout {...seo}>
-  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }]} />
-  <h1>Services</h1>
+  <div class="child-page services-page">
+    <div class="child-breadcrumb"><Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }]} /></div>
 
-  <section>
-    <h2>Comprehensive Wellness Center in El Paso, TX</h2>
-    <p>
-      At KM Wellness Center, our mission is to promote holistic health and well-being through a range
-      of integrative services. As a premier wellness center in El Paso, TX, we offer a variety of
-      services tailored to meet your individual health needs.
-    </p>
-  </section>
+    <section class="child-hero">
+      <div class="child-hero-copy">
+        <p class="eyebrow">Whole-person care in El Paso</p>
+        <h1>Services designed around <em>your real life.</em></h1>
+        <p>Nutrition, weight management, and fitness care work better together. Our team builds an evidence-based plan around your health, preferences, and goals.</p>
+        <div class="child-actions"><a class="button button-dark" href="/contact-us/">Book your consultation</a><a class="text-link" href="#service-directory">Explore services</a></div>
+      </div>
+      <div class="child-hero-image"><Image src={consultationImage} alt="Personalized nutrition consultation at KM Wellness Center" widths={[520, 800, 1100]} sizes="(min-width: 850px) 48vw, 100vw" format="webp" quality={78} loading="eager" /></div>
+    </section>
 
-  <section>
-    <h2>Our Services</h2>
-    <ul>
-      <li>
-        <a href="/services/medical-nutrition-therapy-and-nutrition-counseling/">Medical Nutrition Therapy and Nutrition Counseling</a>
-        — personalized nutrition plans and counseling from registered dietitians.
-      </li>
-      <li>
-        <a href="/services/nutritionist-el-paso/">Nutritionist in El Paso</a>
-        — registered dietitian services for diabetes, PCOS, heart health, and weight loss.
-      </li>
-      <li>
-        <a href="/metabolic-assessment-el-paso/">Metabolic Assessment &amp; Body Composition</a>
-        — resting metabolic rate testing and body composition analysis.
-      </li>
-      <li>
-        <a href="/services/weight-loss-prescription-disease-management/">Weight Loss Prescription &amp; Disease Management</a>
-        — medically supervised programs and chronic-condition management.
-      </li>
-      <li>
-        <a href="/services/weight-management/">Weight Management</a>
-        — clinically supervised, medically guided weight loss.
-      </li>
-      <li>
-        <a href="/services/exercise-classes-and-personal-training/">Exercise Classes and Personal Training</a>
-        — group classes and individualized workout plans.
-      </li>
-      <li>
-        <a href="/personal-training/">Personal Training</a>
-        — certified personal trainers and custom fitness plans.
-      </li>
-      <li>
-        <a href="/services/medical-nutrition/">Medical Nutrition Therapy</a>
-        — therapeutic nutrition for chronic disease and weight management.
-      </li>
-      <li>
-        <a href="/services/additional-services/">Additional Services</a>
-        — meal prep, smoothie bar, and supplements.
-      </li>
-    </ul>
-  </section>
+    <section class="child-intro" aria-labelledby="services-intro-title">
+      <div><p class="eyebrow">How we help</p><h2 id="services-intro-title">Comprehensive wellness care, without the guesswork.</h2></div>
+      <p>KM Wellness Center offers integrated services that address nutrition, physical activity, metabolic health, and sustainable behavior change. Start with the support you need today, and your care can evolve as your goals do.</p>
+    </section>
 
-  <section>
-    <h2>What people say about us</h2>
-    <blockquote>
-      <p>
-        Daniel is the first dietitian that is really teaching me how to have a proper healthy diet
-        without starving myself. The personal trainer, Aaron, is awesome and makes working out fun!
-        Great staff! Highly recommend this clinic!
-      </p>
-      <footer>— Karen D. Martinez Franco, Google Review</footer>
-    </blockquote>
-    <blockquote>
-      <p>
-        I definitely recommend this place to anyone looking to start their weight loss journey. Daniel
-        is a very knowledgeable and compassionate dietitian. Not only am I losing weight, but also
-        learning better eating habits and unlearning toxic diet culture.
-      </p>
-      <footer>— Amber Mejia, Google Review</footer>
-    </blockquote>
-  </section>
+    <section id="service-directory" class="service-directory" aria-labelledby="directory-title">
+      <div class="child-section-heading"><p class="eyebrow">Our services</p><h2 id="directory-title">Find the right place to start.</h2></div>
+      <div class="child-service-grid">
+        {services.map((service, index) => <article class:list={[{ featured: index === 0 }]}><span>{service.label}</span><h3>{service.title}</h3><p>{service.text}</p><a class="text-link" href={service.href}>Learn more</a></article>)}
+      </div>
+    </section>
 
-  <LeadForm source="services-overview" service="Not sure yet" />
+    <section class="expect-band">
+      <div><p class="eyebrow">What to expect</p><h2>Objective care. Individual guidance. Ongoing support.</h2></div>
+      <ol><li><span>01</span><strong>Connect</strong><p>Tell us what you want to change.</p></li><li><span>02</span><strong>Assess</strong><p>We look at your health, habits, and needs.</p></li><li><span>03</span><strong>Personalize</strong><p>Your plan is built to fit your life.</p></li><li><span>04</span><strong>Progress</strong><p>We adjust the plan as you move forward.</p></li></ol>
+    </section>
+
+    <section class="split-feature">
+      <div class="split-feature-image"><Image src={trainingImage} alt="Personal training at KM Wellness Center in El Paso" widths={[480, 760, 1000]} sizes="(min-width: 850px) 45vw, 100vw" format="webp" quality={78} loading="lazy" /></div>
+      <div><p class="eyebrow">Integrated care</p><h2>Nutrition and movement, working as one.</h2><p>Our registered dietitians and certified fitness professionals collaborate so your nutrition plan and physical training support the same outcome—not competing priorities.</p><a class="button button-outline" href="/about-us/">Meet our care team</a></div>
+    </section>
+
+    <section class="review-section" aria-labelledby="reviews-title"><div><p class="eyebrow">Client experiences</p><h2 id="reviews-title">Care that teaches, supports, and lasts.</h2></div><div class="review-grid"><blockquote><p>“Daniel is the first dietitian that is really teaching me how to have a proper healthy diet without starving myself. The personal trainer, Aaron, is awesome and makes working out fun!”</p><footer>— Karen D. Martinez Franco</footer></blockquote><blockquote><p>“Daniel is a very knowledgeable and compassionate dietitian. Not only am I losing weight, but also learning better eating habits and unlearning toxic diet culture.”</p><footer>— Amber Mejia</footer></blockquote></div></section>
+
+    <section class="child-cta"><div><p class="eyebrow">Not sure where to begin?</p><h2>We’ll help you find the right next step.</h2></div><a class="button" href="/contact-us/">Book a consultation</a></section>
+    <LeadForm source="services-overview" service="Not sure yet" />
+  </div>
 </BaseLayout>
+
+<style>
+  .services-page .child-hero-image img,.split-feature-image img{width:100%;height:100%;object-fit:cover}.service-directory{padding:clamp(2.5rem,6vw,4.5rem);border:1px solid #d1d1d1;border-radius:20px;background:#ededed;box-shadow:0 18px 50px rgb(0 0 0 / 8%)}.child-section-heading{max-width:720px;margin-bottom:2.25rem}.child-section-heading h2{font-size:clamp(2.4rem,5vw,4.2rem)}.child-service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.child-service-grid article{min-height:270px;padding:clamp(1.4rem,3vw,2.1rem);border:1px solid #d4d4d4;border-radius:14px;background:#fff;display:flex;flex-direction:column}.child-service-grid article.featured{border-color:#111;background:#111;color:#fff}.child-service-grid span{font-size:.7rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#686868}.child-service-grid .featured span,.child-service-grid .featured h3,.child-service-grid .featured p,.child-service-grid .featured a{color:#fff}.child-service-grid h3{margin:.8rem 0 1rem;font-size:clamp(1.5rem,2.4vw,2.2rem)}.child-service-grid p{font-size:.95rem}.child-service-grid a{margin-top:auto}.expect-band{padding:clamp(2.5rem,6vw,4.5rem);border-radius:20px;background:#111;color:#fff}.expect-band h2,.expect-band .eyebrow,.expect-band strong{color:#fff}.expect-band>div{max-width:760px}.expect-band h2{font-size:clamp(2.4rem,5vw,4.2rem)}.expect-band ol{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin:2.5rem 0 0;padding:0;list-style:none}.expect-band li{padding:1.4rem;border:1px solid #3f3f3f;border-radius:14px;background:#1b1b1b}.expect-band li span{display:block;margin-bottom:1.5rem;color:#aaa;font-family:var(--serif);font-size:2rem}.expect-band li strong{display:block;font-size:1.1rem}.expect-band li p{margin:.5rem 0 0;color:#bbb;font-size:.88rem}.review-section{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(2rem,6vw,5rem);padding:clamp(2.5rem,6vw,4.5rem);border:1px solid #d4d4d4;border-radius:20px;background:#fff}.review-section h2{font-size:clamp(2.2rem,4vw,3.6rem)}.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.review-grid blockquote{margin:0;padding:1.75rem;border-radius:14px;background:#ededed}.review-grid blockquote p{font-family:var(--serif);font-size:1.3rem;color:#111}.review-grid footer{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em}@media(max-width:850px){.child-service-grid{grid-template-columns:1fr 1fr}.expect-band ol{grid-template-columns:1fr 1fr}.review-section{grid-template-columns:1fr}}@media(max-width:580px){.child-service-grid,.expect-band ol,.review-grid{grid-template-columns:1fr}.child-service-grid article{min-height:230px}}
+</style>

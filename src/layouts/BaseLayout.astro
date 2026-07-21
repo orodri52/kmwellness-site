@@ -14,6 +14,8 @@ interface Props {
   noindex?: boolean;
 }
 const { title, description, image, type, noindex } = Astro.props;
+const pagePath = Astro.url.pathname;
+const usesCustomPageDesign = pagePath === '/' || pagePath === '/about-us/' || pagePath === '/services/';
 
 // Only load GTM on the production host so preview/localhost traffic never
 // pollutes analytics. Indexable production pages only.
@@ -42,7 +44,11 @@ const gtmActive = analytics.gtmId && Astro.site?.hostname === PROD_HOSTNAME && !
     )}
     <a class="skip-link" href="#main">Skip to content</a>
     <Header />
-    <main id="main" class="site-main">
+    <main
+      id="main"
+      class:list={['site-main', { 'flow-main': !usesCustomPageDesign }]}
+      data-page-path={pagePath}
+    >
       <slot />
     </main>
     <Footer />

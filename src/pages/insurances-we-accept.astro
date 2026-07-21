@@ -56,7 +56,12 @@ const insurers = [
 <style>
   .insurer-logo-section {
     width: min(100%, 960px);
-    margin: 1.5rem auto;
+    margin: 0 auto;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: #eeeeee;
+    box-shadow: 0 16px 44px rgb(0 0 0 / 8%);
   }
   .insurer-grid {
     list-style: none;
@@ -77,6 +82,8 @@ const insurers = [
     flex: 0 0 210px;
     box-sizing: border-box;
     padding: 1rem;
+    border-radius: var(--radius-md);
+    background: var(--white);
   }
   .insurer-grid img {
     max-width: 100%;

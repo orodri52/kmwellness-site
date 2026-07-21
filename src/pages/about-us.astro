@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import bestOfElPaso from '../assets/images/best-of-el-paso.png';
+import danielPortrait from '../assets/images/daniel-gym-portrait.webp';
 
 const seo = {
   title: 'Wellness Center | About | Kingsway Wellness Center | El Paso, TX',
@@ -10,8 +11,6 @@ const seo = {
     'Meet the KM Wellness Center team—dedicated dietitians, trainers, and specialists helping El Paso reach long-term wellness.',
 };
 
-// Declares this page is ABOUT the practitioner + organization, tying the
-// on-page bio to the Person entity in the site-wide graph (E-E-A-T).
 const site = Astro.site?.href.replace(/\/$/, '') ?? '';
 const aboutSchema = {
   '@context': 'https://schema.org',
@@ -22,135 +21,224 @@ const aboutSchema = {
   about: { '@id': `${site}/#organization` },
   mainEntity: { '@id': `${site}/#practitioner` },
 };
+
+const wellnessServices = [
+  {
+    title: 'Wellness Clinic',
+    text: 'At our wellness clinic, we offer a wide range of health and wellness services designed to cater to your individual needs, staffed with experienced professionals committed to personalized care.',
+  },
+  {
+    title: 'Holistic Health',
+    text: 'Our holistic health approach addresses not just the physical aspects of well-being but also the mental, emotional, and spiritual dimensions.',
+  },
+  {
+    title: 'Physical Fitness',
+    text: 'Our wellness center offers a variety of fitness programs tailored to meet different fitness levels and goals, from personal training sessions to group fitness classes.',
+  },
+  {
+    title: 'Health and Wellness Coaching',
+    text: 'Our certified wellness coaches work with you to set realistic goals, create personalized wellness plans, and provide ongoing support and motivation.',
+  },
+  {
+    title: 'Nutrition and Wellness',
+    text: 'Our registered dietitians and nutrition experts work with you to develop healthy eating habits that support your overall wellness, including weight management and dietary restrictions.',
+  },
+];
 ---
 <BaseLayout {...seo}>
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(aboutSchema)} />
-  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'About Us', href: '/about-us/' }]} />
-  <h1>About Us</h1>
+  <div class="child-page about-page">
+    <div class="child-breadcrumb">
+      <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'About Us', href: '/about-us/' }]} />
+    </div>
 
-  <section>
-    <h2>Discover KM Wellness Center: Your Premier Wellness Destination in El Paso</h2>
-    <p>
-      Welcome to KM Wellness Center in El Paso, where we believe that true wellness encompasses
-      physical and nutritional well-being. Our integrated approach and evidence-based practices ensure
-      that each client receives the highest quality of care tailored to their unique needs and goals.
-    </p>
-  </section>
+    <section class="about-intro child-card">
+      <div>
+        <p class="eyebrow">About KM Wellness Center</p>
+        <h1>About Us</h1>
+      </div>
+      <div>
+        <h2>Discover KM Wellness Center: Your Premier Wellness Destination in El Paso</h2>
+        <p>
+          Welcome to KM Wellness Center in El Paso, where we believe that true wellness encompasses
+          physical and nutritional well-being. Our integrated approach and evidence-based practices ensure
+          that each client receives the highest quality of care tailored to their unique needs and goals.
+        </p>
+      </div>
+    </section>
 
-  <section>
-    <h2>Why Choose KM Wellness Center?</h2>
-    <p>
-      At KM Wellness Center, we are committed to providing the highest quality care to our clients.
-      Our team of experienced professionals is dedicated to helping you achieve your health and
-      wellness goals through personalized care and comprehensive services. We believe in a holistic
-      approach to health, addressing the physical, mental, emotional, and spiritual aspects of
-      well-being.
-    </p>
-    <Image
-      class="award-badge"
-      src={bestOfElPaso}
-      alt="Best of El Paso 2024 and 2025 award winner — KM Wellness Center"
-      widths={[180, 360]}
-      sizes="180px"
-      format="webp"
-      quality={80}
-      loading="lazy"
-      decoding="async"
-    />
-  </section>
+    <div class="about-card-row">
+      <section class="why-card child-card">
+        <div>
+          <p class="eyebrow">Why KM Wellness</p>
+          <h2>Why Choose KM Wellness Center?</h2>
+          <p>
+            At KM Wellness Center, we are committed to providing the highest quality care to our clients.
+            Our team of experienced professionals is dedicated to helping you achieve your health and
+            wellness goals through personalized care and comprehensive services. We believe in a holistic
+            approach to health, addressing the physical, mental, emotional, and spiritual aspects of
+            well-being.
+          </p>
+        </div>
+        <Image
+          class="award-badge"
+          src={bestOfElPaso}
+          alt="Best of El Paso 2024 and 2025 award winner — KM Wellness Center"
+          widths={[150, 300]}
+          sizes="150px"
+          format="webp"
+          quality={80}
+          loading="lazy"
+          decoding="async"
+        />
+      </section>
 
-  <section>
-    <h2 id="team">Meet Our Co-Founder — Daniel Chavez, RD, LD, CSCS, CISSN</h2>
-    <p>Co-Founder · Registered &amp; Licensed Dietitian · Certified Strength &amp; Conditioning Specialist · Certified Sports Nutritionist</p>
-    <p>
-      As a Registered and Licensed Dietitian and Certified Strength &amp; Conditioning Specialist with
-      over a decade of experience in the health and wellness industry, I have developed a deep
-      commitment to improving people's lives. My early work as a kinesiologist and certified sports
-      nutritionist gave me valuable experience working with individuals from diverse backgrounds. I
-      pursued a dietetics degree from the University of Alabama, where I graduated Summa Cum Laude.
-      Today, I work as a clinical dietitian, managing over a hundred inpatient beds while running a
-      successful private practice. I have earned recognition from major online publications such as
-      Forbes Health, Generation Iron, and T-Nation. I remain committed to staying up-to-date with the
-      latest research and best practices, attending conferences, workshops, and other professional
-      development opportunities to ensure I continue providing my patients and clients with the
-      highest level of care.
-    </p>
-    <p>
-      Daniel's expertise has been recognized in national publications — see his
-      <a href="/as-featured-in/">press features</a>, including Forbes Health, GQ, and Men's Journal.
-    </p>
-  </section>
+      <section class="care-card child-card">
+        <p class="eyebrow">Collaborative support</p>
+        <h2>Our Care Team</h2>
+        <p>
+          Alongside Daniel, KM Wellness Center brings together registered dietitians and certified
+          personal trainers who collaborate as one team. This means your nutrition plan, weight-management
+          program, and fitness coaching all work together — not in isolation — so every part of your care
+          supports the same goal.
+        </p>
+      </section>
+    </div>
 
-  <section>
-    <h2>Our Care Team</h2>
-    <p>
-      Alongside Daniel, KM Wellness Center brings together registered dietitians and certified
-      personal trainers who collaborate as one team. This means your nutrition plan, weight-management
-      program, and fitness coaching all work together — not in isolation — so every part of your care
-      supports the same goal.
-    </p>
-    <!-- TODO(client): add individual bios/credentials for other dietitians and trainers
-         (e.g. Aaron, personal trainer) to strengthen team-wide E-E-A-T. -->
-  </section>
+    <section id="team" class="founder-card child-card">
+      <div class="founder-image">
+        <Image
+          src={danielPortrait}
+          alt="Daniel Chavez, registered and licensed dietitian and co-founder of KM Wellness Center"
+          widths={[420, 720]}
+          sizes="(min-width: 760px) 38vw, 100vw"
+          format="webp"
+          quality={80}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div class="founder-copy">
+        <p class="eyebrow">Meet our co-founder</p>
+        <h2>Meet Our Co-Founder — Daniel Chavez, RD, LD, CSCS, CISSN</h2>
+        <p class="founder-role">Co-Founder · Registered &amp; Licensed Dietitian · Certified Strength &amp; Conditioning Specialist · Certified Sports Nutritionist</p>
+        <p class="founder-bio">
+          As a Registered and Licensed Dietitian and Certified Strength &amp; Conditioning Specialist with
+          over a decade of experience in the health and wellness industry, I have developed a deep
+          commitment to improving people's lives. My early work as a kinesiologist and certified sports
+          nutritionist gave me valuable experience working with individuals from diverse backgrounds. I
+          pursued a dietetics degree from the University of Alabama, where I graduated Summa Cum Laude.
+          Today, I work as a clinical dietitian, managing over a hundred inpatient beds while running a
+          successful private practice. I have earned recognition from major online publications such as
+          Forbes Health, Generation Iron, and T-Nation. I remain committed to staying up-to-date with the
+          latest research and best practices, attending conferences, workshops, and other professional
+          development opportunities to ensure I continue providing my patients and clients with the
+          highest level of care.
+        </p>
+        <p>
+          Daniel's expertise has been recognized in national publications — see his
+          <a href="/as-featured-in/">press features</a>, including Forbes Health, GQ, and Men's Journal.
+        </p>
+      </div>
+    </section>
 
-  <section>
-    <h2>Our Mission</h2>
-    <p>
-      Our mission is to empower individuals to lead healthier, happier, and more fulfilling lives by
-      addressing the physical, nutritional, mental, and emotional aspects of well-being. We aim to
-      treat the root cause of health issues through personalized care and evidence-based practices.
-    </p>
-    <h3>Our Vision</h3>
-    <p>
-      We envision a world where everyone has access to the resources and support they need to lead a
-      healthy and fulfilling life. We are committed to being a leader in the wellness industry,
-      providing innovative and effective health and wellness solutions.
-    </p>
-    <h3>Our Values</h3>
-    <ul>
-      <li><strong>Holistic Approach:</strong> We believe in treating the whole person, not just the symptoms.</li>
-      <li><strong>Personalized Care:</strong> We provide customized care tailored to your individual needs.</li>
-      <li><strong>Empowerment:</strong> We empower you to take control of your health and wellness.</li>
-      <li><strong>Compassion:</strong> We provide compassionate care and support to all our clients.</li>
-      <li><strong>Excellence:</strong> We strive for excellence in everything we do.</li>
-    </ul>
-    <p><a href="/contact-us/">Make an appointment</a></p>
-  </section>
+    <section class="purpose-section child-card">
+      <div class="purpose-heading">
+        <p class="eyebrow">What guides us</p>
+        <h2>Our Mission</h2>
+        <p>
+          Our mission is to empower individuals to lead healthier, happier, and more fulfilling lives by
+          addressing the physical, nutritional, mental, and emotional aspects of well-being. We aim to
+          treat the root cause of health issues through personalized care and evidence-based practices.
+        </p>
+      </div>
+      <div class="purpose-grid">
+        <article>
+          <h3>Our Vision</h3>
+          <p>
+            We envision a world where everyone has access to the resources and support they need to lead a
+            healthy and fulfilling life. We are committed to being a leader in the wellness industry,
+            providing innovative and effective health and wellness solutions.
+          </p>
+        </article>
+        <article>
+          <h3>Our Values</h3>
+          <ul>
+            <li><strong>Holistic Approach:</strong> We believe in treating the whole person, not just the symptoms.</li>
+            <li><strong>Personalized Care:</strong> We provide customized care tailored to your individual needs.</li>
+            <li><strong>Empowerment:</strong> We empower you to take control of your health and wellness.</li>
+            <li><strong>Compassion:</strong> We provide compassionate care and support to all our clients.</li>
+            <li><strong>Excellence:</strong> We strive for excellence in everything we do.</li>
+          </ul>
+        </article>
+      </div>
+      <a class="button" href="/contact-us/">Make an appointment</a>
+    </section>
 
-  <section>
-    <h2>Comprehensive Wellness Services</h2>
-    <h3>Wellness Clinic</h3>
-    <p>
-      At our wellness clinic, we offer a wide range of health and wellness services designed to cater
-      to your individual needs, staffed with experienced professionals committed to personalized care.
-    </p>
-    <h3>Holistic Health</h3>
-    <p>
-      Our holistic health approach addresses not just the physical aspects of well-being but also the
-      mental, emotional, and spiritual dimensions.
-    </p>
-    <h3>Physical Fitness</h3>
-    <p>
-      Our wellness center offers a variety of fitness programs tailored to meet different fitness
-      levels and goals, from personal training sessions to group fitness classes.
-    </p>
-    <h3>Health and Wellness Coaching</h3>
-    <p>
-      Our certified wellness coaches work with you to set realistic goals, create personalized
-      wellness plans, and provide ongoing support and motivation.
-    </p>
-    <h3>Nutrition and Wellness</h3>
-    <p>
-      Our registered dietitians and nutrition experts work with you to develop healthy eating habits
-      that support your overall wellness, including weight management and dietary restrictions.
-    </p>
-  </section>
+    <section class="wellness-section child-card">
+      <div class="wellness-heading">
+        <p class="eyebrow">What we offer</p>
+        <h2>Comprehensive Wellness Services</h2>
+      </div>
+      <div class="wellness-grid">
+        {wellnessServices.map((service, index) => (
+          <article class:list={[{ 'wellness-featured': index === 0 }]}>
+            <h3>{service.title}</h3>
+            <p>{service.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
 </BaseLayout>
 
 <style>
-  .award-badge {
-    width: 180px;
-    height: auto;
-    margin-top: 1.25rem;
+  .about-page { display: grid; gap: clamp(.85rem, 1.8vw, 1.1rem); }
+  .child-card { border: 1px solid rgb(212 212 212 / 78%); border-radius: 20px; overflow: hidden; box-shadow: 0 18px 50px rgb(0 0 0 / 8%); }
+  .about-intro { display: grid; grid-template-columns: .72fr 1.28fr; gap: clamp(2rem, 6vw, 6rem); padding: clamp(2.25rem, 5vw, 4.5rem); background: linear-gradient(135deg, #fff, #ededed); }
+  .about-intro h1 { font-size: clamp(3.6rem, 7vw, 6.3rem); }
+  .about-intro h2 { margin-bottom: 1rem; font-size: clamp(2rem, 3.6vw, 3.4rem); }
+  .about-card-row { display: grid; grid-template-columns: 1.18fr .82fr; gap: clamp(.85rem, 1.8vw, 1.1rem); }
+  .why-card, .care-card { padding: clamp(2rem, 4vw, 3.25rem); }
+  .why-card { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 1.5rem; background: #f0f0f0; }
+  .why-card h2, .care-card h2 { margin-bottom: 1rem; font-size: clamp(2rem, 3.5vw, 3.25rem); }
+  .award-badge { width: 140px; height: auto; }
+  .care-card { background: #111; color: #fff; }
+  .care-card h2, .care-card .eyebrow { color: #fff; }
+  .care-card p { color: #c8c8c8; }
+  .founder-card { display: grid; grid-template-columns: .72fr 1.28fr; background: #fff; }
+  .founder-image { min-height: 430px; filter: grayscale(1); }
+  .founder-image img { width: 100%; height: 100%; object-fit: cover; }
+  .founder-copy { padding: clamp(2.25rem, 4.5vw, 4rem); }
+  .founder-copy h2 { margin-bottom: 1rem; font-size: clamp(2.2rem, 4vw, 3.75rem); }
+  .founder-role { color: #111; font-size: .82rem; font-weight: 900; letter-spacing: .04em; }
+  .founder-bio { columns: 2; column-gap: 1.6rem; font-size: .93rem; }
+  .purpose-section { padding: clamp(2.25rem, 5vw, 4rem); background: #e9e9e9; }
+  .purpose-heading { display: grid; grid-template-columns: .65fr 1.35fr; column-gap: 2rem; align-items: start; }
+  .purpose-heading .eyebrow { grid-column: 1 / -1; }
+  .purpose-heading h2 { font-size: clamp(2.4rem, 4vw, 3.8rem); }
+  .purpose-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+  .purpose-grid article { padding: 1.75rem; border-radius: 14px; background: #fff; }
+  .purpose-grid h3 { margin-bottom: .8rem; }
+  .purpose-grid ul { margin-bottom: 0; padding-left: 1.1rem; }
+  .wellness-section { padding: clamp(2.25rem, 5vw, 4rem); background: #fff; }
+  .wellness-heading { display: grid; grid-template-columns: .7fr 1.3fr; align-items: end; margin-bottom: 2rem; }
+  .wellness-heading .eyebrow { grid-column: 1 / -1; }
+  .wellness-heading h2 { grid-column: 1 / -1; font-size: clamp(2.4rem, 4vw, 3.8rem); }
+  .wellness-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .wellness-grid article { padding: 1.6rem; border-radius: 14px; background: #ededed; }
+  .wellness-grid article.wellness-featured { background: #111; }
+  .wellness-featured h3, .wellness-featured p { color: #fff; }
+  .wellness-grid h3 { margin-bottom: .75rem; font-size: 1.45rem; }
+  .wellness-grid p { margin: 0; font-size: .92rem; }
+  @media (max-width: 820px) {
+    .about-intro, .about-card-row, .founder-card, .purpose-heading { grid-template-columns: 1fr; }
+    .founder-image { min-height: 380px; }
+    .founder-bio { columns: 1; }
+    .wellness-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .why-card, .purpose-grid, .wellness-grid { grid-template-columns: 1fr; }
+    .award-badge { width: 115px; }
   }
 </style>
