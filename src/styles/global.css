@@ -1821,7 +1821,11 @@ textarea:focus {
   }
 
   .hero-art {
-    height: 180px;
+    height: clamp(260px, 72vw, 320px);
+  }
+
+  .hero-art img {
+    object-position: 50% 28%;
   }
 
   .principles-section,
