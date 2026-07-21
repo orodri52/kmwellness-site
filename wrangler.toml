@@ -1,2 +1,3 @@
 name = "kmwellness-site"
 pages_build_output_dir = "dist"
+# Keep Pages configuration in source control.
