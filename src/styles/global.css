@@ -1933,8 +1933,16 @@ textarea:focus {
   font-size: clamp(1rem, 1.3vw, 1.15rem);
 }
 
-/* Each band owns one consistent surface. The gray progression is assigned to
-   whole sections—not to the cards or list items inside them. */
+/* Supporting pages reuse the approved Home-page rhythm: a pale canvas,
+   rounded light bands, and one charcoal feature band in every three sections.
+   The explicit class keeps these surface tokens away from Home and About. */
+.site-main.supporting-main {
+  --support-dark-surface:
+    radial-gradient(circle at 100% 55%, rgb(255 255 255 / 10%), transparent 17rem),
+    linear-gradient(135deg, #000000, #171717 58%, #0a0a0a);
+  --support-dark-border: rgb(255 255 255 / 10%);
+}
+
 .site-main.flow-main > section {
   position: relative;
   margin: 0;
@@ -1946,12 +1954,30 @@ textarea:focus {
   box-shadow: 0 16px 44px rgb(0 0 0 / 8%);
 }
 
-.site-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) {
+.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) {
+  border-color: var(--support-dark-border);
+  background: var(--support-dark-surface);
+  color: var(--white);
+}
+
+.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n) {
   background: #e7e7e7;
 }
 
-.site-main.flow-main > section:not(.lead-form):nth-of-type(3n) {
-  background: #f2f2f2;
+.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2)
+  :is(h1, h2, h3, strong, summary, a, label, .eyebrow) {
+  color: var(--white);
+}
+
+.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2)
+  :is(p, li, address) {
+  color: rgb(255 255 255 / 74%);
+}
+
+.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) a:hover,
+.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) a:focus-visible {
+  color: var(--white);
+  text-decoration-color: currentColor;
 }
 
 .site-main.flow-main > section h2 {
@@ -2029,10 +2055,76 @@ textarea:focus {
   content: counter(flow-card, decimal-leading-zero);
 }
 
+.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) > :is(ul, ol) > li {
+  border-color: rgb(255 255 255 / 16%);
+  background: rgb(255 255 255 / 7%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 7%);
+}
+
+.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) > :is(ul, ol) > li::before {
+  border-color: rgb(255 255 255 / 42%);
+  background: transparent;
+  color: var(--white);
+}
+
 .site-main.flow-main > section details {
   border-color: rgb(115 115 115 / 28%);
   border-radius: var(--radius-md);
   background: rgb(255 255 255 / 76%);
+}
+
+.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) details {
+  border-color: rgb(255 255 255 / 18%);
+  background: rgb(255 255 255 / 7%);
+}
+
+/* A few supporting pages have only one short content band, so their dark
+   moment is selected explicitly. Forms and long-form reading surfaces stay
+   light for legibility. */
+.site-main.supporting-main.flow-main[data-page-path="/contact-us/"] > section:first-of-type,
+.site-main.supporting-main.flow-main[data-page-path="/blog/"] > section:first-of-type {
+  border-color: var(--support-dark-border);
+  background: var(--support-dark-surface);
+  color: var(--white);
+}
+
+.site-main.supporting-main.flow-main[data-page-path="/contact-us/"] > section:first-of-type
+  :is(h1, h2, h3, strong, a, .eyebrow),
+.site-main.supporting-main.flow-main[data-page-path="/blog/"] > section:first-of-type
+  > :is(h1, h2, h3, strong, a, .eyebrow) {
+  color: var(--white);
+}
+
+.site-main.supporting-main.flow-main[data-page-path="/contact-us/"] > section:first-of-type :is(p, address),
+.site-main.supporting-main.flow-main[data-page-path="/blog/"] > section:first-of-type > p {
+  color: rgb(255 255 255 / 74%);
+}
+
+/* Blog cards remain bright reading tiles inside the dark index band. */
+.site-main.supporting-main.flow-main[data-page-path="/blog/"] .blog-card :is(h2, a, p, time) {
+  color: var(--ink);
+}
+
+.site-main.supporting-main.flow-main[data-page-path="/blog/"] .blog-card .post-meta {
+  color: var(--ink-soft);
+}
+
+/* Privacy copy is intentionally kept on neutral reading surfaces. */
+.site-main.supporting-main.flow-main[data-page-path="/privacy-policy/"]
+  > section:not(.lead-form):nth-of-type(3n + 2) {
+  border-color: rgb(212 212 212 / 82%);
+  background: #e7e7e7;
+  color: var(--ink);
+}
+
+.site-main.supporting-main.flow-main[data-page-path="/privacy-policy/"]
+  > section:not(.lead-form):nth-of-type(3n + 2) :is(h1, h2, h3, p, li, strong, summary, a, address, label) {
+  color: inherit;
+}
+
+.site-main.supporting-main.flow-main[data-page-path="/privacy-policy/"]
+  > section:not(.lead-form):nth-of-type(3n) {
+  background: #f2f2f2;
 }
 
 .site-main.flow-main > nav.related-services {

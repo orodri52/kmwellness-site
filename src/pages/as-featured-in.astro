@@ -112,17 +112,18 @@ const press = [
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
     padding: clamp(1rem, 2.4vw, 1.5rem);
-    border: 1px solid #d7d7d7;
+    border: 1px solid var(--support-dark-border);
     border-radius: 22px;
-    background: #eeeeee;
-    box-shadow: 0 16px 42px rgb(0 0 0 / 6%);
+    background: var(--support-dark-surface);
+    box-shadow: 0 18px 48px rgb(0 0 0 / 14%);
   }
 
   .press-card {
     min-height: 255px;
-    border: 1px solid #d8d8d8;
+    border: 1px solid rgb(255 255 255 / 14%);
     border-radius: 16px;
-    background: #ffffff;
+    background: rgb(255 255 255 / 7%);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 7%);
     overflow: hidden;
     transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
   }
@@ -133,12 +134,12 @@ const press = [
     width: 100%;
     height: 100%;
     padding: clamp(1.35rem, 3vw, 2rem);
-    color: #171717;
+    color: var(--white);
     text-decoration: none;
   }
 
   .press-publication {
-    color: #555555;
+    color: #d4d4d4;
     font-size: .69rem;
     font-weight: 900;
     letter-spacing: .14em;
@@ -148,7 +149,7 @@ const press = [
 
   .press-card h2 {
     margin: .7rem 0 .9rem;
-    color: #171717;
+    color: var(--white);
     font-family: var(--sans);
     font-size: clamp(1.2rem, 2vw, 1.55rem);
     font-weight: 900;
@@ -158,7 +159,7 @@ const press = [
 
   .press-card p {
     margin: 0;
-    color: #595959;
+    color: rgb(255 255 255 / 72%);
     font-size: .94rem;
     line-height: 1.55;
   }
@@ -169,7 +170,7 @@ const press = [
     gap: .55rem;
     margin-top: auto;
     padding-top: 1.3rem;
-    color: #171717;
+    color: var(--white);
     font-size: .84rem;
     font-weight: 900;
   }
@@ -179,15 +180,15 @@ const press = [
     place-items: center;
     width: 1.7rem;
     height: 1.7rem;
-    border: 1px solid #bdbdbd;
+    border: 1px solid rgb(255 255 255 / 36%);
     border-radius: 50%;
     font-size: .88rem;
   }
 
   @media (hover: hover) {
     .press-card:hover {
-      border-color: #969696;
-      box-shadow: 0 14px 30px rgb(0 0 0 / 10%);
+      border-color: rgb(255 255 255 / 38%);
+      box-shadow: 0 14px 30px rgb(0 0 0 / 24%);
       transform: translateY(-3px);
     }
   }

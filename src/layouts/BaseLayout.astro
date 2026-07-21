@@ -15,6 +15,7 @@ interface Props {
 }
 const { title, description, image, type, noindex } = Astro.props;
 const pagePath = Astro.url.pathname;
+const isSupportingPage = pagePath !== '/' && pagePath !== '/about-us/';
 const usesCustomPageDesign =
   pagePath === '/' || pagePath === '/about-us/' || pagePath === '/services/' || pagePath === '/as-featured-in/';
 
@@ -47,7 +48,7 @@ const gtmActive = analytics.gtmId && Astro.site?.hostname === PROD_HOSTNAME && !
     <Header />
     <main
       id="main"
-      class:list={['site-main', { 'flow-main': !usesCustomPageDesign }]}
+      class:list={['site-main', { 'supporting-main': isSupportingPage, 'flow-main': !usesCustomPageDesign }]}
       data-page-path={pagePath}
     >
       <slot />
