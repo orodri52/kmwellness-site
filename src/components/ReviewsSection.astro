@@ -1,0 +1,430 @@
+---
+// Featured-review carousel: one large review card at a time, with clickable
+// reviewer tabs, Prev/Next arrows, and a counter. Auto-rotates every 3s.
+// Reads from the static src/data/reviews.ts snapshot (see that file for why
+// this isn't a live API call) and renders nothing until real data exists.
+import { business } from '../config/site';
+import { aggregateRating, fallbackReviews } from '../data/reviews';
+
+const reviews = fallbackReviews;
+
+const renderStars = (r: number) => '★★★★★'.slice(0, Math.max(0, Math.min(5, Math.round(r))));
+
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .map((p) => p[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+---
+{reviews.length > 0 && (
+  <section class="reviews-section" id="reviews" aria-labelledby="reviews-title" data-reviews-carousel>
+    <div class="reviews-shell">
+      <div class="reviews-heading">
+        <p class="eyebrow">Reviews</p>
+        <h2 id="reviews-title">Real People. Real Results.</h2>
+        {aggregateRating && (
+          <>
+            <div class="reviews-stars" aria-label={`${aggregateRating.ratingValue} star rating`}>★★★★★</div>
+            <a class="reviews-rating-pill" href={business.mapsUrl} target="_blank" rel="noopener noreferrer">
+              <span aria-hidden="true">G</span>
+              <strong>{aggregateRating.ratingValue}</strong>
+              <em>rating from {aggregateRating.reviewCount} reviews</em>
+            </a>
+          </>
+        )}
+      </div>
+
+      <div class="review-tabs" role="tablist" aria-label="Featured reviews">
+        {reviews.map((review, index) => (
+          <button
+            class="review-tab"
+            type="button"
+            role="tab"
+            id={`review-tab-${index}`}
+            aria-selected={index === 0 ? 'true' : 'false'}
+            aria-controls={`review-panel-${index}`}
+            tabindex={index === 0 ? 0 : -1}
+            data-review-tab
+            data-index={index}
+          >
+            <span aria-hidden="true">{initials(review.authorName)}</span>
+            <strong>{review.authorName}</strong>
+            <small aria-label={`${review.rating} star review`}>{renderStars(review.rating)}</small>
+          </button>
+        ))}
+      </div>
+
+      <div class="featured-review-stage" aria-live="polite">
+        {reviews.map((review, index) => (
+          <article
+            class="featured-review-card"
+            id={`review-panel-${index}`}
+            role="tabpanel"
+            aria-labelledby={`review-tab-${index}`}
+            data-review-panel
+            data-index={index}
+            hidden={index !== 0}
+          >
+            <div class="featured-review-quote">
+              <span class="review-quote-mark" aria-hidden="true">&ldquo;</span>
+              <p>{review.text}</p>
+              <span class="review-quote-mark review-quote-end" aria-hidden="true">&rdquo;</span>
+            </div>
+            <div class="featured-review-meta">
+              <strong>{review.authorName}</strong>
+              <span>
+                <span aria-hidden="true">&check;</span> Verified Review
+                {review.relativePublishTimeDescription && ` · ${review.relativePublishTimeDescription}`}
+              </span>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      {reviews.length > 1 && (
+        <div class="review-carousel-controls" aria-label="Review carousel controls">
+          <button class="review-carousel-button" type="button" data-review-prev aria-label="Previous review">←</button>
+          <span data-review-counter>1 / {reviews.length}</span>
+          <button class="review-carousel-button" type="button" data-review-next aria-label="Next review">→</button>
+        </div>
+      )}
+
+      <div class="reviews-footer">
+        <a href={business.mapsUrl} target="_blank" rel="noopener noreferrer" class="button button-outline reviews-more-link">
+          View more reviews →
+        </a>
+        <p>Reviews reflect individual experiences. Results vary and are not guaranteed.</p>
+      </div>
+    </div>
+  </section>
+)}
+
+<script>
+  const carousels = document.querySelectorAll('[data-reviews-carousel]');
+
+  carousels.forEach((carousel) => {
+    const tabs = Array.from(carousel.querySelectorAll<HTMLButtonElement>('[data-review-tab]'));
+    const panels = Array.from(carousel.querySelectorAll<HTMLElement>('[data-review-panel]'));
+    const prev = carousel.querySelector<HTMLButtonElement>('[data-review-prev]');
+    const next = carousel.querySelector<HTMLButtonElement>('[data-review-next]');
+    const counter = carousel.querySelector('[data-review-counter]');
+
+    if (!panels.length) return;
+
+    const AUTOPLAY_DELAY = 3000;
+    let activeIndex = 0;
+    let autoplayId = 0;
+    let isPaused = false;
+
+    const setActive = (index: number) => {
+      activeIndex = (index + panels.length) % panels.length;
+
+      tabs.forEach((tab, i) => {
+        const isActive = i === activeIndex;
+        tab.classList.toggle('is-active', isActive);
+        tab.setAttribute('aria-selected', String(isActive));
+        tab.tabIndex = isActive ? 0 : -1;
+      });
+
+      panels.forEach((panel, i) => {
+        panel.hidden = i !== activeIndex;
+      });
+
+      if (counter) counter.textContent = `${activeIndex + 1} / ${panels.length}`;
+    };
+
+    const stopAutoplay = () => window.clearInterval(autoplayId);
+
+    const startAutoplay = () => {
+      if (panels.length <= 1) return;
+      stopAutoplay();
+      autoplayId = window.setInterval(() => {
+        if (!isPaused) setActive(activeIndex + 1);
+      }, AUTOPLAY_DELAY);
+    };
+
+    const pause = () => { isPaused = true; };
+    const resume = () => { isPaused = false; };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const index = Number(tab.dataset.index);
+        if (!Number.isNaN(index)) setActive(index);
+      });
+    });
+
+    prev?.addEventListener('click', () => setActive(activeIndex - 1));
+    next?.addEventListener('click', () => setActive(activeIndex + 1));
+
+    carousel.addEventListener('pointerenter', pause);
+    carousel.addEventListener('pointerleave', resume);
+    carousel.addEventListener('touchstart', pause, { passive: true });
+    carousel.addEventListener('touchend', resume, { passive: true });
+    carousel.addEventListener('touchcancel', resume, { passive: true });
+    carousel.addEventListener('focusin', pause);
+    carousel.addEventListener('focusout', resume);
+
+    setActive(0);
+    startAutoplay();
+  });
+</script>
+
+<style>
+  .reviews-section {
+    padding: clamp(1.1rem, 2.2vw, 1.6rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--paper-soft);
+    box-shadow: 0 16px 44px rgb(0 0 0 / 8%);
+  }
+
+  .reviews-shell {
+    display: grid;
+    justify-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .reviews-heading {
+    width: min(620px, 100%);
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .reviews-heading h2 {
+    margin-bottom: 0.4rem;
+  }
+
+  .reviews-stars {
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+    font-size: 1.15rem;
+    letter-spacing: 0.1em;
+  }
+
+  .reviews-rating-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.95rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--ink);
+    font-size: 0.85rem;
+    text-decoration: none;
+  }
+
+  .reviews-rating-pill:hover {
+    border-color: var(--ink);
+  }
+
+  .reviews-rating-pill span {
+    display: inline-grid;
+    place-items: center;
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: 800;
+  }
+
+  .reviews-rating-pill em {
+    color: var(--ink-soft);
+    font-style: normal;
+  }
+
+  .review-tabs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 0.6rem;
+    width: 100%;
+    margin-bottom: 0.9rem;
+  }
+
+  .review-tab {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.05rem 0.7rem;
+    align-items: center;
+    min-height: 50px;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--white);
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 180ms ease, transform 180ms ease;
+  }
+
+  .review-tab:hover,
+  .review-tab.is-active,
+  .review-tab:focus-visible {
+    border-color: var(--ink);
+    transform: translateY(-1px);
+  }
+
+  .review-tab > span {
+    display: grid;
+    grid-row: span 2;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--paper-deep);
+    color: var(--ink);
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+
+  .review-tab.is-active > span {
+    background: var(--ink);
+    color: var(--white);
+  }
+
+  .review-tab strong {
+    font-size: 0.85rem;
+  }
+
+  .review-tab small {
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+  }
+
+  .featured-review-stage {
+    width: min(680px, 100%);
+  }
+
+  .featured-review-card {
+    padding: clamp(1.1rem, 2.4vw, 1.6rem) clamp(1.1rem, 3.6vw, 2.4rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    box-shadow: 0 16px 44px rgb(0 0 0 / 8%);
+  }
+
+  .featured-review-quote {
+    position: relative;
+    padding: 0 1.7rem;
+  }
+
+  .featured-review-card p {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0 0 0.85rem;
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: clamp(1.02rem, 1.6vw, 1.2rem);
+    line-height: 1.35;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+  }
+
+  .review-quote-mark {
+    position: absolute;
+    top: -0.4rem;
+    left: 0;
+    font-family: var(--serif);
+    font-size: 2.6rem;
+    line-height: 1;
+    color: var(--ink);
+    opacity: 0.28;
+  }
+
+  .review-quote-end {
+    top: auto;
+    right: 0;
+    bottom: 0.6rem;
+    left: auto;
+  }
+
+  .featured-review-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .featured-review-meta strong {
+    font-size: 0.95rem;
+  }
+
+  .featured-review-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .review-carousel-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.85rem;
+    padding: 0.35rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+
+  .review-carousel-controls span {
+    min-width: 3.4rem;
+    color: var(--ink);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-align: center;
+  }
+
+  .review-carousel-button {
+    width: 2.1rem;
+    height: 2.1rem;
+    padding: 0;
+    display: inline-grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--ink);
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .review-carousel-button:hover,
+  .review-carousel-button:focus-visible {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--white);
+  }
+
+  .reviews-footer {
+    display: grid;
+    justify-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  .reviews-footer p {
+    max-width: 46ch;
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: 640px) {
+    .review-tabs {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

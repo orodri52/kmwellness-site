@@ -3,7 +3,8 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import LeadForm from '../components/LeadForm.astro';
-import { reviews, business } from '../config/site';
+import ReviewsSection from '../components/ReviewsSection.astro';
+import { business } from '../config/site';
 
 const seo = {
   title: 'Wellness Center Near Me | Success Stories | Kingsway Wellness Center | El Paso, TX',
@@ -34,37 +35,173 @@ const gallery = Object.keys(successPhotos)
     started: {business.phone}</a>.
   </p>
 
-  <section aria-labelledby="reviews-title">
-    <h2 id="reviews-title">What our clients say</h2>
-    <div class="testimonials">
-      {reviews.map((r) => (
-        <figure>
-          <blockquote><p>{r.body}</p></blockquote>
-          <figcaption>— {r.author}, Google Review</figcaption>
-        </figure>
-      ))}
+  <section class="results-section" aria-labelledby="gallery-title">
+    <div class="results-heading">
+      <p class="results-kicker">Transformation gallery</p>
+      <h2 id="gallery-title">Client Results</h2>
+      <p>
+        Browse real client progress. Use the arrows, swipe, or scroll horizontally to move
+        through the gallery.
+      </p>
+    </div>
+
+    <div class="results-carousel" data-results-carousel>
+      <div class="carousel-controls" aria-label="Client results carousel controls">
+        <button
+          class="carousel-button"
+          type="button"
+          data-results-prev
+          aria-label="Previous client result"
+          aria-controls="results-carousel-track"
+        >
+          ←
+        </button>
+        <p class="carousel-status" aria-live="polite">
+          <span data-results-current>1</span> / {gallery.length}
+        </p>
+        <button
+          class="carousel-button"
+          type="button"
+          data-results-next
+          aria-label="Next client result"
+          aria-controls="results-carousel-track"
+        >
+          →
+        </button>
+      </div>
+
+      <ul
+        id="results-carousel-track"
+        class="results-gallery"
+        aria-label="Client result photos"
+        tabindex="0"
+      >
+        {gallery.map((src, i) => (
+          <li>
+            <figure>
+              <Image
+                src={src}
+                alt={`KM Wellness Center client success story in El Paso (${i + 1})`}
+                widths={[280, 360, 480]}
+                sizes="(min-width: 900px) 280px, (min-width: 600px) 42vw, 82vw"
+                format="webp"
+                quality={74}
+                loading={i < 3 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            </figure>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
-  <section aria-labelledby="gallery-title">
-    <h2 id="gallery-title">Client Results</h2>
-    <ul class="results-gallery">
-      {gallery.map((src, i) => (
-        <li>
-          <Image
-            src={src}
-            alt={`KM Wellness Center client success story in El Paso (${i + 1})`}
-            widths={[240, 480]}
-            sizes="(min-width: 600px) 240px, 45vw"
-            format="webp"
-            quality={70}
-            loading={i < 4 ? 'eager' : 'lazy'}
-            decoding="async"
-          />
-        </li>
-      ))}
-    </ul>
-  </section>
+  <script>
+    const carousels = document.querySelectorAll('[data-results-carousel]');
+
+    carousels.forEach((carousel) => {
+      const track = carousel.querySelector('.results-gallery');
+      const prev = carousel.querySelector('[data-results-prev]');
+      const next = carousel.querySelector('[data-results-next]');
+      const current = carousel.querySelector('[data-results-current]');
+
+      if (!(track instanceof HTMLElement) || !(prev instanceof HTMLButtonElement) || !(next instanceof HTMLButtonElement) || !current) {
+        return;
+      }
+
+      const slides = Array.from(track.querySelectorAll('li'));
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const AUTOPLAY_DELAY = 5000;
+      let autoplayId = 0;
+      let isPaused = false;
+
+      const getActiveIndex = () => {
+        const trackLeft = track.getBoundingClientRect().left;
+        const distances = slides.map((slide, index) => ({
+          index,
+          distance: Math.abs(slide.getBoundingClientRect().left - trackLeft),
+        }));
+
+        return distances.sort((a, b) => a.distance - b.distance)[0]?.index ?? 0;
+      };
+
+      const updateStatus = () => {
+        current.textContent = String(getActiveIndex() + 1);
+      };
+
+      const scrollToIndex = (index, behavior) => {
+        const target = slides[index];
+        if (!target) return;
+
+        // Scroll the track horizontally only (scrollIntoView also drags the
+        // whole page's vertical scroll position, hiding the arrows above).
+        const trackRect = track.getBoundingClientRect();
+        const targetRect = target.getBoundingClientRect();
+        const delta = targetRect.left - trackRect.left;
+
+        track.scrollTo({
+          left: track.scrollLeft + delta,
+          behavior,
+        });
+      };
+
+      const scrollToSlide = (direction) => {
+        const activeIndex = getActiveIndex();
+        let nextIndex = activeIndex + direction;
+        let behavior = prefersReducedMotion ? 'auto' : 'smooth';
+
+        if (nextIndex >= slides.length) {
+          nextIndex = 0;
+          behavior = 'auto';
+        } else if (nextIndex < 0) {
+          nextIndex = slides.length - 1;
+          behavior = 'auto';
+        }
+
+        scrollToIndex(nextIndex, behavior);
+      };
+
+      const stopAutoplay = () => window.clearInterval(autoplayId);
+
+      const startAutoplay = () => {
+        stopAutoplay();
+        autoplayId = window.setInterval(() => {
+          if (!isPaused) scrollToSlide(1);
+        }, AUTOPLAY_DELAY);
+      };
+
+      const pause = () => { isPaused = true; };
+      const resume = () => { isPaused = false; };
+
+      prev.addEventListener('click', () => { scrollToSlide(-1); });
+      next.addEventListener('click', () => { scrollToSlide(1); });
+      track.addEventListener('scroll', () => window.requestAnimationFrame(updateStatus), { passive: true });
+      track.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          scrollToSlide(-1);
+        }
+
+        if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          scrollToSlide(1);
+        }
+      });
+
+      carousel.addEventListener('pointerenter', pause);
+      carousel.addEventListener('pointerleave', resume);
+      carousel.addEventListener('touchstart', pause, { passive: true });
+      carousel.addEventListener('touchend', resume, { passive: true });
+      carousel.addEventListener('touchcancel', resume, { passive: true });
+      track.addEventListener('focusin', pause);
+      track.addEventListener('focusout', resume);
+
+      updateStatus();
+      startAutoplay();
+    });
+  </script>
+
+  <div><ReviewsSection /></div>
 
   <section>
     <h2>Discover the Best Wellness Center Near You</h2>
@@ -86,31 +223,156 @@ const gallery = Object.keys(successPhotos)
 </BaseLayout>
 
 <style>
-  .testimonials {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin: 1.5rem 0 2rem;
+  .results-section {
+    background:
+      radial-gradient(circle at top left, rgb(255 255 255 / 88%), transparent 22rem),
+      linear-gradient(135deg, #f8f8f8, #e7e7e7);
   }
-  .testimonials figure { margin: 0; padding: 1.5rem; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--white); }
-  .testimonials figure:nth-child(even) { background: #e8e8e8; }
-  .testimonials figcaption { margin-top: 0.5rem; font-weight: 600; }
+
+  .results-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.58fr);
+    gap: 1rem clamp(1.5rem, 4vw, 3rem);
+    align-items: end;
+    margin-bottom: clamp(1.1rem, 2.8vw, 1.8rem);
+  }
+
+  .results-heading h2,
+  .results-heading p {
+    margin: 0;
+  }
+
+  .results-heading h2 {
+    max-width: 8ch;
+  }
+
+  .results-heading > p:last-child {
+    max-width: 33rem;
+    justify-self: end;
+  }
+
+  .results-kicker {
+    grid-column: 1 / -1;
+    color: var(--ink);
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .results-carousel {
+    position: relative;
+    padding: clamp(0.7rem, 1.6vw, 1rem);
+    border: 1px solid rgb(255 255 255 / 78%);
+    border-radius: calc(var(--radius-lg) + 8px);
+    background:
+      linear-gradient(135deg, rgb(255 255 255 / 62%), rgb(255 255 255 / 22%)),
+      rgb(17 17 17 / 4%);
+  }
+
+  .carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.65rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .carousel-button {
+    width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0;
+    border: 1px solid rgb(17 17 17 / 16%);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--ink);
+    font-size: 1.15rem;
+    letter-spacing: 0;
+    line-height: 1;
+    text-transform: none;
+    box-shadow: 0 8px 22px rgb(0 0 0 / 10%);
+  }
+
+  .carousel-button:hover,
+  .carousel-button:focus-visible {
+    background: var(--ink);
+    color: var(--white);
+  }
+
+  .carousel-status {
+    min-width: 4.5rem;
+    margin: 0;
+    color: var(--ink);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-transform: uppercase;
+  }
 
   .results-gallery {
-    list-style: none;
-    margin: 1rem 0;
-    padding: 0;
+    --gallery-gap: clamp(0.8rem, 1.5vw, 1.1rem);
+    --gallery-columns: 3;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 0.5rem;
+    grid-auto-columns: calc((100% - (var(--gallery-columns) - 1) * var(--gallery-gap)) / var(--gallery-columns));
+    grid-auto-flow: column;
+    align-items: start;
+    gap: var(--gallery-gap);
+    margin: 0;
+    padding: 0 0 0.85rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-padding-inline: 0.1rem;
+    scroll-snap-type: inline mandatory;
+    scrollbar-color: rgb(17 17 17 / 34%) transparent;
+    list-style: none;
   }
-  .results-gallery li { margin: 0; }
+
+  .results-gallery li {
+    scroll-snap-align: start;
+    margin: 0;
+  }
+
+  .results-gallery figure {
+    margin: 0;
+    padding: clamp(0.55rem, 1vw, 0.75rem);
+    border: 1px solid rgb(212 212 212 / 88%);
+    border-radius: calc(var(--radius-md) + 8px);
+    background: rgb(255 255 255 / 86%);
+    box-shadow: 0 16px 34px rgb(0 0 0 / 12%);
+  }
+
   .results-gallery img {
     width: 100%;
     height: auto;
     aspect-ratio: 1 / 1;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: var(--radius-md);
-    display: block;
+    background: #f7f7f7;
+  }
+
+  @media (max-width: 800px) {
+    .results-heading {
+      grid-template-columns: 1fr;
+    }
+
+    .results-heading > p:last-child {
+      justify-self: start;
+    }
+
+    .carousel-controls {
+      justify-content: space-between;
+    }
+
+    .results-gallery {
+      --gallery-columns: 2;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .results-gallery {
+      --gallery-columns: 1;
+    }
   }
 </style>

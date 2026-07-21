@@ -15,7 +15,8 @@ interface Props {
 }
 const { title, description, image, type, noindex } = Astro.props;
 const pagePath = Astro.url.pathname;
-const usesCustomPageDesign = pagePath === '/' || pagePath === '/about-us/' || pagePath === '/services/';
+const usesCustomPageDesign =
+  pagePath === '/' || pagePath === '/about-us/' || pagePath === '/services/' || pagePath === '/as-featured-in/';
 
 // Only load GTM on the production host so preview/localhost traffic never
 // pollutes analytics. Indexable production pages only.

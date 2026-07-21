@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LeadForm from "../../components/LeadForm.astro";
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import FaqSchema from '../../components/FaqSchema.astro';
 import RelatedServices from '../../components/RelatedServices.astro';
+import nutritionistPhoto from '../../assets/images/nutritionist-consult.jpg';
 
 const seo = {
   title: 'Nutritionist El Paso | Registered Dietitian Services',
@@ -31,6 +33,18 @@ const faqs = [
     health goals and long-term success. Our experienced registered dietitians create personalized
     nutrition plans based on your goals, medical history, and daily routine.
   </p>
+
+  <Image
+    class="feature-photo"
+    src={nutritionistPhoto}
+    alt="Registered dietitian explaining a nutrition plan to clients at KM Wellness Center in El Paso"
+    widths={[420, 640, 860]}
+    sizes="(min-width: 900px) 860px, 100vw"
+    format="webp"
+    quality={75}
+    loading="lazy"
+    decoding="async"
+  />
 
   <section>
     <h2>What Does a Nutritionist Do?</h2>

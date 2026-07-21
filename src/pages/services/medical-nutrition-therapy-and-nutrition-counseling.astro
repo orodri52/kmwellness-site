@@ -1,8 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LeadForm from "../../components/LeadForm.astro";
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RelatedServices from '../../components/RelatedServices.astro';
+import counselingPhoto from '../../assets/images/nutrition-counseling-consult.jpg';
 
 const seo = {
   title: 'Medical Nutrition Therapy and Nutrition Counseling | KM Wellness',
@@ -21,6 +23,18 @@ const seo = {
     toward a balanced lifestyle. Our experienced registered dietitian and nutritional counselors guide
     you toward healthier living and sustainable wellness.
   </p>
+
+  <Image
+    class="feature-photo"
+    src={counselingPhoto}
+    alt="Registered dietitian reviewing a personalized nutrition plan with a client at KM Wellness Center in El Paso"
+    widths={[420, 640, 860]}
+    sizes="(min-width: 900px) 860px, 100vw"
+    format="webp"
+    quality={75}
+    loading="lazy"
+    decoding="async"
+  />
 
   <section>
     <h2>What is Nutritional Counseling?</h2>

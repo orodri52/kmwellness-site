@@ -1,8 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LeadForm from "../../components/LeadForm.astro";
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RelatedServices from '../../components/RelatedServices.astro';
+import mealPrepPhoto from '../../assets/images/meal-prep-containers.webp';
 
 const seo = {
   title: 'Additional Services | Meal Prep, Smoothie Bar & Supplements | KM Wellness',
@@ -20,6 +22,18 @@ const seo = {
     dietary needs, provide convenient nutrition options, and ensure you have access to high-quality
     supplements.
   </p>
+
+  <Image
+    class="feature-photo"
+    src={mealPrepPhoto}
+    alt="Assortment of healthy, portioned meal prep containers"
+    widths={[420, 640, 860]}
+    sizes="(min-width: 900px) 860px, 100vw"
+    format="webp"
+    quality={75}
+    loading="lazy"
+    decoding="async"
+  />
 
   <section>
     <h2>Wholesome Meals: Convenient Meal Prep Services</h2>

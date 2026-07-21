@@ -9,28 +9,198 @@ const seo = {
 };
 
 const press = [
-  { name: 'Forbes Health', url: 'https://www.forbes.com/health/weight-loss/lose-fat-and-gain-muscle/' },
-  { name: 'GQ', url: 'https://www.gq.com/story/alcohol-athletic-performance' },
-  { name: "Men's Journal", url: 'https://www.mensjournal.com/food-drink/healthiest-protein-bars' },
-  { name: 'Parade', url: 'https://parade.com/health/what-happens-if-you-dont-eat-vegetables' },
-  { name: 'The Manual', url: 'https://www.themanual.com/food-and-drink/best-foods-with-creatine/' },
-  { name: 'The Everygirl', url: 'https://theeverygirl.com/how-to-choose-a-protein-powder/' },
-  { name: 'Vitamin Shoppe', url: 'https://whatsgood.vitaminshoppe.com/creatine-bloating-tips/' },
-  { name: 'Barbend', url: 'https://barbend.com/running-fuel/' },
-  { name: 'Generation Iron', url: 'https://generationiron.com/should-lifters-go-keto/' },
-  { name: 'El Paso Inc.', url: 'https://www.elpasoinc.com/magazine/how-to-pack-protein-in-your-diet/article_1e9fa9fa-e027-11ee-9c68-0fa047b7271b.html' },
+  { name: 'Forbes Health', title: 'How to Lose Fat and Gain Muscle at the Same Time', summary: 'Daniel explains the balanced nutrition and activity habits that support safe fat loss while preserving lean muscle.', url: 'https://www.forbes.com/health/weight-loss/lose-fat-and-gain-muscle/' },
+  { name: 'GQ', title: 'Just How Bad Is Alcohol for Athletic Performance?', summary: 'Daniel discusses how alcohol can affect sleep, recovery, training, and overall athletic performance.', url: 'https://www.gq.com/story/alcohol-athletic-performance' },
+  { name: "Men's Journal", title: 'The 12 Healthiest Protein Bars With Clean, Natural Ingredients', summary: 'Dietitian guidance for comparing ingredients and choosing a protein bar that supports your nutrition goals.', url: 'https://www.mensjournal.com/food-drink/healthiest-protein-bars' },
+  { name: 'Parade', title: "7 Things That Happen When You Don't Eat Enough Vegetables", summary: 'A practical look at how consistently missing vegetables can affect digestion, energy, and long-term health.', url: 'https://parade.com/health/what-happens-if-you-dont-eat-vegetables' },
+  { name: 'The Manual', title: 'Want to Build Muscle? The Best Foods With Creatine', summary: 'Daniel shares food-based sources of creatine and how they can support strength, recovery, and performance.', url: 'https://www.themanual.com/food-and-drink/best-foods-with-creatine/' },
+  { name: 'The Everygirl', title: 'An Expert Guide to Picking the Best Protein Powder for You', summary: 'What to compare on the label, from protein source and serving size to ingredients and third-party testing.', url: 'https://theeverygirl.com/how-to-choose-a-protein-powder/' },
+  { name: 'Vitamin Shoppe', title: 'Use These Tips to Prevent Creatine Bloat', summary: 'Daniel explains practical ways to understand and reduce the temporary bloating some people experience with creatine.', url: 'https://whatsgood.vitaminshoppe.com/creatine-bloating-tips/' },
+  { name: 'BarBend', title: 'Running Fuel: What and When to Eat for Optimal Performance', summary: 'Nutrition and meal-timing strategies designed to support running energy, recovery, and stronger performance.', url: 'https://barbend.com/running-fuel/' },
+  { name: 'Generation Iron', title: 'Should Lifters Go Keto for Performance and Gains?', summary: 'Daniel examines the possible benefits and tradeoffs of a ketogenic diet for strength-focused athletes.', url: 'https://generationiron.com/should-lifters-go-keto/' },
+  { name: 'El Paso Inc.', title: 'How to Pack More Protein Into Your Diet', summary: 'Local expert advice for adding more high-quality protein to everyday meals without overcomplicating your routine.', url: 'https://www.elpasoinc.com/magazine/how-to-pack-protein-in-your-diet/article_1e9fa9fa-e027-11ee-9c68-0fa047b7271b.html' },
 ];
 ---
 <BaseLayout {...seo}>
-  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'About', href: '/about-us/' }, { name: 'As Featured In', href: '/as-featured-in/' }]} />
-  <h1>Daniel Chavez, RD, LD, CSCS, CISSN</h1>
-  <p>
-    Daniel's accomplishments include several inclusions and mentions in nationally published articles
-    and posts. Here is a sample of some of those:
-  </p>
-  <ul>
-    {press.map((p) => (
-      <li><a href={p.url} rel="noopener nofollow" target="_blank">{p.name}</a></li>
-    ))}
-  </ul>
+  <div class="press-page">
+    <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'About', href: '/about-us/' }, { name: 'As Featured In', href: '/as-featured-in/' }]} />
+
+    <header class="press-intro">
+      <p class="eyebrow">In the press</p>
+      <h1>Publications that quote Daniel</h1>
+      <div class="press-intro-copy">
+        <p class="press-credentials">Daniel Chavez, RD, LD, CSCS, CISSN</p>
+        <p>
+          Daniel's accomplishments include several inclusions and mentions in nationally published articles
+          and posts. Here is a sample of some of those:
+        </p>
+      </div>
+    </header>
+
+    <section class="press-collection" aria-label="Publications featuring Daniel Chavez">
+      {press.map((item) => (
+        <article class="press-card">
+          <a href={item.url} rel="noopener nofollow" target="_blank">
+            <span class="press-publication">{item.name}</span>
+            <h2>{item.title}</h2>
+            <p>{item.summary}</p>
+            <span class="press-action"><span aria-hidden="true">↗</span> Read the article</span>
+          </a>
+        </article>
+      ))}
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .press-page {
+    display: grid;
+    gap: clamp(1rem, 2vw, 1.4rem);
+    width: min(1120px, calc(100vw - 40px));
+    margin: 0 auto;
+    padding-bottom: clamp(3rem, 7vw, 6rem);
+  }
+
+  .press-page :global(nav[aria-label="Breadcrumb"]) {
+    margin: 1.7rem 0 0;
+  }
+
+  .press-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(260px, .95fr);
+    column-gap: clamp(1.5rem, 5vw, 5rem);
+    row-gap: .65rem;
+    padding: clamp(2rem, 5vw, 4rem);
+    border: 1px solid #d8d8d8;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #ffffff, #f2f2f2);
+    box-shadow: 0 16px 42px rgb(0 0 0 / 7%);
+  }
+
+  .press-intro .eyebrow {
+    align-self: start;
+    margin: .35rem 0 0;
+  }
+
+  .press-intro h1 {
+    grid-column: 1;
+    align-self: center;
+    margin: 0;
+    font-size: clamp(2.75rem, 4.5vw, 4.4rem);
+  }
+
+  .press-intro-copy {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: end;
+    padding-left: clamp(0rem, 3vw, 2.5rem);
+    border-left: 1px solid #d2d2d2;
+  }
+
+  .press-intro-copy p:last-child { margin-bottom: 0; }
+
+  .press-credentials {
+    color: #1d1d1d;
+    font-size: .76rem;
+    font-weight: 900;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+  }
+
+  .press-collection {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    padding: clamp(1rem, 2.4vw, 1.5rem);
+    border: 1px solid #d7d7d7;
+    border-radius: 22px;
+    background: #eeeeee;
+    box-shadow: 0 16px 42px rgb(0 0 0 / 6%);
+  }
+
+  .press-card {
+    min-height: 255px;
+    border: 1px solid #d8d8d8;
+    border-radius: 16px;
+    background: #ffffff;
+    overflow: hidden;
+    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  }
+
+  .press-card a {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: clamp(1.35rem, 3vw, 2rem);
+    color: #171717;
+    text-decoration: none;
+  }
+
+  .press-publication {
+    color: #555555;
+    font-size: .69rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .press-card h2 {
+    margin: .7rem 0 .9rem;
+    color: #171717;
+    font-family: var(--sans);
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    font-weight: 900;
+    letter-spacing: -.025em;
+    line-height: 1.22;
+  }
+
+  .press-card p {
+    margin: 0;
+    color: #595959;
+    font-size: .94rem;
+    line-height: 1.55;
+  }
+
+  .press-action {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    margin-top: auto;
+    padding-top: 1.3rem;
+    color: #171717;
+    font-size: .84rem;
+    font-weight: 900;
+  }
+
+  .press-action span {
+    display: grid;
+    place-items: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    border: 1px solid #bdbdbd;
+    border-radius: 50%;
+    font-size: .88rem;
+  }
+
+  @media (hover: hover) {
+    .press-card:hover {
+      border-color: #969696;
+      box-shadow: 0 14px 30px rgb(0 0 0 / 10%);
+      transform: translateY(-3px);
+    }
+  }
+
+  @media (max-width: 720px) {
+    .press-intro { grid-template-columns: 1fr; }
+    .press-intro h1 { grid-column: auto; }
+    .press-intro-copy { grid-column: auto; grid-row: auto; padding: 1.25rem 0 0; border-top: 1px solid #d2d2d2; border-left: 0; }
+  }
+
+  @media (max-width: 600px) {
+    .press-page { width: calc(100vw - 24px); }
+    .press-collection { grid-template-columns: 1fr; }
+    .press-card { min-height: 0; }
+  }
+</style>

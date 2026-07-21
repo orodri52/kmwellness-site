@@ -1,8 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LeadForm from "../../components/LeadForm.astro";
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RelatedServices from '../../components/RelatedServices.astro';
+import mntPhoto from '../../assets/images/medical-nutrition-education.jpg';
 
 const seo = {
   title: 'Medical Nutrition Therapy | Kingsway Wellness Center | El Paso, TX',
@@ -20,6 +22,18 @@ const seo = {
     diabetes, cardiovascular disease, and obesity. MNT goes beyond typical dietary advice, focusing on
     how tailored nutrition plans can address specific medical needs.
   </p>
+
+  <Image
+    class="feature-photo"
+    src={mntPhoto}
+    alt="Registered dietitian leading a medical nutrition therapy session at KM Wellness Center in El Paso"
+    widths={[420, 640, 860]}
+    sizes="(min-width: 900px) 860px, 100vw"
+    format="webp"
+    quality={75}
+    loading="lazy"
+    decoding="async"
+  />
 
   <section>
     <h2>What Is Medical Nutrition Therapy?</h2>

@@ -59,13 +59,53 @@ const services = [
       <div><p class="eyebrow">Integrated care</p><h2>Nutrition and movement, working as one.</h2><p>Our registered dietitians and certified fitness professionals collaborate so your nutrition plan and physical training support the same outcome—not competing priorities.</p><a class="button button-outline" href="/about-us/">Meet our care team</a></div>
     </section>
 
-    <section class="review-section" aria-labelledby="reviews-title"><div><p class="eyebrow">Client experiences</p><h2 id="reviews-title">Care that teaches, supports, and lasts.</h2></div><div class="review-grid"><blockquote><p>“Daniel is the first dietitian that is really teaching me how to have a proper healthy diet without starving myself. The personal trainer, Aaron, is awesome and makes working out fun!”</p><footer>— Karen D. Martinez Franco</footer></blockquote><blockquote><p>“Daniel is a very knowledgeable and compassionate dietitian. Not only am I losing weight, but also learning better eating habits and unlearning toxic diet culture.”</p><footer>— Amber Mejia</footer></blockquote></div></section>
-
     <section class="child-cta"><div><p class="eyebrow">Not sure where to begin?</p><h2>We’ll help you find the right next step.</h2></div><a class="button" href="/contact-us/">Book a consultation</a></section>
     <LeadForm source="services-overview" service="Not sure yet" />
   </div>
 </BaseLayout>
 
 <style>
-  .services-page .child-hero-image img,.split-feature-image img{width:100%;height:100%;object-fit:cover}.service-directory{padding:clamp(2.5rem,6vw,4.5rem);border:1px solid #d1d1d1;border-radius:20px;background:#ededed;box-shadow:0 18px 50px rgb(0 0 0 / 8%)}.child-section-heading{max-width:720px;margin-bottom:2.25rem}.child-section-heading h2{font-size:clamp(2.4rem,5vw,4.2rem)}.child-service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.child-service-grid article{min-height:270px;padding:clamp(1.4rem,3vw,2.1rem);border:1px solid #d4d4d4;border-radius:14px;background:#fff;display:flex;flex-direction:column}.child-service-grid article.featured{border-color:#111;background:#111;color:#fff}.child-service-grid span{font-size:.7rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#686868}.child-service-grid .featured span,.child-service-grid .featured h3,.child-service-grid .featured p,.child-service-grid .featured a{color:#fff}.child-service-grid h3{margin:.8rem 0 1rem;font-size:clamp(1.5rem,2.4vw,2.2rem)}.child-service-grid p{font-size:.95rem}.child-service-grid a{margin-top:auto}.expect-band{padding:clamp(2.5rem,6vw,4.5rem);border-radius:20px;background:#111;color:#fff}.expect-band h2,.expect-band .eyebrow,.expect-band strong{color:#fff}.expect-band>div{max-width:760px}.expect-band h2{font-size:clamp(2.4rem,5vw,4.2rem)}.expect-band ol{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin:2.5rem 0 0;padding:0;list-style:none}.expect-band li{padding:1.4rem;border:1px solid #3f3f3f;border-radius:14px;background:#1b1b1b}.expect-band li span{display:block;margin-bottom:1.5rem;color:#aaa;font-family:var(--serif);font-size:2rem}.expect-band li strong{display:block;font-size:1.1rem}.expect-band li p{margin:.5rem 0 0;color:#bbb;font-size:.88rem}.review-section{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(2rem,6vw,5rem);padding:clamp(2.5rem,6vw,4.5rem);border:1px solid #d4d4d4;border-radius:20px;background:#fff}.review-section h2{font-size:clamp(2.2rem,4vw,3.6rem)}.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.review-grid blockquote{margin:0;padding:1.75rem;border-radius:14px;background:#ededed}.review-grid blockquote p{font-family:var(--serif);font-size:1.3rem;color:#111}.review-grid footer{font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em}@media(max-width:850px){.child-service-grid{grid-template-columns:1fr 1fr}.expect-band ol{grid-template-columns:1fr 1fr}.review-section{grid-template-columns:1fr}}@media(max-width:580px){.child-service-grid,.expect-band ol,.review-grid{grid-template-columns:1fr}.child-service-grid article{min-height:230px}}
+  .services-page .child-hero-image img,.split-feature-image img{width:100%;height:100%;object-fit:cover}.service-directory{padding:clamp(2.5rem,6vw,4.5rem);border:1px solid #d1d1d1;border-radius:20px;background:#ededed;box-shadow:0 18px 50px rgb(0 0 0 / 8%)}.child-section-heading{max-width:720px;margin-bottom:2.25rem}.child-section-heading h2{font-size:clamp(2.4rem,5vw,4.2rem)}.child-service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.child-service-grid article{min-height:270px;padding:clamp(1.4rem,3vw,2.1rem);border:1px solid #d4d4d4;border-radius:14px;background:#fff;display:flex;flex-direction:column}.child-service-grid article.featured{border-color:#111;background:#111;color:#fff}.child-service-grid span{font-size:.7rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#686868}.child-service-grid .featured span,.child-service-grid .featured h3,.child-service-grid .featured p,.child-service-grid .featured a{color:#fff}.child-service-grid h3{margin:.8rem 0 1rem;font-size:clamp(1.5rem,2.4vw,2.2rem)}.child-service-grid p{font-size:.95rem}.child-service-grid a{margin-top:auto}.expect-band{padding:clamp(2.5rem,6vw,4.5rem);border-radius:20px;background:#111;color:#fff}.expect-band h2,.expect-band .eyebrow,.expect-band strong{color:#fff}.expect-band>div{max-width:760px}.expect-band h2{font-size:clamp(2.4rem,5vw,4.2rem)}.expect-band ol{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin:2.5rem 0 0;padding:0;list-style:none}.expect-band li{padding:1.4rem;border:1px solid #3f3f3f;border-radius:14px;background:#1b1b1b}.expect-band li span{display:block;margin-bottom:1.5rem;color:#aaa;font-family:var(--serif);font-size:2rem}.expect-band li strong{display:block;font-size:1.1rem}.expect-band li p{margin:.5rem 0 0;color:#bbb;font-size:.88rem}@media(max-width:850px){.child-service-grid{grid-template-columns:1fr 1fr}.expect-band ol{grid-template-columns:1fr 1fr}}@media(max-width:580px){.child-service-grid,.expect-band ol{grid-template-columns:1fr}.child-service-grid article{min-height:230px}}
+
+  /* The service hub now follows the same section-level gray progression as
+     the other child pages. Card variation is reserved for hierarchy, not color. */
+  .services-page .service-directory { background: var(--white); }
+  .services-page .child-service-grid article.featured {
+    border-color: #bcbcbc;
+    background: var(--white);
+    color: var(--ink);
+  }
+  .services-page .child-service-grid .featured :is(span, h3, p, a) { color: inherit; }
+  .services-page .expect-band {
+    border: 1px solid #d1d1d1;
+    background: #e7e7e7;
+    color: var(--ink);
+  }
+  .services-page .expect-band :is(h2, .eyebrow, strong) { color: var(--ink); }
+  .services-page .expect-band li {
+    border-color: #d2d2d2;
+    background: rgb(255 255 255 / 76%);
+  }
+  .services-page .expect-band li span { color: #666; }
+  .services-page .expect-band li p { color: var(--ink-soft); }
+  .services-page .split-feature .button-outline {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  .services-page .split-feature .button-outline:hover {
+    background: var(--ink);
+    color: var(--white);
+  }
+  .services-page .child-cta {
+    border: 1px solid #d1d1d1;
+    background: var(--white);
+    color: var(--ink);
+    box-shadow: 0 16px 42px rgb(0 0 0 / 7%);
+  }
+  .services-page .child-cta :is(h2, .eyebrow) { color: var(--ink); }
+  .services-page .child-cta .button {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--white);
+  }
 </style>

@@ -366,9 +366,12 @@ button:hover {
 
 .primary-nav .has-children > a::after {
   margin-left: 0.35rem;
-  content: "/";
-  color: #a3a3a3;
-  font-weight: 700;
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 3.5px solid transparent;
+  border-right: 3.5px solid transparent;
+  border-top: 4.5px solid #a3a3a3;
 }
 
 .primary-nav li ul {
@@ -1894,15 +1897,16 @@ textarea:focus {
   }
 }
 
-/* Interior-page flow system. Home, About, and the Services hub use their own
-   approved layouts and never receive this class. */
+/* Interior-page flow system. The home page establishes a vertical rhythm;
+   interior pages follow the same top-to-bottom sequence instead of pairing
+   unrelated content cards side by side. Home, About, Services, and Press use
+   their own approved page shells. */
 .site-main.flow-main {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: stretch;
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(0.85rem, 1.8vw, 1.1rem);
   width: var(--container);
-  margin-inline: auto;
+  margin: clamp(0.9rem, 2vw, 1.6rem) auto 0;
   padding-top: 0;
 }
 
@@ -1912,70 +1916,52 @@ textarea:focus {
   margin-inline: 0;
 }
 
-.site-main.flow-main > nav[aria-label="Breadcrumb"],
-.site-main.flow-main > h1,
-.site-main.flow-main > p,
-.site-main.flow-main > article,
-.site-main.flow-main > ul,
-.site-main.flow-main > ol,
-.site-main.flow-main > .insurer-logo-section,
-.site-main.flow-main > .related-services,
-.site-main.flow-main > .lead-form,
-.site-main.flow-main > section:only-of-type,
-.site-main.flow-main > section:has(form),
-.site-main.flow-main > section:has(details),
-.site-main.flow-main > section:has(.results-gallery),
-.site-main.flow-main > section:has(.testimonials),
-.site-main.flow-main > section:last-of-type:nth-of-type(odd) {
-  grid-column: 1 / -1;
-}
-
 .site-main.flow-main > nav[aria-label="Breadcrumb"] {
-  margin-top: 1.5rem;
-  margin-bottom: 0.7rem;
+  margin: 0.35rem 0 0;
 }
 
 .site-main.flow-main > h1 {
-  margin: clamp(1rem, 3vw, 2.25rem) 0 0.5rem;
-  font-size: clamp(3.2rem, 6.5vw, 5.8rem);
+  max-width: 880px;
+  margin: clamp(0.7rem, 1.6vw, 1.1rem) 0 0;
+  font-size: clamp(2.1rem, 3.6vw, 3.2rem);
 }
 
 .site-main.flow-main > h1 + p,
 .site-main.flow-main > nav + h1 + p {
   max-width: 850px;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.35rem;
   font-size: clamp(1rem, 1.3vw, 1.15rem);
 }
 
+/* Each band owns one consistent surface. The gray progression is assigned to
+   whole sections—not to the cards or list items inside them. */
 .site-main.flow-main > section {
   position: relative;
-  min-height: 100%;
-  margin-top: 0;
+  margin: 0;
   padding: clamp(1.65rem, 3.5vw, 2.5rem);
   overflow: hidden;
   border: 1px solid rgb(212 212 212 / 82%);
   border-radius: var(--radius-lg);
-  background: var(--white);
+  background: linear-gradient(135deg, var(--paper-soft), #f5f5f5);
   box-shadow: 0 16px 44px rgb(0 0 0 / 8%);
 }
 
 .site-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) {
-  border-color: #242424;
-  background: #111;
-  color: var(--white);
+  background: #e7e7e7;
 }
 
-.site-main.flow-main > section:not(.lead-form):nth-of-type(3n + 3) {
-  background: #e8e8e8;
-}
-
-.site-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) :is(h2, h3, p, li, strong, summary, a, address, label) {
-  color: var(--white);
+.site-main.flow-main > section:not(.lead-form):nth-of-type(3n) {
+  background: #f2f2f2;
 }
 
 .site-main.flow-main > section h2 {
-  margin-bottom: 1rem;
-  font-size: clamp(1.9rem, 3.2vw, 3rem);
+  margin-bottom: 0.75rem;
+  font-size: clamp(1.4rem, 2vw, 1.9rem);
+}
+
+.site-main.flow-main > section > h1 {
+  margin-bottom: 0.75rem;
+  font-size: clamp(1.8rem, 2.8vw, 2.5rem);
 }
 
 .site-main.flow-main > section h3 {
@@ -1986,7 +1972,8 @@ textarea:focus {
   margin-bottom: 0;
 }
 
-/* Compact bordered item grids inspired by the approved reference layout. */
+/* Keep the home page's side-by-side detail language inside each section while
+   the page itself remains a calm, readable vertical sequence. */
 .site-main.flow-main > section > ul:not(.results-gallery),
 .site-main.flow-main > section > ol {
   display: grid;
@@ -2009,7 +1996,7 @@ textarea:focus {
   padding: 0.85rem 0.85rem 0.85rem 3.15rem;
   border: 1px solid rgb(115 115 115 / 24%);
   border-radius: var(--radius-md);
-  background: rgb(255 255 255 / 68%);
+  background: rgb(255 255 255 / 78%);
 }
 
 .site-main.flow-main > section > ul:not(.results-gallery) > li::before,
@@ -2023,7 +2010,7 @@ textarea:focus {
   height: 1.85rem;
   border: 1px solid #d4d4d4;
   border-radius: 50%;
-  background: #f1f1f1;
+  background: #f7f7f7;
   color: #111;
   font-size: 0.76rem;
   font-weight: 900;
@@ -2042,79 +2029,138 @@ textarea:focus {
   content: counter(flow-card, decimal-leading-zero);
 }
 
-.site-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) > :is(ul, ol) > li {
-  border-color: rgb(255 255 255 / 17%);
-  background: rgb(255 255 255 / 7%);
-}
-
 .site-main.flow-main > section details {
   border-color: rgb(115 115 115 / 28%);
   border-radius: var(--radius-md);
-  background: rgb(255 255 255 / 66%);
+  background: rgb(255 255 255 / 76%);
 }
 
-.site-main.flow-main > .related-services {
+.site-main.flow-main > nav.related-services {
+  display: grid;
+  gap: 1rem;
   margin: 0;
-  padding: 1.75rem clamp(1.5rem, 4vw, 2.5rem);
+  padding: clamp(1.5rem, 3.5vw, 2.25rem);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: #e8e8e8;
+  background: linear-gradient(135deg, #ededed, #e2e2e2);
+  box-shadow: 0 16px 44px rgb(0 0 0 / 7%);
 }
 
-.site-main.flow-main > .related-services ul {
-  gap: 0.6rem;
+.site-main.flow-main > nav.related-services > h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(1.35rem, 2.1vw, 1.7rem);
+  line-height: 1.1;
 }
 
-.site-main.flow-main > .related-services li a {
-  width: 100%;
-  padding: 0.65rem 0.8rem;
-  border-radius: var(--radius-sm);
+.site-main.flow-main > nav.related-services > h2::after {
+  width: clamp(2rem, 7vw, 5rem);
+  height: 1px;
+  content: "";
+  background: #ababab;
+}
+
+.site-main.flow-main > nav.related-services > ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-main.flow-main > nav.related-services > ul > li {
+  margin: 0;
+}
+
+.site-main.flow-main > nav.related-services[aria-label="Related services"] > ul > li > a {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 58px;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid #d5d5d5;
+  border-radius: 12px;
   background: var(--white);
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 750;
+  line-height: 1.35;
   text-decoration: none;
+}
+
+.site-main.flow-main > nav.related-services[aria-label="Related services"] > ul > li > a::after {
+  flex: 0 0 auto;
+  margin-left: auto;
+  color: #6a6a6a;
+  content: "↗";
+  font-size: 1rem;
+}
+
+.site-main.flow-main > nav.related-services[aria-label="Related services"] > ul > li > a:hover,
+.site-main.flow-main > nav.related-services[aria-label="Related services"] > ul > li > a:focus-visible {
+  border-color: #9a9a9a;
+  background: #fafafa;
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.site-main.flow-main > nav.related-services > .related-hub {
+  margin: 0;
+  padding-top: 0.15rem;
+}
+
+.site-main.flow-main > nav.related-services > .related-hub a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #4b4b4b;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.site-main.flow-main > nav.related-services > .related-hub a:hover,
+.site-main.flow-main > nav.related-services > .related-hub a:focus-visible {
+  color: var(--ink);
+  text-decoration: underline;
 }
 
 .site-main.flow-main > .lead-form {
   margin: 0 !important;
+  background: var(--white);
   box-shadow: 0 16px 44px rgb(0 0 0 / 8%);
 }
 
-/* Close odd service-card sequences cleanly before related links and FAQs. */
-.site-main.flow-main:is(
-  [data-page-path="/services/additional-services/"],
-  [data-page-path="/services/medical-nutrition-therapy-and-nutrition-counseling/"],
-  [data-page-path="/services/medical-nutrition/"],
-  [data-page-path="/services/weight-loss-prescription-disease-management/"]
-) > section:has(+ .related-services),
-.site-main.flow-main > section:has(+ section details),
-.site-main.flow-main[data-page-path="/success-stories/"] > section {
-  grid-column: 1 / -1;
-}
-
-/* On image-led service pages, the photograph and first card form a balanced
-   side-by-side row; the remaining two cards naturally pair below it. */
+/* Image-led pages receive one full-width visual break rather than a paired
+   image tile competing with the copy beside it. */
 .site-main.flow-main > .feature-photo {
-  align-self: stretch;
   width: 100%;
-  height: 100%;
-  min-height: 330px;
+  height: clamp(280px, 42vw, 460px);
   margin: 0;
   object-fit: cover;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   box-shadow: 0 16px 44px rgb(0 0 0 / 8%);
-  filter: grayscale(1);
 }
 
-/* Standalone press and resource lists become scan-friendly card grids. */
+/* Standalone resource lists remain scan-friendly, with a shared container
+   surface instead of alternating individual cards. */
 .site-main.flow-main > ul {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.8rem;
-  margin: 0 0 1rem;
+  margin: 0;
   padding: clamp(1.25rem, 3vw, 2rem);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: #e8e8e8;
+  background: #e7e7e7;
+  box-shadow: 0 16px 44px rgb(0 0 0 / 7%);
   list-style: none;
 }
 
@@ -2136,7 +2182,7 @@ textarea:focus {
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  background: #e7e7e7;
+  background: #f2f2f2;
   content: "↗";
   color: #111;
   font-weight: 900;
@@ -2148,7 +2194,7 @@ textarea:focus {
   text-decoration: none;
 }
 
-/* Article and confirmation pages use a focused single-card reading surface. */
+/* Article and confirmation pages retain a focused reading surface. */
 .site-main.flow-main > article {
   justify-self: center;
   width: min(100%, 860px);
@@ -2175,51 +2221,43 @@ textarea:focus {
   box-shadow: var(--shadow);
 }
 
-/* Terms remain word-for-word intact; headings and their paragraphs form pairs. */
+/* Terms remain word-for-word intact; each heading and its copy now follow the
+   same neutral sequence rather than forming black-and-white tile pairs. */
 .site-main.flow-main[data-page-path="/terms-conditions/"] > h2 {
   margin: 0;
-  padding: 1.6rem;
-  border-radius: var(--radius-lg);
-  background: #111;
-  color: var(--white);
+  padding: 1.15rem 1.35rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: #e7e7e7;
+  color: var(--ink);
   font-size: clamp(1.45rem, 2.4vw, 2.15rem);
 }
 
 .site-main.flow-main[data-page-path="/terms-conditions/"] > h2 + p {
-  grid-column: auto;
-  margin: 0;
-  padding: 1.6rem;
+  margin: -0.65rem 0 0;
+  padding: 1.35rem;
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
   background: var(--white);
-}
-
-.site-main.flow-main[data-page-path="/terms-conditions/"] > p:first-of-type,
-.site-main.flow-main[data-page-path="/terms-conditions/"] > p:last-of-type {
-  grid-column: 1 / -1;
 }
 
 @media (max-width: 760px) {
   .site-main.flow-main {
-    grid-template-columns: 1fr;
+    width: min(100% - 24px, 1120px);
+    gap: 0.75rem;
   }
 
-  .site-main.flow-main > * {
-    grid-column: 1 !important;
+  .site-main.flow-main > section,
+  .site-main.flow-main > .related-services {
+    padding: 1.25rem 1rem;
   }
 
   .site-main.flow-main > ul {
     grid-template-columns: 1fr 1fr;
   }
 
-  .site-main.flow-main[data-page-path="/terms-conditions/"] > h2 {
-    margin-bottom: -0.55rem;
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  }
-
-  .site-main.flow-main[data-page-path="/terms-conditions/"] > h2 + p {
-    margin-bottom: 0.5rem;
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  .site-main.flow-main > nav.related-services > ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -2227,6 +2265,10 @@ textarea:focus {
   .site-main.flow-main > ul,
   .site-main.flow-main > section > ul:not(.results-gallery),
   .site-main.flow-main > section > ol {
+    grid-template-columns: 1fr;
+  }
+
+  .site-main.flow-main > nav.related-services > ul {
     grid-template-columns: 1fr;
   }
 }

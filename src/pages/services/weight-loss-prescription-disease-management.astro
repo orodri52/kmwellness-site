@@ -1,8 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LeadForm from "../../components/LeadForm.astro";
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RelatedServices from '../../components/RelatedServices.astro';
+import prescriptionPhoto from '../../assets/images/weight-loss-prescription-consult.jpg';
 
 const seo = {
   title: 'Weight Loss Prescription & Meal Prep | KM Wellness Center | El Paso',
@@ -21,6 +23,18 @@ const seo = {
     providing comprehensive assessments and personalized strategies to help you reach your health
     goals.
   </p>
+
+  <Image
+    class="feature-photo"
+    src={prescriptionPhoto}
+    alt="Provider reviewing a GLP-1 weight-loss prescription option with a client at KM Wellness Center in El Paso"
+    widths={[420, 640, 860]}
+    sizes="(min-width: 900px) 860px, 100vw"
+    format="webp"
+    quality={75}
+    loading="lazy"
+    decoding="async"
+  />
 
   <section>
     <h2>Why Choose Our Services?</h2>
