@@ -3,7 +3,8 @@
 // Includes Organization/MedicalBusiness (with NAP, hours, geo, sameAs) and
 // WebSite. Per-page schema (FAQPage, Article) is added separately via FaqSchema
 // / page-level <script type="application/ld+json"> blocks.
-import { business, practitioner, services, reviews, rating } from '../config/site';
+import { business, practitioner, services } from '../config/site';
+import { aggregateRating, fallbackReviews } from '../data/reviews';
 
 const site = Astro.site?.href.replace(/\/$/, '') ?? '';
 
@@ -64,19 +65,25 @@ const graph = {
         })),
       },
       sameAs: [business.social.facebook, business.social.instagram],
-      // Real client testimonials. AggregateRating only appears once real numbers
-      // are set in config (site.ts `rating`) — never fabricated.
-      review: reviews.map((r) => ({
-        '@type': 'Review',
-        author: { '@type': 'Person', name: r.author },
-        reviewBody: r.body,
-      })),
-      ...(rating
+      // Real client reviews, sourced from the same snapshot the ReviewsSection
+      // component renders. Both blocks are only emitted once real data exists
+      // in src/data/reviews.ts — never fabricated.
+      ...(fallbackReviews.length
+        ? {
+            review: fallbackReviews.map((r) => ({
+              '@type': 'Review',
+              author: { '@type': 'Person', name: r.authorName },
+              reviewRating: { '@type': 'Rating', ratingValue: r.rating },
+              reviewBody: r.text,
+            })),
+          }
+        : {}),
+      ...(aggregateRating
         ? {
             aggregateRating: {
               '@type': 'AggregateRating',
-              ratingValue: rating.value,
-              reviewCount: rating.count,
+              ratingValue: aggregateRating.ratingValue,
+              reviewCount: aggregateRating.reviewCount,
             },
           }
         : {}),

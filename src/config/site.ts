@@ -76,23 +76,9 @@ export const practitioner = {
   ].filter(Boolean),
 } as const;
 
-// Real client testimonials (named Google reviews). Used on /success-stories/ and
-// emitted as Review schema. Never invent reviews or ratings.
-export const reviews = [
-  {
-    author: 'Karen D. Martinez Franco',
-    body: 'Daniel is the first dietitian that is really teaching me how to have a proper healthy diet without starving myself. The personal trainer, Aaron, is awesome and makes working out fun! Great staff! Highly recommend this clinic!',
-  },
-  {
-    author: 'Amber Mejia',
-    body: 'I definitely recommend this place to anyone looking to start their weight loss journey. Daniel is a very knowledgeable and compassionate dietitian. Not only am I losing weight, but also learning better eating habits and unlearning toxic diet culture.',
-  },
-] as const;
-
-// Aggregate rating from the Google Business Profile. Left null on purpose:
-// AggregateRating schema is only emitted once REAL numbers are set here.
-// TODO(client): set { value, count } from your live Google rating.
-export const rating: { value: number; count: number } | null = null;
+// Client reviews + aggregate rating now live in src/data/reviews.ts (used by
+// ReviewsSection.astro and Schema.astro), so they can be refreshed as one
+// hand-maintained snapshot without touching this file.
 
 // Canonical service catalog. Single source of truth for schema (hasOfferCatalog)
 // and the RelatedServices internal-linking mesh. Order = rough priority.

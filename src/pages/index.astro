@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadForm from '../components/LeadForm.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
 import { business } from '../config/site';
 import danielGymPortrait from '../assets/images/daniel-gym-portrait.webp';
 
@@ -250,6 +251,8 @@ const supportItems = [
         <p><strong>1000+</strong><span>Happy clients</span></p>
       </div>
     </section>
+
+    <ReviewsSection />
 
     <section class="booking-strip" aria-label="Schedule consultation">
       <div>
