@@ -1,3 +1,5 @@
 name = "kmwellness-site"
-pages_build_output_dir = "dist"
-# Keep Pages configuration in source control. Rebuild trigger: 2026-07-21 07:25 MDT.
+compatibility_date = "2026-07-21"
+
+[assets]
+directory = "./dist"
