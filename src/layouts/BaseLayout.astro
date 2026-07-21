@@ -54,5 +54,21 @@ const gtmActive = analytics.gtmId && Astro.site?.hostname === PROD_HOSTNAME && !
       <slot />
     </main>
     <Footer />
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      document.addEventListener('click', function (event) {
+        var target = event.target;
+        if (!(target instanceof Element)) return;
+        var link = target.closest('a[href^="tel:"], a[href^="mailto:"]');
+        if (!link) return;
+        var href = link.getAttribute('href') || '';
+        window.dataLayer.push({
+          event: href.indexOf('tel:') === 0 ? 'phone_click' : 'email_click',
+          link_url: href,
+          link_text: (link.textContent || '').trim(),
+          page_path: window.location.pathname,
+        });
+      });
+    </script>
   </body>
 </html>

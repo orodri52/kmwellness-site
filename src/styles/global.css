@@ -1345,7 +1345,7 @@ textarea:focus {
   display: flex;
   min-height: 175px;
   flex-direction: column;
-  grid-column: span 2;
+  grid-column: span 3;
   padding: clamp(0.85rem, 1.9vw, 1.15rem);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
@@ -1359,10 +1359,6 @@ textarea:focus {
   background:
     linear-gradient(180deg, rgb(0 0 0 / 52%), rgb(0 0 0 / 84%)),
     url("/images/placeholder-consult-room.jpg") center / cover;
-}
-
-.service-grid article:nth-child(2) {
-  grid-column: span 3;
 }
 
 .service-grid .service-featured h3,
@@ -2049,6 +2045,12 @@ textarea:focus {
 .site-main.flow-main > section > ul:not(.results-gallery) > li::before {
   content: "•";
   font-size: 1.15rem;
+}
+
+.site-main.flow-main[data-page-path="/services/medical-nutrition/"] > section > :is(ul:not(.results-gallery), ol) > li::before,
+.site-main.flow-main[data-page-path="/services/medical-nutrition-therapy-and-nutrition-counseling/"] > section > :is(ul:not(.results-gallery), ol) > li::before {
+  content: "✓";
+  font-size: 0.82rem;
 }
 
 .site-main.flow-main > section > ol > li {

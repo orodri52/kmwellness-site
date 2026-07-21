@@ -83,6 +83,7 @@ const services = [
 <script>
   declare global {
     interface Window {
+      dataLayer?: Array<Record<string, unknown>>;
       turnstile?: {
         render: (container: HTMLElement, options: Record<string, unknown>) => string;
         reset: (widgetId: string) => void;
@@ -127,6 +128,27 @@ const services = [
     script.addEventListener('load', onload);
   }
 
+  function trackLeadAndRedirect(form: HTMLFormElement, data: FormData) {
+    let redirected = false;
+    const redirect = () => {
+      if (redirected) return;
+      redirected = true;
+      window.location.href = '/thank-you/';
+    };
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'generate_lead',
+      form_name: 'lead-form',
+      form_source: data.get('source')?.toString() || form.dataset.source || 'unknown',
+      service_interest: data.get('service')?.toString() || 'unknown',
+      page_path: window.location.pathname,
+      eventCallback: redirect,
+      eventTimeout: 1000,
+    });
+    window.setTimeout(redirect, 1200);
+  }
+
   // Progressive enhancement: submit via fetch, then redirect to /thank-you/.
   document.querySelectorAll<HTMLFormElement>('form[data-lead-form]').forEach((form) => {
     const turnstileContainer = form.querySelector('[data-turnstile]') as HTMLElement | null;
@@ -164,7 +186,7 @@ const services = [
           headers: { Accept: 'application/json' },
         });
         if (!res.ok) throw new Error('failed');
-        window.location.href = '/thank-you/';
+        trackLeadAndRedirect(f, data);
       } catch {
         if (btn) { btn.disabled = false; btn.textContent = 'Request my consultation'; }
         if (status) {

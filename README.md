@@ -91,8 +91,9 @@ nutrition URLs are **redirects**, not pages (by design).
 - [ ] Add real images to `public/images/` (`og-default.jpg`, `logo.png`, `contact-og.jpg`) — see that folder's README.
 - [ ] Wire the contact form: set the `action` prop in `src/pages/contact-us.astro` to a Formspree
       endpoint or a Cloudflare Pages Function (`functions/contact.ts`).
-- [ ] Re-add analytics/pixels (GTM `GTM-5ZSWHWBG`, Meta Pixel `423627567305329`, GA4) — add the GTM
-      snippet in `BaseLayout.astro`. (See `Website-Backup/seo/technical-seo.md`.)
+- [x] Re-add analytics/pixels through the existing GTM container (`GTM-5ZSWHWBG`). `BaseLayout.astro`
+      loads GTM on the production host only, and form/phone/email interactions push conversion
+      events into `dataLayer` for GA4/GTM.
 - [ ] Confirm the canonical brand name (KM Wellness Center vs Kingsway) in `src/config/site.ts`.
 - [ ] Verify the business `geo` coordinates in `src/config/site.ts`.
 - [ ] Point the production domain at Cloudflare and confirm `PUBLIC_SITE_URL` is unset/correct so

@@ -67,11 +67,33 @@ const hearOptions = [
 <script>
   declare global {
     interface Window {
+      dataLayer?: Array<Record<string, unknown>>;
       turnstile?: {
         render: (container: HTMLElement, options: Record<string, unknown>) => string;
         reset: (widgetId: string) => void;
       };
     }
+  }
+
+  function trackContactLeadAndRedirect(form: HTMLFormElement, data: FormData) {
+    let redirected = false;
+    const redirect = () => {
+      if (redirected) return;
+      redirected = true;
+      window.location.href = '/thank-you/';
+    };
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'generate_lead',
+      form_name: 'contact-form',
+      form_source: data.get('source')?.toString() || 'contact-page',
+      lead_source: data.get('hear')?.toString() || 'unknown',
+      page_path: window.location.pathname,
+      eventCallback: redirect,
+      eventTimeout: 1000,
+    });
+    window.setTimeout(redirect, 1200);
   }
 
   const SCRIPT_ID = 'cf-turnstile-script';
@@ -148,7 +170,7 @@ const hearOptions = [
           headers: { Accept: 'application/json' },
         });
         if (!response.ok) throw new Error('Request failed');
-        window.location.href = '/thank-you/';
+        trackContactLeadAndRedirect(form, data);
       } catch {
         showStatus("Sorry, your message couldn't be sent. Please try again or call (915) 444-5110.");
         if (button) {
