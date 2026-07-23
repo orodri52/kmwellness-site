@@ -13,10 +13,7 @@ export const analytics = {
 } as const;
 
 export const business = {
-  // NOTE: site uses both "KM Wellness Center" and "Kingsway Wellness Center".
-  // Confirm the canonical name with the client, then keep it consistent here.
   name: 'KM Wellness Center',
-  legalName: 'Kingsway Wellness Center',
   tagline: 'Holistic Weight Loss Clinic in El Paso',
   description:
     'KM Wellness Center is a holistic weight loss and nutrition clinic in El Paso, TX, offering medical nutrition therapy, personalized weight management, metabolic assessments, and personal training.',
@@ -83,7 +80,7 @@ export const practitioner = {
 // Canonical service catalog. Single source of truth for schema (hasOfferCatalog)
 // and the RelatedServices internal-linking mesh. Order = rough priority.
 export const services = [
-  { name: 'Medical Nutrition Therapy & Nutrition Counseling', href: '/services/medical-nutrition-therapy-and-nutrition-counseling/' },
+  { name: 'Nutrition Counseling', href: '/services/medical-nutrition-therapy-and-nutrition-counseling/' },
   { name: 'Medical Nutrition Therapy', href: '/services/medical-nutrition/' },
   { name: 'Nutritionist / Registered Dietitian', href: '/services/nutritionist-el-paso/' },
   { name: 'Weight Management', href: '/services/weight-management/' },

@@ -19,11 +19,21 @@ import { business, nav } from '../config/site';
           <li class:list={[{'has-children': 'children' in item && item.children}]}>
             <a href={item.href}>{item.label}</a>
             {'children' in item && item.children && (
-              <ul>
-                {item.children.map((child) => (
-                  <li><a href={child.href}>{child.label}</a></li>
-                ))}
-              </ul>
+              <>
+                <button
+                  type="button"
+                  class="submenu-toggle"
+                  aria-expanded="false"
+                  aria-label={`Toggle ${item.label} submenu`}
+                >
+                  <span aria-hidden="true"></span>
+                </button>
+                <ul>
+                  {item.children.map((child) => (
+                    <li><a href={child.href}>{child.label}</a></li>
+                  ))}
+                </ul>
+              </>
             )}
           </li>
         ))}
@@ -33,3 +43,14 @@ import { business, nav } from '../config/site';
     <a class="button button-dark nav-cta" href="/contact-us/">Book a Consult</a>
   </div>
 </header>
+
+<script>
+  document.querySelectorAll<HTMLLIElement>('.primary-nav .has-children').forEach((item) => {
+    const toggle = item.querySelector<HTMLButtonElement>(':scope > .submenu-toggle');
+    if (!toggle) return;
+    toggle.addEventListener('click', () => {
+      const isOpen = item.classList.toggle('submenu-open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+  });
+</script>
