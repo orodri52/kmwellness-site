@@ -6,6 +6,7 @@ import bestOfElPaso from '../assets/images/best-of-el-paso.png';
 import danielPortrait from '../assets/images/daniel-gym-portrait.webp';
 import brendaPortrait from '../assets/images/brenda-kinesiologist.webp';
 import karenPortrait from '../assets/images/karen-billing-specialist.webp';
+import aaronPortrait from '../assets/images/aaron-personal-trainer.webp';
 
 const seo = {
   title: 'Wellness Center | About | KM Wellness Center | El Paso, TX',
@@ -99,10 +100,10 @@ const wellnessServices = [
         <p class="eyebrow">Collaborative support</p>
         <h2>Our Care Team</h2>
         <p>
-          Alongside Daniel, KM Wellness Center brings together registered dietitians and certified
-          personal trainers who collaborate as one team. This means your nutrition plan, weight-management
-          program, and fitness coaching all work together — not in isolation — so every part of your care
-          supports the same goal.
+          Alongside Daniel, KM Wellness Center brings together registered dietitians, kinesiologists, and
+          certified personal trainers who collaborate as one team. This means your nutrition plan,
+          weight-management program, and fitness coaching all work together — not in isolation — so every
+          part of your care supports the same goal.
         </p>
       </section>
     </div>
@@ -187,6 +188,50 @@ const wellnessServices = [
       </section>
 
       <section class="founder-card child-card">
+        <div class="founder-image">
+          <Image
+            src={aaronPortrait}
+            alt="Aaron Vázquez, certified personal trainer at KM Wellness Center in El Paso"
+            widths={[420, 720, 1000]}
+            sizes="(min-width: 1160px) 400px, (min-width: 760px) 38vw, 100vw"
+            format="webp"
+            quality={80}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="founder-copy">
+          <p class="eyebrow">Meet our team</p>
+          <h2>Meet Aaron — Certified Personal Trainer</h2>
+          <p class="founder-role">Certified Personal Trainer (CPT), NASM · B.S. Biomedical Sciences</p>
+          <div class="founder-bio">
+            <p>
+              Hello, my name is Aaron Vázquez, and I am a Certified Personal Trainer (CPT) through the
+              National Academy of Sports Medicine, and part of the team at KM Wellness Center.
+            </p>
+            <p>
+              I am a biologist who graduated from The University of Texas at El Paso, with a focus in
+              Biomedical Sciences. For five years, I worked in a leukemia research laboratory, where I
+              developed experimental protocols and gained extensive knowledge in immunology,
+              physiology, anatomy, biology, and biochemistry. This knowledge allowed me to understand
+              physiological processes that I later applied to my training programs, developing a
+              scientifically based training method. This way, you can be confident that your workouts
+              are optimal and effective. If you have questions about any topic, I would be happy to
+              help you find an answer. I love learning about a wide variety of subjects and educating
+              others in a patient and detailed manner.
+            </p>
+            <p>
+              In addition to being your trainer, I am also passionate about photography,
+              cinematography, and content creation. For me, it is a hobby that allows me to convey
+              different emotions using nothing more than a camera. Pretty crazy, right? If you've seen
+              our social media, then you already know who's responsible for keeping you glued to your
+              phone with our content every morning.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="founder-card founder-card--alt child-card">
         <div class="founder-image">
           <Image
             src={karenPortrait}
