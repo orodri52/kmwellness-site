@@ -13,7 +13,19 @@ import { business, nav } from '../config/site';
       <img class="brand-logo" src="/images/logo.png" alt="" width="736" height="370" decoding="async" />
     </a>
 
-    <nav class="primary-nav" aria-label="Primary">
+    <button
+      type="button"
+      class="menu-toggle"
+      aria-expanded="false"
+      aria-controls="primary-navigation"
+      aria-label="Open navigation menu"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+
+    <nav class="primary-nav" id="primary-navigation" aria-label="Primary">
       <ul>
         {nav.map((item) => (
           <li class:list={[{'has-children': 'children' in item && item.children}]}>
@@ -45,6 +57,38 @@ import { business, nav } from '../config/site';
 </header>
 
 <script>
+  const menuToggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const primaryNav = document.querySelector<HTMLElement>('.primary-nav');
+
+  const closeMenu = () => {
+    if (!menuToggle || !primaryNav) return;
+    primaryNav.classList.remove('menu-open');
+    menuToggle.classList.remove('menu-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Open navigation menu');
+  };
+
+  menuToggle?.addEventListener('click', () => {
+    if (!primaryNav) return;
+    const isOpen = primaryNav.classList.toggle('menu-open');
+    menuToggle.classList.toggle('menu-open', isOpen);
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+  });
+
+  primaryNav?.querySelectorAll<HTMLAnchorElement>('a').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeMenu();
+      menuToggle?.focus();
+    }
+  });
+
+  window.matchMedia('(min-width: 981px)').addEventListener('change', closeMenu);
+
   document.querySelectorAll<HTMLLIElement>('.primary-nav .has-children').forEach((item) => {
     const toggle = item.querySelector<HTMLButtonElement>(':scope > .submenu-toggle');
     if (!toggle) return;

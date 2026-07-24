@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 220" width="300" height="220">
+  <rect x="4" y="4" width="292" height="212" rx="14" fill="#fdfdfb" stroke="#c9c6bd" stroke-width="3"/>
+  <g clip-path="url(#cardClip)">
+    <clipPath id="cardClip">
+      <rect x="4" y="4" width="292" height="212" rx="14"/>
+    </clipPath>
+    <polygon points="4,4 296,4 236,26 4,26" fill="#b0202e"/>
+    <polygon points="4,26 260,26 200,48 4,48" fill="#1c3a6e"/>
+  </g>
+  <text x="150" y="118" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="36" fill="#232323">MEDICARE</text>
+  <text x="140" y="156" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="28" fill="#232323">ACCEPTED</text>
+  <g transform="translate(228,143)">
+    <circle cx="0" cy="0" r="18" fill="#ffffff" stroke="#2e7d4f" stroke-width="2"/>
+    <path d="M -8 0 L -2 7 L 9 -8" fill="none" stroke="#2e7d4f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
