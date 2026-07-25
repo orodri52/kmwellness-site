@@ -1962,7 +1962,6 @@ textarea:focus {
     transform: none;
   }
 
-  .primary-nav li:focus-within > ul,
   .primary-nav li.submenu-open > ul {
     display: grid;
   }
