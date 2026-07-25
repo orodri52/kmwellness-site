@@ -1728,6 +1728,10 @@ textarea:focus {
   color: rgb(255 255 255 / 72%);
 }
 
+.site-footer strong {
+  color: var(--white);
+}
+
 .site-footer a:not(.button):hover,
 .site-footer a:not(.button):focus-visible {
   color: var(--white);
