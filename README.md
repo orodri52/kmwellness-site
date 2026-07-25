@@ -38,6 +38,26 @@ product — the live URL is a `*.workers.dev` domain.
      the real domain) for production.
 5. Deploy. `_redirects` and `_headers` in `public/` are picked up by Cloudflare automatically.
 
+### KV namespace for lead form rate limiting
+
+`functions/api/lead.ts` rate-limits contact-form submissions per IP (5 per 10 minutes) using a
+Workers KV binding called `RATE_LIMIT_KV`. It fails open — if the binding is missing or KV errors,
+submissions are still accepted — but for it to actually rate-limit you need to create the namespace
+and wire the ids into `wrangler.toml`:
+
+```bash
+# Production namespace
+wrangler kv namespace create RATE_LIMIT_KV
+
+# Preview namespace (used by `wrangler pages dev` / preview deploys)
+wrangler kv namespace create RATE_LIMIT_KV --preview
+```
+
+Each command prints an `id`. Paste them into the `[[kv_namespaces]]` block in `wrangler.toml`
+(`id` from the first command, `preview_id` from the second). No separate env var or `.dev.vars`
+entry is needed — KV namespaces are wired through `wrangler.toml`, not environment variables, and
+`wrangler pages dev` picks up the `preview_id` automatically for local testing.
+
 No adapter is needed — this is a pure static build.
 
 ## SEO — what's built in

@@ -8,10 +8,14 @@ node_modules/
 # astro
 .astro/
 
+# wrangler local dev state (KV/D1/cache simulation)
+.wrangler/
+
 # environment
 .env
 .env.production
 .env.*.local
+.dev.vars
 
 # logs
 npm-debug.log*

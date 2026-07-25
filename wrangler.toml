@@ -3,3 +3,11 @@ compatibility_date = "2026-07-21"
 
 [assets]
 directory = "./dist"
+
+# Used by functions/api/lead.ts for IP-based rate limiting on lead submissions.
+# Create with `wrangler kv namespace create RATE_LIMIT_KV` (see README for full
+# setup steps) and fill in the ids it prints below.
+[[kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id = "REPLACE_WITH_PRODUCTION_NAMESPACE_ID"
+preview_id = "REPLACE_WITH_PREVIEW_NAMESPACE_ID"

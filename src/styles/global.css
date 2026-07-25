@@ -1879,7 +1879,10 @@ textarea:focus {
 
   .primary-nav > ul {
     display: grid;
+    justify-content: stretch;
+    align-items: stretch;
     gap: 0;
+    width: 100%;
   }
 
   .primary-nav > ul > li {
@@ -1908,12 +1911,19 @@ textarea:focus {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.75rem;
-    height: 1.75rem;
-    margin-left: 0.1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-left: 0.25rem;
     padding: 0;
     border: 0;
+    border-radius: 50%;
     background: transparent;
+  }
+
+  .submenu-toggle:hover,
+  .submenu-toggle:focus-visible {
+    background: rgb(255 255 255 / 10%);
+    transform: none;
   }
 
   .submenu-toggle span {
@@ -1933,9 +1943,10 @@ textarea:focus {
     grid-column: 1 / -1;
     position: static;
     display: none;
+    width: 100%;
     min-width: 0;
     margin: 0 0 0.5rem;
-    padding: 0.15rem 0 0.15rem 0.65rem;
+    padding: 0.25rem 0 0.35rem 0.75rem;
     border: 0;
     border-left: 2px solid #404040;
     border-radius: 0;
@@ -1946,9 +1957,22 @@ textarea:focus {
     transform: none;
   }
 
+  .primary-nav li:hover > ul,
+  .primary-nav li:focus-within > ul {
+    transform: none;
+  }
+
   .primary-nav li:focus-within > ul,
   .primary-nav li.submenu-open > ul {
     display: grid;
+  }
+
+  .primary-nav li ul a {
+    min-height: 2.4rem;
+    padding: 0.45rem 0.65rem;
+    border-radius: 0;
+    font-size: 0.68rem;
+    line-height: 1.35;
   }
 
   .hero-panel,

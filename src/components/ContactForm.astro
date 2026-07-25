@@ -118,7 +118,7 @@ const hearOptions = [
         sitekey: SITE_KEY,
         theme: 'light',
         size: 'flexible',
-        appearance: 'interaction-only',
+        appearance: 'always',
         callback: (value: string) => { token = value; },
         'expired-callback': () => { token = ''; },
         'error-callback': () => { token = ''; },
