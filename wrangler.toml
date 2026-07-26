@@ -1,6 +1,10 @@
 name = "kmwellness-site"
 compatibility_date = "2026-07-21"
 
+# Note: this file is currently ignored by the Cloudflare Pages build (Pages
+# needs `pages_build_output_dir`, not `[assets]`); bindings/vars are
+# configured via the dashboard instead. Kept here as a reference only.
+
 [assets]
 directory = "./dist"
 
