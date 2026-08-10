@@ -23,7 +23,8 @@ export default defineConfig({
     mdx(),
     sitemap({
       // Keep utility/confirmation pages out of the sitemap.
-      filter: (page) => !page.includes('/thank-you'),
+      // The dedicated video sitemap is submitted separately via robots.txt.
+      filter: (page) => !page.includes('/thank-you') && !page.endsWith('/video-sitemap.xml'),
     }),
   ],
 });

@@ -1,0 +1,251 @@
+---
+interface Props {
+  videoId: string;
+  title: string;
+  durationLabel?: string;
+  mode?: 'poster' | 'embed';
+  class?: string;
+}
+
+const {
+  videoId,
+  title,
+  durationLabel,
+  mode = 'poster',
+  class: className,
+} = Astro.props;
+
+const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&playsinline=1`;
+const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
+---
+<div
+  class:list={['youtube-video', className]}
+  data-youtube-video
+  data-video-id={videoId}
+  data-video-title={title}
+>
+  {mode === 'embed' ? (
+    <iframe
+      class="youtube-video__iframe"
+      src={embedUrl}
+      title={title}
+      loading="eager"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+    ></iframe>
+  ) : (
+    <>
+      <button class="youtube-video__poster" type="button" aria-label={`Play ${title}`}>
+        <img
+          src={thumbnailUrl}
+          width="1280"
+          height="720"
+          alt=""
+          loading="lazy"
+          decoding="async"
+          referrerpolicy="strict-origin-when-cross-origin"
+        />
+        <span class="youtube-video__shade" aria-hidden="true"></span>
+        <span class="youtube-video__play" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img">
+            <path d="M9 7.25v9.5L17 12 9 7.25Z"></path>
+          </svg>
+        </span>
+        <span class="youtube-video__label" aria-hidden="true">Watch video</span>
+        {durationLabel && (
+          <span class="youtube-video__duration" aria-hidden="true">{durationLabel}</span>
+        )}
+      </button>
+      <iframe
+        class="youtube-video__iframe"
+        data-video-iframe
+        data-src={`${embedUrl}&autoplay=1`}
+        title={title}
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+        hidden
+      ></iframe>
+      <noscript>
+        <a class="youtube-video__fallback" href={youtubeUrl}>Watch {title} on YouTube</a>
+      </noscript>
+    </>
+  )}
+</div>
+
+<script>
+  document.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+
+    const button = target.closest<HTMLButtonElement>('.youtube-video__poster');
+    const player = button?.closest<HTMLElement>('[data-youtube-video]');
+    if (!button || !player) return;
+
+    const iframe = player.querySelector<HTMLIFrameElement>('[data-video-iframe]');
+    const source = iframe?.dataset.src;
+    if (!iframe || !source) return;
+
+    iframe.src = source;
+    iframe.hidden = false;
+    button.remove();
+    iframe.focus();
+  });
+</script>
+
+<style>
+  .youtube-video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 18%);
+    border-radius: 18px;
+    background: #050505;
+    box-shadow: 0 20px 55px rgb(0 0 0 / 24%);
+    isolation: isolate;
+  }
+
+  .youtube-video__iframe {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    border: 0;
+  }
+
+  .youtube-video__iframe[hidden] {
+    display: none;
+  }
+
+  .youtube-video__poster {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 0;
+    background: #050505;
+    color: var(--white);
+    font: inherit;
+    letter-spacing: normal;
+    text-align: left;
+    text-transform: none;
+  }
+
+  .youtube-video__poster:hover,
+  .youtube-video__poster:focus-visible {
+    background: #050505;
+    color: var(--white);
+    transform: none;
+  }
+
+  .youtube-video__poster:focus-visible {
+    outline: 3px solid var(--white);
+    outline-offset: -7px;
+  }
+
+  .youtube-video__poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 220ms ease, transform 420ms ease;
+  }
+
+  .youtube-video__poster:hover img,
+  .youtube-video__poster:focus-visible img {
+    filter: brightness(0.88);
+    transform: scale(1.018);
+  }
+
+  .youtube-video__shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgb(0 0 0 / 8%) 42%, rgb(0 0 0 / 62%)),
+      linear-gradient(90deg, rgb(0 0 0 / 24%), transparent 45%);
+  }
+
+  .youtube-video__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    place-items: center;
+    width: clamp(3.7rem, 7vw, 5.25rem);
+    height: clamp(3.7rem, 7vw, 5.25rem);
+    border: 1px solid rgb(255 255 255 / 72%);
+    border-radius: 50%;
+    background: rgb(255 255 255 / 92%);
+    box-shadow: 0 16px 40px rgb(0 0 0 / 34%);
+    color: #050505;
+    transform: translate(-50%, -50%);
+    transition: background 180ms ease, transform 180ms ease;
+  }
+
+  .youtube-video__poster:hover .youtube-video__play,
+  .youtube-video__poster:focus-visible .youtube-video__play {
+    background: var(--white);
+    transform: translate(-50%, -50%) scale(1.07);
+  }
+
+  .youtube-video__play svg {
+    width: 42%;
+    height: 42%;
+    fill: currentColor;
+  }
+
+  .youtube-video__label,
+  .youtube-video__duration {
+    position: absolute;
+    bottom: clamp(0.75rem, 2vw, 1.15rem);
+    padding: 0.4rem 0.62rem;
+    border: 1px solid rgb(255 255 255 / 22%);
+    border-radius: 999px;
+    background: rgb(0 0 0 / 66%);
+    color: var(--white);
+    font-size: 0.64rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+  }
+
+  .youtube-video__label {
+    left: clamp(0.75rem, 2vw, 1.15rem);
+  }
+
+  .youtube-video__duration {
+    right: clamp(0.75rem, 2vw, 1.15rem);
+    letter-spacing: 0.04em;
+  }
+
+  .youtube-video__fallback {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    background: #050505;
+    color: var(--white);
+    text-align: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .youtube-video__poster img,
+    .youtube-video__play {
+      transition: none;
+    }
+  }
+</style>

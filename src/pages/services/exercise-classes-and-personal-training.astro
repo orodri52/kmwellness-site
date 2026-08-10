@@ -4,12 +4,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import LeadForm from "../../components/LeadForm.astro";
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RelatedServices from '../../components/RelatedServices.astro';
+import ServiceVideoFeature from '../../components/ServiceVideoFeature.astro';
+import { exerciseClassesVideo as video } from '../../data/videos';
 import gymFloorPhoto from '../../assets/images/gym-floor.jpg';
 
 const seo = {
   title: 'Exercise Classes | KM Wellness Center | El Paso, TX',
   description:
     'Find top-rated exercise classes near El Paso at KM Wellness Center—boost strength, flexibility, and overall wellness today.',
+  image: video.thumbnailUrl,
 };
 ---
 <BaseLayout {...seo}>
@@ -43,6 +46,12 @@ const seo = {
       piece of a complete wellness strategy focused on long-term health and balance.
     </p>
   </section>
+
+  <ServiceVideoFeature
+    video={video}
+    heading="See our training environment"
+    body="Take a quick look at the coaching and training space behind our personalized exercise programs at KM Wellness Center."
+  />
 
   <section>
     <h2>Wide Variety of Group Fitness Classes</h2>

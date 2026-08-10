@@ -1,0 +1,51 @@
+---
+interface Props {
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  uploadDate: string;
+  duration: string;
+  embedUrl: string;
+  contentUrl?: string;
+  isMainContent?: boolean;
+}
+
+const {
+  name,
+  description,
+  thumbnailUrl,
+  uploadDate,
+  duration,
+  embedUrl,
+  contentUrl,
+  isMainContent = false,
+} = Astro.props;
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  '@id': `${pageUrl}#video`,
+  name,
+  description,
+  thumbnailUrl,
+  uploadDate,
+  duration,
+  embedUrl,
+  ...(contentUrl ? { contentUrl } : {}),
+  url: pageUrl,
+  ...(isMainContent
+    ? {
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': pageUrl,
+        },
+      }
+    : {}),
+  publisher: { '@id': `${site}/#organization` },
+  isPartOf: { '@id': `${site}/#website` },
+  inLanguage: 'en-US',
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

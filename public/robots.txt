@@ -5,3 +5,4 @@ Disallow: /thank-you/
 # Correct production sitemap (the current live site points to the WRONG domain —
 # this fixes it). @astrojs/sitemap generates the index below at build time.
 Sitemap: https://kmwellnesscenter.com/sitemap-index.xml
+Sitemap: https://kmwellnesscenter.com/video-sitemap.xml

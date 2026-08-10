@@ -4,12 +4,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import LeadForm from "../../components/LeadForm.astro";
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RelatedServices from '../../components/RelatedServices.astro';
+import ServiceVideoFeature from '../../components/ServiceVideoFeature.astro';
+import { medicalNutritionTherapyVideo as video } from '../../data/videos';
 import mntPhoto from '../../assets/images/medical-nutrition-education.jpg';
 
 const seo = {
   title: 'Medical Nutrition Therapy | KM Wellness Center | El Paso, TX',
   description:
     'Optimize your health with personalized medical nutrition therapy at KM Wellness Center. Discover tailored plans for lasting wellness.',
+  image: video.thumbnailUrl,
 };
 ---
 <BaseLayout {...seo}>
@@ -46,6 +49,12 @@ const seo = {
     </p>
   </section>
 
+  <ServiceVideoFeature
+    video={video}
+    heading="See personalized nutrition care in action"
+    body="Take a quick look inside medical nutrition therapy at KM Wellness Center and the one-on-one, dietitian-led care behind every plan."
+  />
+
   <section>
     <h2>The Benefits of Nutrition Therapy</h2>
     <ul>
@@ -66,12 +75,14 @@ const seo = {
   </section>
 
   <section>
-    <h2>Medical Nutrition Therapy for Weight Loss</h2>
+    <h2>Medical Nutrition Therapy for Weight-Related Health Conditions</h2>
     <p>
       Obesity is often linked to other health conditions such as Type 2 diabetes, heart disease, and
       metabolic syndrome. Our team provides metabolic assessments that help patients understand how
       their bodies process food and burn energy, emphasizing sustainable changes rather than crash
-      diets.
+      diets. If you're not managing a diagnosed condition and simply want ongoing support building
+      healthier habits, our <a href="/services/medical-nutrition-therapy-and-nutrition-counseling/">nutrition counseling</a>
+      service may be a better fit.
     </p>
   </section>
 
