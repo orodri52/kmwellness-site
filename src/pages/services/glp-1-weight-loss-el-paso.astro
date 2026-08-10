@@ -1,0 +1,169 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FaqSchema from '../../components/FaqSchema.astro';
+import RelatedServices from '../../components/RelatedServices.astro';
+import prescriptionPhoto from '../../assets/images/weight-loss-prescription-consult.jpg';
+
+const seo = {
+  title: 'GLP-1 Weight Loss Counseling in El Paso | KM Wellness Center',
+  description:
+    'Medically supervised GLP-1 weight-loss treatment in El Paso, coordinated with Kingsway Medical Center and paired with nutrition counseling from KM Wellness Center’s Registered Dietitian.',
+};
+
+const faqs = [
+  {
+    question: 'What is a GLP-1 medication?',
+    answer:
+      'GLP-1 receptor agonists are a class of prescription medications that mimic a hormone called glucagon-like peptide-1 (GLP-1), which targets areas of the brain that regulate appetite and food intake, according to the National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK).',
+  },
+  {
+    question: 'Which GLP-1 medications does KM Wellness Center offer?',
+    answer:
+      'We coordinate medically supervised treatment using compounded semaglutide and compounded tirzepatide, prescribed and monitored by the medical providers at Kingsway Medical Center. Medication cost varies by dosage and is discussed during your medical consultation.',
+  },
+  {
+    question: 'Who oversees GLP-1 treatment at KM Wellness Center?',
+    answer:
+      'This is a collaborative program: Kingsway Medical Center’s Board-Certified Family Nurse Practitioners and a Medical Doctor handle medical evaluation and prescribing, while Daniel Chavez, RD, LD, CSCS, provides nutrition counseling, body composition analysis, metabolic testing, and ongoing lifestyle coaching to support safety, muscle preservation, and long-term results.',
+  },
+  {
+    question: 'Do I need labs or a physical exam before starting?',
+    answer:
+      'Every patient undergoes a medical evaluation with Kingsway Medical Center, which considers BMI, medical history, current medications, lab results, and any contraindications to GLP-1 medication. If you have a chronic medical condition, recent lab work is generally required. If you don’t have a primary care provider, we can help arrange self-pay lab testing.',
+  },
+  {
+    question: 'Is this available by telehealth?',
+    answer:
+      'Yes. We offer both in-person and telehealth appointments whenever clinically appropriate. Telehealth availability depends on your insurance or self-pay status.',
+  },
+  {
+    question: 'What does nutrition counseling cost if it isn’t covered by insurance?',
+    answer:
+      'Self-pay nutrition counseling is $150 for an initial assessment and $130 for follow-up visits. Medication costs are separate and are discussed during your medical consultation with Kingsway Medical Center.',
+  },
+];
+---
+<BaseLayout {...seo}>
+  <FaqSchema slot="head" items={faqs} />
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }, { name: 'GLP-1 Weight Loss Counseling', href: '/services/glp-1-weight-loss-el-paso/' }]} />
+  <h1>GLP-1 Weight Loss Counseling in El Paso, TX</h1>
+
+  <p>
+    GLP-1 medications are one of the most requested weight-loss options in El Paso right now. At KM
+    Wellness Center, GLP-1 care is a collaborative program: the medical providers at
+    <a href="https://kingswaymedical.com/" target="_blank" rel="noopener noreferrer">Kingsway Medical Center</a>
+    &mdash; Board-Certified Family Nurse Practitioners and a Medical Doctor &mdash; handle your medical
+    evaluation and prescribing, while our Registered &amp; Licensed Dietitian, Daniel Chavez, RD, LD,
+    CSCS, provides the nutrition counseling, body composition analysis, metabolic testing, and lifestyle
+    coaching that runs alongside your treatment. This page complements our broader
+    <a href="/services/weight-loss-prescription-disease-management/">weight loss prescription &amp; disease management</a>
+    services.
+  </p>
+
+  <Image
+    class="feature-photo"
+    src={prescriptionPhoto}
+    alt="Provider discussing GLP-1 weight-loss counseling with a client at KM Wellness Center in El Paso"
+    widths={[420, 640, 860]}
+    sizes="(min-width: 900px) 860px, 100vw"
+    format="webp"
+    quality={75}
+    loading="lazy"
+    decoding="async"
+  />
+
+  <section>
+    <h2>What Is a GLP-1 Medication?</h2>
+    <p>
+      GLP-1 receptor agonists are prescription medications that mimic a naturally occurring hormone called
+      glucagon-like peptide-1 (GLP-1), which targets areas of the brain that regulate appetite and food
+      intake. Medications in this class don't replace physical activity or healthy eating habits as a way
+      to lose weight &mdash; they're intended to work alongside them.
+    </p>
+    <p class="source-note">
+      Source: <a href="https://www.niddk.nih.gov/health-information/weight-management/prescription-medications-treat-overweight-obesity" target="_blank" rel="noopener noreferrer">National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK), "Prescription Medications to Treat Overweight &amp; Obesity"</a>
+    </p>
+  </section>
+
+  <section>
+    <h2>How Treatment Works at KM Wellness Center</h2>
+    <p>We coordinate medically supervised treatment using <strong>compounded semaglutide</strong> and <strong>compounded tirzepatide</strong>. Care is split between two teams working together:</p>
+    <ul>
+      <li><strong>Kingsway Medical Center</strong> &mdash; Board-Certified Family Nurse Practitioners and a Medical Doctor conduct your medical evaluation, determine eligibility, and manage prescribing.</li>
+      <li><strong>Daniel Chavez, RD, LD, CSCS</strong> &mdash; provides nutrition counseling, body composition analysis, metabolic testing, and lifestyle coaching to help maximize safety, preserve muscle mass, and support long-term weight management.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Why We Pair GLP-1 Treatment With Nutrition Counseling</h2>
+    <p>
+      NIDDK-reviewed research found that adults who combined prescription weight-loss medication with
+      behavioral changes achieved 3% to 12% greater weight loss over one year compared to those using
+      lifestyle changes alone. That's the reasoning behind our approach &mdash; medication addresses
+      appetite, and nutrition counseling addresses the muscle preservation, eating habits, and long-term
+      sustainability that medication alone doesn't.
+    </p>
+    <p class="source-note">
+      Source: <a href="https://www.niddk.nih.gov/health-information/weight-management/prescription-medications-treat-overweight-obesity" target="_blank" rel="noopener noreferrer">NIDDK, "Prescription Medications to Treat Overweight &amp; Obesity"</a>
+    </p>
+  </section>
+
+  <section>
+    <h2>Eligibility &amp; What to Expect</h2>
+    <p>Every patient undergoes a medical evaluation with Kingsway Medical Center. Eligibility is based on factors including:</p>
+    <ul>
+      <li>BMI</li>
+      <li>Medical history</li>
+      <li>Current medications</li>
+      <li>Laboratory results</li>
+      <li>Contraindications to GLP-1 medications</li>
+    </ul>
+    <p>
+      If you have a chronic medical condition, recent lab work is generally required. If you don't have
+      known medical conditions, lab testing is encouraged but not always necessary. If you don't have a
+      primary care provider, we can help arrange lab testing through self-pay laboratory services.
+    </p>
+    <p>Appointments are available both <strong>in person</strong> and via <strong>telehealth</strong>, when clinically appropriate.</p>
+  </section>
+
+  <section>
+    <h2>Cost</h2>
+    <p>
+      Self-pay nutrition counseling: <strong>$150</strong> for your initial assessment, <strong>$130</strong>
+      for follow-up visits. Medication cost varies by dosage and is discussed during your medical
+      consultation with Kingsway Medical Center.
+    </p>
+    <p><a href="/contact-us/">Make an appointment</a></p>
+  </section>
+
+  <section>
+    <h2>Frequently Asked Questions</h2>
+    {faqs.map((f) => (
+      <details>
+        <summary>{f.question}</summary>
+        <p>{f.answer}</p>
+      </details>
+    ))}
+  </section>
+
+  <RelatedServices current="/services/glp-1-weight-loss-el-paso/" />
+
+  <LeadForm source="glp-1-weight-loss" service="Weight Loss Program" />
+</BaseLayout>
+
+<style>
+  .feature-photo {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg, 12px);
+    margin: 1.5rem 0;
+  }
+  .source-note {
+    font-size: 0.8rem;
+    color: var(--support-muted, #666);
+    margin-top: -0.5rem;
+  }
+</style>

@@ -382,7 +382,11 @@ button:hover {
   display: none;
 }
 
-.primary-nav li ul {
+/* Direct-child combinator only — this is the flat single-column dropdown
+   (used by "About"). Must NOT match the <ul> lists nested inside the
+   .mega-menu-group panels below (those are 3 levels deep under the <li>),
+   or the mega-menu's lists get yanked out and stacked on top of each other. */
+.primary-nav li > ul {
   position: absolute;
   top: 100%;
   left: 50%;
@@ -402,14 +406,14 @@ button:hover {
   transition: opacity 160ms ease, transform 160ms ease;
 }
 
-.primary-nav li:hover ul,
-.primary-nav li:focus-within ul {
+.primary-nav li:hover > ul,
+.primary-nav li:focus-within > ul {
   opacity: 1;
   pointer-events: auto;
   transform: translate(-50%, 0);
 }
 
-.primary-nav li ul a {
+.primary-nav li > ul a {
   justify-content: flex-start;
   min-height: auto;
   width: 100%;
@@ -421,13 +425,78 @@ button:hover {
   text-transform: none;
 }
 
-.primary-nav li ul a:hover {
+.primary-nav li > ul a:hover {
   background: #262626;
   color: var(--white);
 }
 
 .primary-nav > ul > li > a:hover,
 .primary-nav > ul > li > a:focus-visible {
+  color: var(--white);
+}
+
+/* Services mega-menu: grouped, multi-column panel (replaces a single 20-item
+   flat dropdown). Desktop only — mobile styles are in the breakpoint below. */
+.mega-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 0.5rem 1.75rem;
+  width: max-content;
+  max-width: min(960px, 90vw);
+  margin: 0;
+  padding: 1.35rem;
+  border: 1px solid #404040;
+  border-radius: var(--radius-sm);
+  background: #171717;
+  box-shadow: 0 18px 45px rgb(0 0 0 / 34%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 4px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.primary-nav li:hover .mega-menu,
+.primary-nav li:focus-within .mega-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.mega-menu-heading {
+  margin: 0 0 0.5rem;
+  color: #a3a3a3;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mega-menu-group ul {
+  display: grid;
+  gap: 0.1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mega-menu-group a {
+  display: block;
+  min-height: auto;
+  padding: 0.4rem 0.5rem;
+  border-radius: 8px;
+  color: #d4d4d4;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  line-height: 1.3;
+}
+
+.mega-menu-group a:hover {
+  background: #262626;
   color: var(--white);
 }
 
@@ -1943,7 +2012,7 @@ textarea:focus {
     transform: rotate(180deg);
   }
 
-  .primary-nav li ul {
+  .primary-nav li > ul {
     grid-column: 1 / -1;
     position: static;
     display: none;
@@ -1970,10 +2039,50 @@ textarea:focus {
     display: grid;
   }
 
-  .primary-nav li ul a {
+  .primary-nav li > ul a {
     min-height: 2.4rem;
     padding: 0.45rem 0.65rem;
     border-radius: 0;
+    font-size: 0.68rem;
+    line-height: 1.35;
+  }
+
+  .primary-nav .mega-menu {
+    grid-column: 1 / -1;
+    position: static;
+    display: none;
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: none;
+    margin: 0 0 0.5rem;
+    padding: 0.25rem 0 0.35rem 0.75rem;
+    border: 0;
+    border-left: 2px solid #404040;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    gap: 0.75rem;
+  }
+
+  .primary-nav li.submenu-open > .mega-menu {
+    display: grid;
+  }
+
+  /* Tapping the toggle button focuses it, which triggers :focus-within on the
+     parent <li> and re-applies the desktop hover-reveal transform (translateX
+     -50%) — shifting the whole panel off-screen. Cancel it here, same fix
+     already applied to the flat dropdown's `> ul` above. */
+  .primary-nav li:hover .mega-menu,
+  .primary-nav li:focus-within .mega-menu {
+    transform: none;
+  }
+
+  .mega-menu-group a {
+    min-height: 2.4rem;
+    padding: 0.45rem 0.65rem;
     font-size: 0.68rem;
     line-height: 1.35;
   }

@@ -1,5 +1,13 @@
 ---
-import { business, nav } from '../config/site';
+import { business, nav, services, serviceCategories } from '../config/site';
+
+// Group the service catalog by category, in `serviceCategories` order, for
+// the Services mega-menu. Single source of truth lives in site.ts — nothing
+// to keep in sync here.
+const serviceGroups = serviceCategories.map((category) => ({
+  category,
+  items: services.filter((s) => s.category === category),
+}));
 ---
 <header class="site-header">
   <div class="utility-bar" aria-label="Clinic contact details">
@@ -28,7 +36,7 @@ import { business, nav } from '../config/site';
     <nav class="primary-nav" id="primary-navigation" aria-label="Primary">
       <ul>
         {nav.map((item) => (
-          <li class:list={[{'has-children': 'children' in item && item.children}]}>
+          <li class:list={[{'has-children': ('children' in item && item.children) || ('mega' in item && item.mega)}]}>
             <a href={item.href}>{item.label}</a>
             {'children' in item && item.children && (
               <>
@@ -45,6 +53,30 @@ import { business, nav } from '../config/site';
                     <li><a href={child.href}>{child.label}</a></li>
                   ))}
                 </ul>
+              </>
+            )}
+            {'mega' in item && item.mega && (
+              <>
+                <button
+                  type="button"
+                  class="submenu-toggle"
+                  aria-expanded="false"
+                  aria-label={`Toggle ${item.label} submenu`}
+                >
+                  <span aria-hidden="true"></span>
+                </button>
+                <div class="mega-menu">
+                  {serviceGroups.map((group) => (
+                    <div class="mega-menu-group">
+                      <p class="mega-menu-heading">{group.category}</p>
+                      <ul>
+                        {group.items.map((s) => (
+                          <li><a href={s.href}>{s.name}</a></li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
               </>
             )}
           </li>

@@ -1,0 +1,80 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FaqSchema from '../../components/FaqSchema.astro';
+import RelatedServices from '../../components/RelatedServices.astro';
+import consultPhoto from '../../assets/images/nutrition-counseling-consult.jpg';
+
+const seo = {
+  title: 'PCOS Nutrition in El Paso, TX | KM Wellness Center',
+  description:
+    'PCOS nutrition counseling in El Paso from Daniel Chavez, RD, LD, CSCS at KM Wellness Center — part of our broader women’s health nutrition services.',
+};
+
+const faqs = [
+  {
+    question: 'Does KM Wellness Center see patients with PCOS?',
+    answer:
+      'Yes. Daniel Chavez, RD, LD, CSCS, provides nutrition counseling for PCOS as part of our women’s health nutrition services.',
+  },
+  {
+    question: 'Does insurance cover PCOS nutrition counseling?',
+    answer:
+      'Coverage varies by plan. Our team will help verify your specific benefits and explain your options before you begin care.',
+  },
+];
+---
+<BaseLayout {...seo}>
+  <FaqSchema slot="head" items={faqs} />
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }, { name: 'PCOS Nutrition', href: '/services/pcos-nutrition-el-paso/' }]} />
+  <h1>PCOS Nutrition in El Paso, TX</h1>
+
+  <p>
+    Daniel Chavez, RD, LD, CSCS, provides nutrition counseling for patients with PCOS (polycystic ovary
+    syndrome), as part of our broader <a href="/services/womens-health-nutrition-el-paso/">women's health
+    nutrition</a> services. PCOS is also closely tied to fertility optimization &mdash; another area we
+    support.
+  </p>
+
+  <Image
+    class="feature-photo"
+    src={consultPhoto}
+    alt="Daniel Chavez, RD, providing one-on-one nutrition counseling at KM Wellness Center in El Paso"
+    widths={[420, 640, 860]}
+    sizes="(min-width: 900px) 860px, 100vw"
+    format="webp"
+    quality={75}
+    loading="lazy"
+    decoding="async"
+  />
+
+  <section>
+    <h2>Cost</h2>
+    <p>
+      Self-pay pricing: <strong>$150</strong> for an initial nutrition assessment, <strong>$130</strong> for
+      follow-up visits. Coverage varies by insurance plan &mdash; our team can help verify your benefits
+      before you begin care.
+    </p>
+    <p><a href="/contact-us/">Make an appointment</a></p>
+  </section>
+
+  <section>
+    <h2>Frequently Asked Questions</h2>
+    {faqs.map((f) => (
+      <details>
+        <summary>{f.question}</summary>
+        <p>{f.answer}</p>
+      </details>
+    ))}
+  </section>
+
+  <RelatedServices current="/services/pcos-nutrition-el-paso/" />
+
+  <LeadForm source="pcos-nutrition" service="Nutrition Counseling" />
+</BaseLayout>
+
+<style>
+  .feature-photo { width: 100%; height: auto; border-radius: var(--radius-lg, 12px); margin: 1.5rem 0; }
+</style>

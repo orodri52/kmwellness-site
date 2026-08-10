@@ -52,8 +52,13 @@ const hearOptions = [
   </p>
 
   <p>
-    <label for="message">Message *</label>
-    <textarea id="message" name="message" rows="5" required></textarea>
+    <label for="message">Message (optional)</label>
+    <textarea id="message" name="message" rows="5" placeholder="e.g. scheduling questions, insurance questions, best times to reach you"></textarea>
+    <span class="field-note">
+      Please don't include medical history, symptoms, diagnoses, or other health details here —
+      this form isn't a secure channel for that. Our team will collect any health information
+      directly and securely once your appointment is scheduled.
+    </span>
   </p>
 
   <div class="contact-form-turnstile" data-turnstile></div>
@@ -61,6 +66,12 @@ const hearOptions = [
 
   <p>
     <button type="submit">Submit</button>
+  </p>
+
+  <p class="contact-form-fineprint">
+    For your privacy, please don't submit protected health information (medical history, diagnoses,
+    lab results, etc.) through this website. By submitting, you agree to be contacted by KM Wellness
+    Center.
   </p>
 </form>
 
@@ -199,6 +210,22 @@ const hearOptions = [
   .contact-form-status {
     color: var(--ink);
     font-weight: 700;
+  }
+
+  .field-note {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--ink-soft, #666);
+    font-size: 0.78rem;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .contact-form-fineprint {
+    margin-top: 0.5rem;
+    color: var(--ink-soft, #666);
+    font-size: 0.78rem;
+    line-height: 1.4;
   }
 
   .hp {

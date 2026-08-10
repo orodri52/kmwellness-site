@@ -70,6 +70,7 @@ export const practitioner = {
     'https://www.instagram.com/texasdietetics/',
     'https://www.healthprofs.com/us/nutritionists-dietitians/daniel-chavez-el-paso-tx/1205157',
     'https://www.healthgrades.com/providers/daniel-chavez-uppj26',
+    'https://www.linkedin.com/in/daniel-chavez-rd-ld-cscs-cissn-880894149/',
   ].filter(Boolean),
 } as const;
 
@@ -77,18 +78,40 @@ export const practitioner = {
 // ReviewsSection.astro and Schema.astro), so they can be refreshed as one
 // hand-maintained snapshot without touching this file.
 
-// Canonical service catalog. Single source of truth for schema (hasOfferCatalog)
-// and the RelatedServices internal-linking mesh. Order = rough priority.
+// Ordered list of category labels — drives the nav mega-menu column order.
+export const serviceCategories = [
+  'Nutrition Counseling',
+  'Weight Management & Medical',
+  'Condition-Specific Nutrition',
+  'Fitness, Testing & Programs',
+] as const;
+
+// Canonical service catalog. Single source of truth for schema (hasOfferCatalog),
+// the nav mega-menu (grouped by `category`), and the RelatedServices
+// internal-linking mesh (filtered to same-category pages). Order = rough
+// priority within each category.
 export const services = [
-  { name: 'Nutrition Counseling', href: '/services/medical-nutrition-therapy-and-nutrition-counseling/' },
-  { name: 'Medical Nutrition Therapy', href: '/services/medical-nutrition/' },
-  { name: 'Nutritionist / Registered Dietitian', href: '/services/nutritionist-el-paso/' },
-  { name: 'Weight Management', href: '/services/weight-management/' },
-  { name: 'Weight Loss Prescription & Meal Prep', href: '/services/weight-loss-prescription-disease-management/' },
-  { name: 'Metabolic Assessment', href: '/metabolic-assessment-el-paso/' },
-  { name: 'Exercise Classes & Personal Training', href: '/services/exercise-classes-and-personal-training/' },
-  { name: 'Personal Training', href: '/personal-training/' },
-  { name: 'Additional Services (Meal Prep, Smoothie Bar, Supplements)', href: '/services/additional-services/' },
+  { name: 'Nutrition Counseling', href: '/services/medical-nutrition-therapy-and-nutrition-counseling/', category: 'Nutrition Counseling' },
+  { name: 'Medical Nutrition Therapy', href: '/services/medical-nutrition/', category: 'Nutrition Counseling' },
+  { name: 'Nutritionist / Registered Dietitian', href: '/services/nutritionist-el-paso/', category: 'Nutrition Counseling' },
+  { name: 'Additional Services (Meal Prep, Smoothie Bar, Supplements)', href: '/services/additional-services/', category: 'Nutrition Counseling' },
+  { name: 'Weight Management', href: '/services/weight-management/', category: 'Weight Management & Medical' },
+  { name: 'Weight Loss Prescription & Meal Prep', href: '/services/weight-loss-prescription-disease-management/', category: 'Weight Management & Medical' },
+  { name: 'GLP-1 Weight Loss Counseling', href: '/services/glp-1-weight-loss-el-paso/', category: 'Weight Management & Medical' },
+  { name: 'Diabetes Nutrition', href: '/services/diabetes-nutrition-el-paso/', category: 'Condition-Specific Nutrition' },
+  { name: "Women's Health Nutrition", href: '/services/womens-health-nutrition-el-paso/', category: 'Condition-Specific Nutrition' },
+  { name: 'PCOS Nutrition', href: '/services/pcos-nutrition-el-paso/', category: 'Condition-Specific Nutrition' },
+  { name: 'Digestive Health Nutrition', href: '/services/digestive-health-nutrition-el-paso/', category: 'Condition-Specific Nutrition' },
+  { name: 'Bariatric Nutrition', href: '/services/bariatric-nutrition-el-paso/', category: 'Condition-Specific Nutrition' },
+  { name: 'Pediatric Nutrition', href: '/services/pediatric-nutrition-el-paso/', category: 'Condition-Specific Nutrition' },
+  { name: 'Sports Nutrition', href: '/services/sports-nutrition-el-paso/', category: 'Condition-Specific Nutrition' },
+  { name: 'Fatty Liver (NAFLD) Nutrition', href: '/services/fatty-liver-nutrition-el-paso/', category: 'Condition-Specific Nutrition' },
+  { name: 'Kidney Disease Nutrition', href: '/services/kidney-disease-nutrition-el-paso/', category: 'Condition-Specific Nutrition' },
+  { name: 'Cholesterol & Heart Health Nutrition', href: '/services/cholesterol-heart-health-nutrition-el-paso/', category: 'Condition-Specific Nutrition' },
+  { name: 'Exercise Classes & Personal Training', href: '/services/exercise-classes-and-personal-training/', category: 'Fitness, Testing & Programs' },
+  { name: 'Personal Training', href: '/personal-training/', category: 'Fitness, Testing & Programs' },
+  { name: 'Metabolic Assessment', href: '/metabolic-assessment-el-paso/', category: 'Fitness, Testing & Programs' },
+  { name: 'Corporate Wellness Programs', href: '/services/corporate-wellness-el-paso/', category: 'Fitness, Testing & Programs' },
 ] as const;
 
 // Primary navigation. `children` render as a nested <ul> (no UI styling here —
@@ -98,16 +121,9 @@ export const nav = [
   {
     label: 'Services',
     href: '/services/',
-    children: [
-      { label: 'Medical Nutrition Therapy', href: '/services/medical-nutrition/' },
-      { label: 'Nutritional Counseling', href: '/services/medical-nutrition-therapy-and-nutrition-counseling/' },
-      { label: 'Personal Training', href: '/personal-training/' },
-      { label: 'Exercise Classes', href: '/services/exercise-classes-and-personal-training/' },
-      { label: 'Our Nutritionist', href: '/services/nutritionist-el-paso/' },
-      { label: 'Weight Loss Prescription & Meal Preps', href: '/services/weight-loss-prescription-disease-management/' },
-      { label: 'Weight Management', href: '/services/weight-management/' },
-      { label: 'Metabolic & Body Composition Tests', href: '/metabolic-assessment-el-paso/' },
-    ],
+    // Rendered as a grouped mega-menu by Header.astro, sourced live from
+    // `services` + `serviceCategories` above — no separate list to keep in sync.
+    mega: true,
   },
   { label: 'Success Stories', href: '/success-stories/' },
   { label: 'Blog', href: '/blog/' },

@@ -3,24 +3,50 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadForm from "../components/LeadForm.astro";
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FaqSchema from '../components/FaqSchema.astro';
 import RelatedServices from '../components/RelatedServices.astro';
 import personalTrainingPhoto from '../assets/images/personal-training.jpg';
 
 const seo = {
-  title: 'El Paso Personal Trainer | KM Wellness Center | El Paso, TX',
+  title: 'Personal Trainer in El Paso, TX | KM Wellness Center',
   description:
-    'Achieve your fitness goals with an expert El Paso personal trainer at KM Wellness Center. Customized strength, cardio, and holistic fitness programs for all levels.',
+    'Personal training in El Paso led by Brenda Alvarez, MS, Lead Kinesiologist, and Aaron Vazquez, CPT, with programming aligned to nutrition by our Registered Dietitian. One-on-one, semi-private, and small group options.',
 };
+
+const faqs = [
+  {
+    question: 'Who will I actually train with at KM Wellness Center?',
+    answer:
+      'Our exercise team includes Brenda Alvarez, MS, Lead Kinesiologist; Aaron Vazquez, BS, Certified Personal Trainer; and Daniel Chavez, RD, LD, CSCS. Exercise programming is primarily designed and supervised by Brenda, who works closely with Daniel to ensure your training aligns with your nutrition plan.',
+  },
+  {
+    question: 'What happens in my first session?',
+    answer:
+      'Every new client receives a complimentary fitness consultation: a needs assessment, health and medical history review, exercise history, lifestyle assessment, goal discussion, injury and movement screening, contraindication review, and a baseline physical assessment covering body composition, mobility, strength, balance, cardiovascular fitness, posture, and movement quality. From there, we build an individualized exercise program around your current abilities and goals.',
+  },
+  {
+    question: 'Is training one-on-one, or are there other options?',
+    answer:
+      'We offer one-on-one personal training, semi-private training (2 clients), and small group training (up to 6 participants).',
+  },
+  {
+    question: 'How much does personal training cost?',
+    answer:
+      'We offer both contract and non-contract training options. Because programs are individualized, contact us for current pricing and package details.',
+  },
+];
 ---
 <BaseLayout {...seo}>
+  <FaqSchema slot="head" items={faqs} />
   <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }, { name: 'Personal Training', href: '/personal-training/' }]} />
-  <h1>El Paso Personal Trainer: Achieve Your Fitness Goals</h1>
+  <h1>Personal Trainer in El Paso, TX</h1>
 
   <p>
-    Are you looking for a certified personal trainer in El Paso to help you achieve your fitness and
-    wellness goals? At KM Wellness Center, we specialize in personalized exercise classes and
-    one-on-one training programs tailored to meet your needs — whether you're working toward weight
-    loss, strength building, or overall health.
+    Personal training at KM Wellness Center is built around a real care team, not a single trainer working
+    in isolation. Exercise programming is led by <strong>Brenda Alvarez, MS, Lead Kinesiologist</strong>,
+    delivered with <strong>Aaron Vazquez, BS, Certified Personal Trainer</strong>, and aligned with your
+    nutrition plan by <strong>Daniel Chavez, RD, LD, CSCS</strong> &mdash; so your training, recovery, and
+    eating habits all move in the same direction.
   </p>
 
   <Image
@@ -36,31 +62,48 @@ const seo = {
   />
 
   <section>
-    <h2>Custom Fitness Plans in El Paso</h2>
+    <h2>Your First Session: A Complimentary Fitness Consultation</h2>
+    <p>Before you start training, every new client gets a complimentary consultation that covers:</p>
     <ul>
-      <li><strong>Strength Training:</strong> Build muscle and improve endurance with expert guidance.</li>
-      <li><strong>Cardio Workouts:</strong> Boost cardiovascular health and burn calories effectively.</li>
-      <li><strong>Flexibility and Balance Exercises:</strong> Enhance mobility and prevent injury through targeted sessions.</li>
+      <li>Comprehensive needs assessment &amp; goal discussion</li>
+      <li>Health and medical history review</li>
+      <li>Exercise history and lifestyle assessment</li>
+      <li>Injury, movement, and contraindication screening</li>
+      <li>Baseline physical assessment: body composition, mobility, strength, balance, cardiovascular fitness, posture, and movement quality</li>
     </ul>
+    <p>From there, we build an individualized exercise program based on your current abilities and goals &mdash; not a generic template.</p>
   </section>
 
   <section>
-    <h2>Holistic Fitness in El Paso</h2>
+    <h2>Training Formats</h2>
     <ul>
-      <li><strong>Initial Fitness Assessments:</strong> Understand your current health and fitness levels to set realistic goals.</li>
-      <li><strong>Nutritional Support:</strong> Guidance on healthy eating to complement your exercise plan.</li>
-      <li><strong>Mental and Emotional Support:</strong> Stay motivated and focused on achieving long-term results.</li>
+      <li><strong>One-on-One Personal Training:</strong> Fully individualized attention every session.</li>
+      <li><strong>Semi-Private Training:</strong> Train alongside one other client (2 clients per session).</li>
+      <li><strong>Small Group Training:</strong> Supportive group sessions capped at 6 participants.</li>
     </ul>
+    <p>We offer both contract and non-contract options. Because programs are individualized, <a href="/contact-us/">contact us</a> for current pricing and packages.</p>
   </section>
 
   <section>
-    <h2>Weight Loss Coach in El Paso</h2>
+    <h2>Training That's Connected to Your Nutrition Plan</h2>
     <p>
-      Our weight loss coach in El Paso provides expert support to help you shed pounds safely and
-      sustainably. We combine personalized fitness plans with nutrition strategies to create a program
-      that fits your lifestyle, with a medically supervised approach to keep you on track.
+      Because Daniel Chavez is both a Registered Dietitian and a Certified Strength &amp; Conditioning
+      Specialist, your exercise programming isn't designed separately from your nutrition plan. If you're
+      also working with us on <a href="/services/weight-management/">weight management</a> or
+      <a href="/services/glp-1-weight-loss-el-paso/">GLP-1 weight loss counseling</a>, Brenda's programming
+      is coordinated with that care rather than treated as a separate service.
     </p>
     <p><a href="/contact-us/">Make an appointment</a></p>
+  </section>
+
+  <section>
+    <h2>Frequently Asked Questions</h2>
+    {faqs.map((f) => (
+      <details>
+        <summary>{f.question}</summary>
+        <p>{f.answer}</p>
+      </details>
+    ))}
   </section>
 
   <RelatedServices current="/personal-training/" />

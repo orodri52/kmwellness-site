@@ -1,0 +1,90 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FaqSchema from '../../components/FaqSchema.astro';
+import RelatedServices from '../../components/RelatedServices.astro';
+import kidneyPhoto from '../../assets/images/consultation-meal-plan.jpg';
+
+const seo = {
+  title: 'Kidney Disease Nutrition in El Paso, TX | KM Wellness Center',
+  description:
+    'Medical nutrition therapy for chronic kidney disease (CKD) in El Paso, from Daniel Chavez, RD, LD, CSCS at KM Wellness Center.',
+};
+
+const faqs = [
+  {
+    question: 'Does KM Wellness Center work with kidney disease patients?',
+    answer:
+      'Daniel Chavez, RD, LD, CSCS, provides medical nutrition therapy for chronic kidney disease (CKD) as part of our chronic disease management services.',
+  },
+  {
+    question: 'Does insurance cover kidney disease nutrition counseling?',
+    answer:
+      'Coverage varies by plan. Our team will help verify your specific benefits and explain your options before you begin care.',
+  },
+];
+---
+<BaseLayout {...seo}>
+  <FaqSchema slot="head" items={faqs} />
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }, { name: 'Kidney Disease Nutrition', href: '/services/kidney-disease-nutrition-el-paso/' }]} />
+  <h1>Kidney Disease Nutrition in El Paso, TX</h1>
+
+  <p>
+    Daniel Chavez, RD, LD, CSCS, provides medical nutrition therapy for
+    <strong>chronic kidney disease (CKD)</strong>, using practical, kidney-friendly meal guidance built
+    around your individual lab results and stage of disease.
+  </p>
+
+  <Image
+    class="feature-photo"
+    src={kidneyPhoto}
+    alt="Daniel Chavez, RD, reviewing a kidney-friendly meal guide with a client at KM Wellness Center in El Paso"
+    widths={[420, 640, 860]}
+    sizes="(min-width: 900px) 860px, 100vw"
+    format="webp"
+    quality={75}
+    loading="lazy"
+    decoding="async"
+  />
+
+  <section>
+    <h2>What's Included</h2>
+    <p>
+      Kidney disease nutrition counseling is individualized to your lab results and stage of CKD, and may
+      be coordinated alongside related conditions such as diabetes or hypertension. See our
+      <a href="/services/diabetes-nutrition-el-paso/">diabetes nutrition</a> and
+      <a href="/services/cholesterol-heart-health-nutrition-el-paso/">cholesterol &amp; heart health
+      nutrition</a> pages if those also apply to your care.
+    </p>
+  </section>
+
+  <section>
+    <h2>Cost</h2>
+    <p>
+      Self-pay pricing: <strong>$150</strong> for an initial nutrition assessment, <strong>$130</strong> for
+      follow-up visits. Coverage varies by insurance plan &mdash; our team can help verify your benefits
+      before you begin care.
+    </p>
+    <p><a href="/contact-us/">Make an appointment</a></p>
+  </section>
+
+  <section>
+    <h2>Frequently Asked Questions</h2>
+    {faqs.map((f) => (
+      <details>
+        <summary>{f.question}</summary>
+        <p>{f.answer}</p>
+      </details>
+    ))}
+  </section>
+
+  <RelatedServices current="/services/kidney-disease-nutrition-el-paso/" />
+
+  <LeadForm source="kidney-disease-nutrition" service="Nutrition Counseling" />
+</BaseLayout>
+
+<style>
+  .feature-photo { width: 100%; height: auto; border-radius: var(--radius-lg, 12px); margin: 1.5rem 0; }
+</style>

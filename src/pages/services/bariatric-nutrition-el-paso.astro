@@ -1,0 +1,89 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FaqSchema from '../../components/FaqSchema.astro';
+import RelatedServices from '../../components/RelatedServices.astro';
+import consultPhoto from '../../assets/images/nutrition-counseling-consult.jpg';
+
+const seo = {
+  title: 'Bariatric Nutrition in El Paso, TX | KM Wellness Center',
+  description:
+    'Pre- and post-bariatric surgery nutrition care in El Paso from Daniel Chavez, RD, LD, CSCS, working alongside bariatric surgeon Dr. Jorge Acosta.',
+};
+
+const faqs = [
+  {
+    question: 'Do you work with patients before and after bariatric surgery?',
+    answer:
+      'Yes. Daniel Chavez, RD, LD, CSCS, works closely with bariatric surgeon Dr. Jorge Acosta to provide nutrition care before and after procedures including sleeve gastrectomy and gastric bypass.',
+  },
+  {
+    question: 'What does bariatric nutrition care include?',
+    answer:
+      'Long-term bariatric nutrition management, vitamin and mineral supplementation guidance, and support for weight-loss plateaus.',
+  },
+];
+---
+<BaseLayout {...seo}>
+  <FaqSchema slot="head" items={faqs} />
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }, { name: 'Bariatric Nutrition', href: '/services/bariatric-nutrition-el-paso/' }]} />
+  <h1>Bariatric Nutrition in El Paso, TX</h1>
+
+  <p>
+    Daniel Chavez, RD, LD, CSCS, works closely with bariatric surgeon <strong>Dr. Jorge Acosta</strong> to
+    provide comprehensive nutrition care before and after bariatric surgery, including sleeve gastrectomy
+    and gastric bypass.
+  </p>
+
+  <Image
+    class="feature-photo"
+    src={consultPhoto}
+    alt="Daniel Chavez, RD, providing one-on-one nutrition counseling at KM Wellness Center in El Paso"
+    widths={[420, 640, 860]}
+    sizes="(min-width: 900px) 860px, 100vw"
+    format="webp"
+    quality={75}
+    loading="lazy"
+    decoding="async"
+  />
+
+  <section>
+    <h2>What's Included</h2>
+    <ul>
+      <li>Pre- and post-surgical nutrition care for sleeve gastrectomy and gastric bypass</li>
+      <li>Long-term bariatric nutrition management</li>
+      <li>Vitamin and mineral supplementation guidance</li>
+      <li>Weight-loss plateau management</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Cost</h2>
+    <p>
+      Self-pay pricing: <strong>$150</strong> for an initial nutrition assessment, <strong>$130</strong> for
+      follow-up visits. Coverage varies by insurance plan &mdash; our team can help verify your benefits
+      before you begin care.
+    </p>
+    <p><a href="/contact-us/">Make an appointment</a></p>
+  </section>
+
+  <section>
+    <h2>Frequently Asked Questions</h2>
+    {faqs.map((f) => (
+      <details>
+        <summary>{f.question}</summary>
+        <p>{f.answer}</p>
+      </details>
+    ))}
+  </section>
+
+  <RelatedServices current="/services/bariatric-nutrition-el-paso/" />
+
+  <LeadForm source="bariatric-nutrition" service="Nutrition Counseling" />
+</BaseLayout>
+
+<style>
+  .feature-photo { width: 100%; height: auto; border-radius: var(--radius-lg, 12px); margin: 1.5rem 0; }
+</style>

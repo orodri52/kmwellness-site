@@ -1,7 +1,8 @@
 ---
-// Internal-linking mesh for the service (spoke) pages. Renders links to sibling
-// services + back to the services hub, so Google sees a connected topic cluster
-// instead of siloed pages. `current` is the page's own href (excluded from list).
+// Internal-linking mesh for the service (spoke) pages. Renders links to
+// same-category sibling services (falling back to the full catalog if the
+// current page isn't found), so Google sees a tight topic cluster instead of
+// one 20-link wall repeated on every page. `current` is the page's own href.
 import { services } from '../config/site';
 
 interface Props {
@@ -10,7 +11,10 @@ interface Props {
 }
 const { current, heading = 'Explore related services' } = Astro.props;
 
-const related = services.filter((s) => s.href !== current);
+const currentService = services.find((s) => s.href === current);
+const related = currentService
+  ? services.filter((s) => s.href !== current && s.category === currentService.category)
+  : services.filter((s) => s.href !== current);
 ---
 <nav class="related-services" aria-label="Related services">
   <h2>{heading}</h2>

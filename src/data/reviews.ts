@@ -13,7 +13,7 @@
 // Leave the arrays empty if this ever needs resetting — the ReviewsSection
 // component renders nothing when `fallbackReviews` is empty, so an empty
 // snapshot is always safe to ship.
-export const lastVerified = '2026-07-21';
+export const lastVerified = '2026-08-09';
 
 export type Review = {
   authorName: string;
@@ -24,7 +24,7 @@ export type Review = {
 
 export const aggregateRating: { ratingValue: string; reviewCount: number } | null = {
   ratingValue: '5.0',
-  reviewCount: 27,
+  reviewCount: 26,
 };
 
 export const fallbackReviews: Review[] = [

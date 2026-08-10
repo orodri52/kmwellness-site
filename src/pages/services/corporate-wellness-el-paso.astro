@@ -1,0 +1,80 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedServices from '../../components/RelatedServices.astro';
+import educationPhoto from '../../assets/images/medical-nutrition-education.jpg';
+
+const seo = {
+  title: 'Corporate Wellness Programs in El Paso, TX | KM Wellness Center',
+  description:
+    'Custom workplace wellness programs for El Paso businesses, built around your team by KM Wellness Center’s nutrition and fitness professionals.',
+};
+---
+<BaseLayout {...seo}>
+  <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/' }, { name: 'Corporate Wellness Programs', href: '/services/corporate-wellness-el-paso/' }]} />
+  <h1>Corporate Wellness Programs in El Paso, TX</h1>
+
+  <p>
+    KM Wellness Center works with El Paso businesses to build wellness programs for their teams, drawing
+    on the same nutrition and fitness professionals who see our individual patients &mdash; Daniel Chavez,
+    RD, LD, CSCS, CISSN; Brenda Alvarez, MS, Lead Kinesiologist; and Aaron Vazquez, BS, Certified Personal
+    Trainer. Every program is built around your organization's size, goals, and schedule &mdash; there's no
+    fixed package, so the details below are a starting point for a conversation, not a menu.
+  </p>
+
+  <Image
+    class="feature-photo"
+    src={educationPhoto}
+    alt="Daniel Chavez, RD, leading a wellness presentation at KM Wellness Center in El Paso"
+    widths={[420, 640, 860]}
+    sizes="(min-width: 900px) 860px, 100vw"
+    format="webp"
+    quality={75}
+    loading="lazy"
+    decoding="async"
+  />
+
+  <section>
+    <h2>What a Program Can Include</h2>
+    <p>Depending on what your organization is looking for, a program can draw on our existing services, such as:</p>
+    <ul>
+      <li>Nutrition education sessions or lunch-and-learn style workshops</li>
+      <li>Group fitness sessions, led by our personal training team</li>
+      <li>Metabolic and body composition screenings for employees</li>
+      <li>Ongoing wellness challenges or check-ins</li>
+    </ul>
+    <p>
+      We'll work with you to decide what actually fits your team, rather than applying a one-size-fits-all
+      package.
+    </p>
+  </section>
+
+  <section>
+    <h2>Let's Talk About Your Team</h2>
+    <p>
+      Every organization is different, so pricing and format are discussed directly based on group size,
+      frequency, and which services you're interested in. Reach out and we'll put together a proposal.
+    </p>
+    <p><a href="/contact-us/">Contact us to discuss a program</a></p>
+  </section>
+
+  <RelatedServices current="/services/corporate-wellness-el-paso/" />
+
+  <LeadForm
+    source="corporate-wellness"
+    service="Corporate Wellness"
+    heading="Ask about a program for your team"
+    subheading="Tell us a bit about your organization and we'll follow up to discuss options."
+  />
+</BaseLayout>
+
+<style>
+  .feature-photo {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg, 12px);
+    margin: 1.5rem 0;
+  }
+</style>
