@@ -16,47 +16,63 @@ npm run preview    # serve the built ./dist locally
 
 Requires Node 18.20+, 20.3+, or 22+.
 
-## Deploy to Cloudflare Workers
+## Deploy to Cloudflare Pages
 
-This project deploys via Cloudflare **Workers Builds** (git-connected CI/CD), not the classic Pages
-product — the live URL is a `*.workers.dev` domain.
+This project deploys as a classic **Cloudflare Pages** project (git-connected CI/CD) — the
+default preview URL is a `*.pages.dev` domain. (An earlier draft of this README described this
+as a Workers Builds / `*.workers.dev` deploy; that was incorrect and has been corrected here —
+`wrangler.toml`'s `[assets]` block is not read by the Pages build for the same reason, see the
+note in that file.)
 
 1. Push this folder to a Git repo (GitHub/GitLab).
-2. Cloudflare dashboard → **Workers & Pages → Create → Connect to Git**.
+2. Cloudflare dashboard → **Workers & Pages → Create → Pages → Connect to Git**.
 3. Build settings:
    - **Framework preset:** Astro
    - **Build command:** `npm run build`
    - **Build output directory:** `dist`
-4. Environment variables — Workers splits these into two separate panels, both under **Settings**:
+4. Environment variables — Pages splits these into two separate panels, both under **Settings**:
    - **Settings → Build → Build variables and secrets:** used only during `npm run build`. Anything
      referenced via `import.meta.env.PUBLIC_*` (e.g. `PUBLIC_SITE_URL`, `PUBLIC_TURNSTILE_SITE_KEY`)
      must go here, since Astro/Vite inlines these into the static bundle at build time.
    - **Settings → Variables and secrets:** used only at runtime by the Pages Function
      (`functions/api/lead.ts`), e.g. `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`.
-   - (Optional) Set `PUBLIC_SITE_URL` to your `*.workers.dev` URL while testing. Non-production hosts
+   - (Optional) Set `PUBLIC_SITE_URL` to your `*.pages.dev` URL while testing. Non-production hosts
      are automatically `noindex`ed (see below), so test deploys won't get indexed. Remove it (or set
      the real domain) for production.
 5. Deploy. `_redirects` and `_headers` in `public/` are picked up by Cloudflare automatically.
+6. **Attach the custom domain**: Pages project → **Custom domains → Add a custom domain** →
+   `kmwellnesscenter.com` (and `www`). This is the step that cuts the live domain over to this
+   project.
+
+> **Post-cutover gotcha (hit during this migration):** right after attaching the custom domain,
+> most routes kept serving the old WordPress site's HTML — only `/` and one other route showed the
+> new build. The custom domain showed **Active** in the dashboard the whole time, so it wasn't a
+> DNS/attachment problem; it was **stale edge cache** from before the cutover (unrelated to
+> Automatic Platform Optimization, which was never enabled on this zone). A one-time
+> **Caching → Configuration → Purge Everything** on the zone resolved it immediately — every route
+> served the new build right after. If you ever repoint this domain at a new backend again
+> (another migration, a new Pages project, etc.), purge the zone cache as a standard step
+> immediately after attaching the custom domain, not just as a last resort.
 
 ### KV namespace for lead form rate limiting
 
 `functions/api/lead.ts` rate-limits contact-form submissions per IP (5 per 10 minutes) using a
 Workers KV binding called `RATE_LIMIT_KV`. It fails open — if the binding is missing or KV errors,
-submissions are still accepted — but for it to actually rate-limit you need to create the namespace
-and wire the ids into `wrangler.toml`:
+submissions are still accepted. The production namespace (`kmwellness-rate-limit`) already exists
+in the Cloudflare account — create a preview namespace to match if one doesn't exist yet:
 
 ```bash
-# Production namespace
-wrangler kv namespace create RATE_LIMIT_KV
-
-# Preview namespace (used by `wrangler pages dev` / preview deploys)
+# Preview namespace (used by `wrangler pages dev` / local preview only)
 wrangler kv namespace create RATE_LIMIT_KV --preview
 ```
 
-Each command prints an `id`. Paste them into the `[[kv_namespaces]]` block in `wrangler.toml`
-(`id` from the first command, `preview_id` from the second). No separate env var or `.dev.vars`
-entry is needed — KV namespaces are wired through `wrangler.toml`, not environment variables, and
-`wrangler pages dev` picks up the `preview_id` automatically for local testing.
+**Bindings for Pages projects are configured in the dashboard, not `wrangler.toml`** — this
+project's `wrangler.toml` is not read by the Pages build (see the note at the top of that file).
+Go to the Pages project → **Settings → Functions → KV namespace bindings** → add a binding named
+`RATE_LIMIT_KV` pointing at the `kmwellness-rate-limit` namespace (production), and the preview
+namespace above for the Preview environment. `wrangler.toml`'s `[[kv_namespaces]]` block is kept
+only as a reference for local `wrangler pages dev` usage, not as the source of truth for
+production.
 
 No adapter is needed — this is a pure static build.
 
@@ -116,8 +132,9 @@ nutrition URLs are **redirects**, not pages (by design).
       events into `dataLayer` for GA4/GTM.
 - [ ] Confirm the canonical brand name (KM Wellness Center vs Kingsway) in `src/config/site.ts`.
 - [ ] Verify the business `geo` coordinates in `src/config/site.ts`.
-- [ ] Point the production domain at Cloudflare and confirm `PUBLIC_SITE_URL` is unset/correct so
-      pages are indexable.
+- [x] Custom domain (`kmwellnesscenter.com` + `www`) attached to the Pages project and cache
+      purged post-cutover — confirmed every route now serves this build, not the old WordPress
+      site. `PUBLIC_SITE_URL` confirmed correct for indexing.
 - [ ] Add a Google Maps embed on Contact (and the real testimonial gallery on Success Stories).
 
 Content for every page came from the audit archive in `../Website-Backup/`.
