@@ -10,6 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "gen:images": "node scripts/gen-brand-images.mjs",
+    "report:lead-sources": "node scripts/lead-sources-report.mjs",
     "astro": "astro"
   },
   "dependencies": {
