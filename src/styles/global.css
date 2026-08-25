@@ -2330,28 +2330,35 @@ textarea:focus {
   box-shadow: 0 16px 44px rgb(0 0 0 / 8%);
 }
 
-.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) {
+.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2),
+.site-main.supporting-main.flow-main > section.flow-card--dark {
   border-color: var(--support-dark-border);
   background: var(--support-dark-surface);
   color: var(--white);
 }
 
-.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n) {
+.site-main.supporting-main.flow-main > section:not(.lead-form):not(.flow-card--dark):nth-of-type(3n) {
   background: #e7e7e7;
 }
 
 .site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2)
+  :is(h1, h2, h3, strong, summary, a, label, .eyebrow),
+.site-main.supporting-main.flow-main > section.flow-card--dark
   :is(h1, h2, h3, strong, summary, a, label, .eyebrow) {
   color: var(--white);
 }
 
 .site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2)
+  :is(p, li, address),
+.site-main.supporting-main.flow-main > section.flow-card--dark
   :is(p, li, address) {
   color: rgb(255 255 255 / 74%);
 }
 
 .site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) a:hover,
-.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) a:focus-visible {
+.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) a:focus-visible,
+.site-main.supporting-main.flow-main > section.flow-card--dark a:hover,
+.site-main.supporting-main.flow-main > section.flow-card--dark a:focus-visible {
   color: var(--white);
   text-decoration-color: currentColor;
 }
@@ -2437,13 +2444,15 @@ textarea:focus {
   content: counter(flow-card, decimal-leading-zero);
 }
 
-.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) > :is(ul, ol) > li {
+.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) > :is(ul, ol) > li,
+.site-main.supporting-main.flow-main > section.flow-card--dark > :is(ul, ol) > li {
   border-color: rgb(255 255 255 / 16%);
   background: rgb(255 255 255 / 7%);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 7%);
 }
 
-.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) > :is(ul, ol) > li::before {
+.site-main.supporting-main.flow-main > section:not(.lead-form):nth-of-type(3n + 2) > :is(ul, ol) > li::before,
+.site-main.supporting-main.flow-main > section.flow-card--dark > :is(ul, ol) > li::before {
   border-color: rgb(255 255 255 / 42%);
   background: transparent;
   color: var(--white);

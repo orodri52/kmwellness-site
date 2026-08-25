@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import bestOfElPaso from '../assets/images/best-of-el-paso.png';
+import bestOf2026 from '../assets/images/best-of-2026-businessrate.png';
 import danielPortrait from '../assets/images/daniel-gym-portrait.webp';
 import brendaPortrait from '../assets/images/brenda-kinesiologist.webp';
 import karenPortrait from '../assets/images/karen-billing-specialist.webp';
@@ -83,17 +84,30 @@ const wellnessServices = [
             well-being.
           </p>
         </div>
-        <Image
-          class="award-badge"
-          src={bestOfElPaso}
-          alt="Best of El Paso 2024 and 2025 award winner — KM Wellness Center"
-          widths={[150, 300]}
-          sizes="150px"
-          format="webp"
-          quality={80}
-          loading="lazy"
-          decoding="async"
-        />
+        <div class="award-badge-group">
+          <Image
+            class="award-badge"
+            src={bestOfElPaso}
+            alt="Best of El Paso 2024 and 2025 award winner — KM Wellness Center"
+            widths={[150, 300]}
+            sizes="150px"
+            format="webp"
+            quality={80}
+            loading="lazy"
+            decoding="async"
+          />
+          <Image
+            class="award-badge award-badge-plaque"
+            src={bestOf2026}
+            alt="Benchmark BusinessRate Best of 2026 award winner — Daniel Chavez, RD, Nutritionist, El Paso"
+            widths={[120, 240]}
+            sizes="120px"
+            format="webp"
+            quality={80}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
       </section>
 
       <section class="care-card child-card">
@@ -339,7 +353,9 @@ const wellnessServices = [
   .why-card, .care-card { padding: clamp(2rem, 4vw, 3.25rem); }
   .why-card { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 1.5rem; background: #f0f0f0; }
   .why-card h2, .care-card h2 { margin-bottom: 1rem; font-size: clamp(2rem, 3.5vw, 3.25rem); }
+  .award-badge-group { display: flex; align-items: flex-end; gap: 1rem; }
   .award-badge { width: 140px; height: auto; }
+  .award-badge-plaque { width: 96px; }
   .care-card { background: #111; color: #fff; }
   .care-card h2, .care-card .eyebrow { color: #fff; }
   .care-card p { color: #c8c8c8; }
@@ -381,5 +397,6 @@ const wellnessServices = [
   @media (max-width: 560px) {
     .why-card, .purpose-grid, .wellness-grid { grid-template-columns: 1fr; }
     .award-badge { width: 115px; }
+    .award-badge-plaque { width: 78px; }
   }
 </style>
