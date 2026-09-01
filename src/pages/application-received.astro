@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business } from '../config/site';
+
+const seo = {
+  title: 'Application Received | KM Wellness Center',
+  description: 'Your application has been sent to the KM Wellness Center team.',
+  noindex: true,
+};
+---
+
+<BaseLayout {...seo}>
+  <p class="eyebrow">Careers at KM Wellness Center</p>
+  <h1>Application Received</h1>
+  <p>Thank you for your interest. Your application and resume have been sent to our team for review.</p>
+  <p>
+    If your background may be a fit for a current or upcoming need, a member of our team will contact
+    you using the information you provided.
+  </p>
+  <p>
+    Questions? Email <a href={`mailto:${business.email}`}>{business.email}</a> or call
+    <a href={`tel:${business.phoneRaw}`}>{business.phone}</a>.
+  </p>
+  <p><a class="button button-dark" href="/careers/">Return to careers</a></p>
+</BaseLayout>

@@ -1,0 +1,939 @@
+---
+import type { Job } from '../data/jobs';
+
+interface Props {
+  jobs: readonly Job[];
+}
+
+const { jobs } = Astro.props;
+const openJobs = jobs.filter((job) => job.status === 'open');
+const maxResumeSizeMb = 5;
+---
+
+<section class="job-listings" id="openings" aria-labelledby="openings-title">
+  <div class="job-listings-heading">
+    <div>
+      <p class="eyebrow">Open opportunities</p>
+      <h2 id="openings-title">Find your place on the team.</h2>
+    </div>
+    <p>
+      Select a listing to review its description and requirements. You can apply securely from the
+      same window when you are ready.
+    </p>
+  </div>
+
+  {
+    openJobs.length > 0 ? (
+      <div class="job-grid">
+        {openJobs.map((job) => {
+          const dialogId = `job-${job.id}-dialog`;
+          const titleId = `job-${job.id}-title`;
+          const applicationHeadingId = `job-${job.id}-application-title`;
+          const displayLocation =
+            job.location === job.workArrangement
+              ? job.location
+              : `${job.location} · ${job.workArrangement}`;
+
+          return (
+            <>
+              <article class="job-card" id={job.id}>
+                <div class="job-card-meta" aria-label="Position details">
+                  <span>{job.department}</span>
+                  <span>{job.employmentType}</span>
+                </div>
+                <h3>{job.title}</h3>
+                <p>{job.summary}</p>
+                <div class="job-card-footer">
+                  <span class="job-location">
+                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                      <path d="M12 21s6-5.2 6-11A6 6 0 0 0 6 10c0 5.8 6 11 6 11Z" fill="none" stroke="currentColor" stroke-width="1.7" />
+                      <circle cx="12" cy="10" r="2" fill="none" stroke="currentColor" stroke-width="1.7" />
+                    </svg>
+                    {displayLocation}
+                  </span>
+                  <button
+                    type="button"
+                    class="button button-dark job-view-button"
+                    aria-haspopup="dialog"
+                    aria-controls={dialogId}
+                    data-job-dialog-open={dialogId}
+                  >
+                    View position
+                  </button>
+                </div>
+              </article>
+
+              <dialog class="job-dialog" id={dialogId} aria-labelledby={titleId} data-job-dialog>
+                <div class="job-dialog-panel">
+                  <header class="job-dialog-header">
+                    <div>
+                      <p class="eyebrow">{job.department}</p>
+                      <h2 id={titleId}>{job.title}</h2>
+                      <p class="job-dialog-meta">
+                        {displayLocation}{' '}
+                        <span aria-hidden="true">·</span> {job.employmentType}
+                      </p>
+                    </div>
+                    <form method="dialog" class="job-dialog-close-form">
+                      <button class="job-dialog-close" value="close" aria-label={`Close ${job.title}`} data-dialog-close>
+                        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                          <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                        </svg>
+                      </button>
+                    </form>
+                  </header>
+
+                  <div class="job-dialog-body">
+                    <div class="job-details" data-job-details>
+                      <section class="job-dialog-copy" aria-labelledby={`${job.id}-description-title`}>
+                        <p class="job-section-label" id={`${job.id}-description-title`}>Position description</p>
+                        {job.description.map((paragraph) => <p>{paragraph}</p>)}
+                      </section>
+
+                      {job.responsibilities && job.responsibilities.length > 0 && (
+                        <section class="job-dialog-copy" aria-labelledby={`${job.id}-responsibilities-title`}>
+                          <p class="job-section-label" id={`${job.id}-responsibilities-title`}>Responsibilities</p>
+                          <ul>
+                            {job.responsibilities.map((responsibility) => <li>{responsibility}</li>)}
+                          </ul>
+                        </section>
+                      )}
+
+                      <section class="job-dialog-copy" aria-labelledby={`${job.id}-requirements-title`}>
+                        <p class="job-section-label" id={`${job.id}-requirements-title`}>Requirements</p>
+                        <ul>
+                          {job.requirements.map((requirement) => <li>{requirement}</li>)}
+                        </ul>
+                      </section>
+
+                      {job.preferred && job.preferred.length > 0 && (
+                        <section class="job-dialog-copy" aria-labelledby={`${job.id}-preferred-title`}>
+                          <p class="job-section-label" id={`${job.id}-preferred-title`}>Preferred</p>
+                          <ul>
+                            {job.preferred.map((item) => <li>{item}</li>)}
+                          </ul>
+                        </section>
+                      )}
+
+                      <div class="job-apply-cta">
+                        <div>
+                          <p class="job-section-label">Interested?</p>
+                          <p>Submit your information and resume for our team to review.</p>
+                        </div>
+                        <button type="button" class="button button-dark" data-show-application>
+                          Apply for this position
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="application-view" data-application-view hidden>
+                      <button type="button" class="application-back" data-show-details>
+                        <span aria-hidden="true">←</span> Back to position details
+                      </button>
+                      <div class="application-heading" tabindex="-1">
+                        <p class="eyebrow">Apply now</p>
+                        <h3 id={applicationHeadingId}>Apply for {job.title}</h3>
+                        <p>Fields marked with an asterisk are required.</p>
+                      </div>
+
+                      <form
+                        class="application-form"
+                        method="POST"
+                        action="/api/apply"
+                        enctype="multipart/form-data"
+                        aria-labelledby={applicationHeadingId}
+                        data-application-form
+                      >
+                        <input type="hidden" name="position" value={job.title} />
+                        <input type="hidden" name="jobId" value={job.id} />
+                        <input type="hidden" name="source" value="careers-page" />
+
+                        <div class="application-hp" aria-hidden="true">
+                          <label>
+                            Company
+                            <input type="text" name="company" tabindex="-1" autocomplete="off" />
+                          </label>
+                        </div>
+
+                        <div class="application-form-row">
+                          <p>
+                            <label for={`${job.id}-applicant-name`}>Full name *</label>
+                            <input
+                              id={`${job.id}-applicant-name`}
+                              name="name"
+                              type="text"
+                              required
+                              maxlength="120"
+                              autocomplete="name"
+                            />
+                          </p>
+                          <p>
+                            <label for={`${job.id}-applicant-phone`}>Phone *</label>
+                            <input
+                              id={`${job.id}-applicant-phone`}
+                              name="phone"
+                              type="tel"
+                              required
+                              maxlength="40"
+                              autocomplete="tel"
+                            />
+                          </p>
+                        </div>
+
+                        <p>
+                          <label for={`${job.id}-applicant-email`}>Email *</label>
+                          <input
+                            id={`${job.id}-applicant-email`}
+                            name="email"
+                            type="email"
+                            required
+                            maxlength="254"
+                            autocomplete="email"
+                          />
+                        </p>
+
+                        <p>
+                          <label for={`${job.id}-applicant-note`}>Why are you interested? (optional)</label>
+                          <textarea
+                            id={`${job.id}-applicant-note`}
+                            name="coverNote"
+                            rows="5"
+                            maxlength="4000"
+                            placeholder="Share relevant experience, the type of role you are seeking, or anything else you would like us to know."
+                          />
+                        </p>
+
+                        <p>
+                          <label for={`${job.id}-applicant-resume`}>Resume *</label>
+                          <input
+                            id={`${job.id}-applicant-resume`}
+                            name="resume"
+                            type="file"
+                            required
+                            accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                            aria-describedby={`${job.id}-resume-note`}
+                            data-resume-input
+                          />
+                          <span class="application-field-note" id={`${job.id}-resume-note`}>
+                            PDF, DOC, or DOCX · {maxResumeSizeMb} MB maximum
+                          </span>
+                        </p>
+
+                        <div class="application-turnstile" data-application-turnstile></div>
+                        <p class="application-status" role="alert" aria-live="polite" hidden></p>
+
+                        <button class="button button-dark application-submit" type="submit">
+                          Submit application
+                        </button>
+
+                        <p class="application-fineprint">
+                          Your application and resume will be emailed to the KM Wellness Center team.
+                          By submitting, you agree that we may use this information to evaluate employment
+                          opportunities. See our <a href="/privacy-policy/">Privacy Policy</a>.
+                        </p>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </dialog>
+            </>
+          );
+        })}
+      </div>
+    ) : (
+      <div class="jobs-empty-state">
+        <h3>There are no open positions right now.</h3>
+        <p>Please check back for future opportunities with KM Wellness Center.</p>
+      </div>
+    )
+  }
+</section>
+
+<script>
+  type TurnstileApi = {
+    render: (container: HTMLElement, options: Record<string, unknown>) => string;
+    reset: (widgetId: string) => void;
+  };
+
+  type CareersWindow = Window & {
+    dataLayer?: Array<Record<string, unknown>>;
+    turnstile?: TurnstileApi;
+  };
+
+  const careersWindow = window as CareersWindow;
+  const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+  const turnstileScriptId = 'cf-turnstile-script';
+  const turnstileScriptSrc = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+  const maxResumeSizeMb = 5;
+  const maxResumeBytes = maxResumeSizeMb * 1024 * 1024;
+  const applicationTokens = new WeakMap<HTMLFormElement, string>();
+  const applicationWidgetIds = new WeakMap<HTMLFormElement, string>();
+  const dialogTriggers = new WeakMap<HTMLDialogElement, HTMLElement>();
+  let turnstileLoadPromise: Promise<void> | undefined;
+
+  const getStatus = (form: HTMLFormElement) =>
+    form.querySelector<HTMLElement>('.application-status');
+
+  const showStatus = (form: HTMLFormElement, message: string, state: 'error' | 'success' = 'error') => {
+    const status = getStatus(form);
+    if (!status) return;
+    status.hidden = false;
+    status.dataset.state = state;
+    status.textContent = message;
+  };
+
+  const hideStatus = (form: HTMLFormElement) => {
+    const status = getStatus(form);
+    if (status) status.hidden = true;
+  };
+
+  const loadTurnstile = () => {
+    if (careersWindow.turnstile) return Promise.resolve();
+    if (turnstileLoadPromise) return turnstileLoadPromise;
+
+    turnstileLoadPromise = new Promise<void>((resolve, reject) => {
+      let script = document.getElementById(turnstileScriptId) as HTMLScriptElement | null;
+      if (!script) {
+        script = document.createElement('script');
+        script.id = turnstileScriptId;
+        script.src = turnstileScriptSrc;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+      }
+
+      script.addEventListener('load', () => resolve(), { once: true });
+      script.addEventListener('error', () => reject(new Error('Verification could not load.')), { once: true });
+    });
+
+    return turnstileLoadPromise;
+  };
+
+  const prepareTurnstile = async (form: HTMLFormElement) => {
+    if (!turnstileSiteKey) {
+      showStatus(form, 'Verification is not configured. Please email your resume to info@kmwellnesscenter.com.');
+      return;
+    }
+    if (applicationWidgetIds.has(form)) return;
+
+    const container = form.querySelector<HTMLElement>('[data-application-turnstile]');
+    if (!container) return;
+
+    try {
+      await loadTurnstile();
+      if (!careersWindow.turnstile || applicationWidgetIds.has(form)) return;
+      const widgetId = careersWindow.turnstile.render(container, {
+        sitekey: turnstileSiteKey,
+        theme: 'light',
+        size: 'flexible',
+        appearance: 'always',
+        action: 'job_application',
+        callback: (token: string) => applicationTokens.set(form, token),
+        'expired-callback': () => applicationTokens.delete(form),
+        'error-callback': () => applicationTokens.delete(form),
+      });
+      applicationWidgetIds.set(form, widgetId);
+    } catch {
+      showStatus(form, 'Verification could not load. Please refresh the page and try again.');
+    }
+  };
+
+  const showDetails = (dialog: HTMLDialogElement) => {
+    const details = dialog.querySelector<HTMLElement>('[data-job-details]');
+    const application = dialog.querySelector<HTMLElement>('[data-application-view]');
+    if (details) details.hidden = false;
+    if (application) application.hidden = true;
+    dialog.querySelector<HTMLElement>('.job-dialog-body')?.scrollTo({ top: 0 });
+  };
+
+  const showApplication = (dialog: HTMLDialogElement) => {
+    const details = dialog.querySelector<HTMLElement>('[data-job-details]');
+    const application = dialog.querySelector<HTMLElement>('[data-application-view]');
+    if (details) details.hidden = true;
+    if (application) application.hidden = false;
+    dialog.querySelector<HTMLElement>('.job-dialog-body')?.scrollTo({ top: 0 });
+    application?.querySelector<HTMLElement>('.application-heading')?.focus({ preventScroll: true });
+
+    const form = application?.querySelector<HTMLFormElement>('[data-application-form]');
+    if (form) void prepareTurnstile(form);
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-job-dialog-open]').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const dialogId = trigger.dataset.jobDialogOpen;
+      const dialog = dialogId ? document.getElementById(dialogId) : null;
+      if (!(dialog instanceof HTMLDialogElement)) return;
+
+      dialogTriggers.set(dialog, trigger);
+      if (typeof dialog.showModal === 'function') dialog.showModal();
+      else dialog.setAttribute('open', '');
+      document.body.classList.add('careers-dialog-open');
+    });
+  });
+
+  document.querySelectorAll<HTMLDialogElement>('[data-job-dialog]').forEach((dialog) => {
+    dialog.querySelector<HTMLElement>('[data-show-application]')?.addEventListener('click', () => {
+      showApplication(dialog);
+    });
+
+    dialog.querySelector<HTMLElement>('[data-show-details]')?.addEventListener('click', () => {
+      showDetails(dialog);
+      dialog.querySelector<HTMLElement>('[data-show-application]')?.focus();
+    });
+
+    dialog.querySelector<HTMLElement>('[data-dialog-close]')?.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (dialog.open) dialog.close();
+    });
+
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    dialog.addEventListener('close', () => {
+      showDetails(dialog);
+      document.body.classList.remove('careers-dialog-open');
+      dialogTriggers.get(dialog)?.focus();
+    });
+  });
+
+  document.querySelectorAll<HTMLInputElement>('[data-resume-input]').forEach((input) => {
+    input.addEventListener('change', () => {
+      const file = input.files?.[0];
+      input.setCustomValidity(file && file.size > maxResumeBytes ? `Please choose a file no larger than ${maxResumeSizeMb} MB.` : '');
+      if (file && file.size > maxResumeBytes) input.reportValidity();
+    });
+  });
+
+  const trackApplicationAndRedirect = (data: FormData) => {
+    let redirected = false;
+    const redirect = () => {
+      if (redirected) return;
+      redirected = true;
+      window.location.href = '/application-received/';
+    };
+
+    careersWindow.dataLayer = careersWindow.dataLayer || [];
+    careersWindow.dataLayer.push({
+      event: 'job_application_submit',
+      form_name: 'job-application',
+      job_id: data.get('jobId')?.toString() || 'unknown',
+      position: data.get('position')?.toString() || 'unknown',
+      page_path: window.location.pathname,
+      eventCallback: redirect,
+      eventTimeout: 1000,
+    });
+    window.setTimeout(redirect, 1200);
+  };
+
+  document.querySelectorAll<HTMLFormElement>('[data-application-form]').forEach((form) => {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      hideStatus(form);
+
+      if (!turnstileSiteKey) {
+        showStatus(form, 'Verification is not configured. Please email your resume to info@kmwellnesscenter.com.');
+        return;
+      }
+
+      const token = applicationTokens.get(form);
+      if (!token) {
+        showStatus(form, 'Please complete the verification challenge.');
+        return;
+      }
+
+      const resumeInput = form.querySelector<HTMLInputElement>('[data-resume-input]');
+      const resume = resumeInput?.files?.[0];
+      if (!resume) {
+        showStatus(form, 'Please attach your resume.');
+        resumeInput?.focus();
+        return;
+      }
+      if (resume.size > maxResumeBytes) {
+        showStatus(form, `Please choose a resume no larger than ${maxResumeSizeMb} MB.`);
+        resumeInput?.focus();
+        return;
+      }
+
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Submitting…';
+      }
+
+      try {
+        const data = new FormData(form);
+        data.set('cf-turnstile-response', token);
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        const result = (await response.json().catch(() => null)) as { error?: string } | null;
+        if (!response.ok) throw new Error(result?.error || 'Your application could not be sent.');
+
+        showStatus(form, 'Application received. Redirecting…', 'success');
+        trackApplicationAndRedirect(data);
+      } catch (error) {
+        showStatus(
+          form,
+          error instanceof Error
+            ? error.message
+            : 'Your application could not be sent. Please try again.',
+        );
+        if (button) {
+          button.disabled = false;
+          button.textContent = 'Submit application';
+        }
+
+        const widgetId = applicationWidgetIds.get(form);
+        if (careersWindow.turnstile && widgetId) careersWindow.turnstile.reset(widgetId);
+        applicationTokens.delete(form);
+      }
+    });
+  });
+</script>
+
+<style>
+  .job-listings {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.25rem);
+    padding: clamp(2rem, 5vw, 4.5rem);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: var(--white);
+    box-shadow: 0 18px 50px rgb(0 0 0 / 8%);
+  }
+
+  .job-listings-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.65fr);
+    align-items: end;
+    gap: clamp(1.5rem, 5vw, 4.5rem);
+    padding-bottom: clamp(1.5rem, 3vw, 2.25rem);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .job-listings-heading h2 {
+    max-width: 650px;
+    font-size: clamp(2.35rem, 5vw, 4.5rem);
+  }
+
+  .job-listings-heading > p {
+    max-width: 480px;
+    margin: 0;
+    font-size: clamp(0.95rem, 1.3vw, 1.08rem);
+  }
+
+  .job-grid {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .job-card {
+    display: grid;
+    gap: 0.85rem;
+    padding: clamp(1.35rem, 3vw, 2rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, #f5f5f5, #ebebeb);
+    transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+  }
+
+  .job-card:hover {
+    border-color: #aaa;
+    box-shadow: 0 14px 34px rgb(0 0 0 / 8%);
+    transform: translateY(-2px);
+  }
+
+  .job-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .job-card-meta span {
+    padding: 0.32rem 0.55rem;
+    border: 1px solid #ccc;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 62%);
+    color: var(--ink-soft);
+    font-size: 0.62rem;
+    font-weight: 850;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .job-card h3 {
+    font-size: clamp(1.65rem, 3vw, 2.35rem);
+  }
+
+  .job-card > p {
+    max-width: 720px;
+    margin: 0;
+  }
+
+  .job-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 0.45rem;
+  }
+
+  .job-location {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+    font-weight: 750;
+  }
+
+  .job-location svg {
+    flex: 0 0 auto;
+  }
+
+  .job-view-button {
+    flex: 0 0 auto;
+  }
+
+  .jobs-empty-state {
+    padding: clamp(2rem, 5vw, 4rem);
+    border: 1px dashed #aaa;
+    border-radius: var(--radius-md);
+    background: #f5f5f5;
+    text-align: center;
+  }
+
+  .jobs-empty-state h3 {
+    margin-bottom: 0.65rem;
+  }
+
+  .jobs-empty-state p {
+    margin: 0;
+  }
+
+  .job-dialog {
+    width: min(820px, calc(100vw - 32px));
+    max-width: none;
+    height: auto;
+    max-height: min(90dvh, 900px);
+    margin: auto;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 18px;
+    background: transparent;
+    color: var(--ink);
+    box-shadow: 0 30px 100px rgb(0 0 0 / 35%);
+  }
+
+  .job-dialog::backdrop {
+    background: rgb(0 0 0 / 68%);
+    backdrop-filter: blur(5px);
+  }
+
+  .job-dialog-panel {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    max-height: min(90dvh, 900px);
+    overflow: hidden;
+    background: var(--white);
+  }
+
+  .job-dialog-header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: clamp(1.3rem, 3.5vw, 2rem);
+    border-bottom: 1px solid var(--line);
+    background: #111;
+  }
+
+  .job-dialog-header h2,
+  .job-dialog-header .eyebrow {
+    color: var(--white);
+  }
+
+  .job-dialog-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  .job-dialog-header .eyebrow {
+    margin-bottom: 0.45rem;
+    color: #cfcfcf;
+  }
+
+  .job-dialog-meta {
+    margin: 0.65rem 0 0;
+    color: #c2c2c2;
+    font-size: 0.8rem;
+  }
+
+  .job-dialog-close-form {
+    display: block;
+    flex: 0 0 auto;
+    margin: 0;
+  }
+
+  .job-dialog-close {
+    width: 2.55rem;
+    height: 2.55rem;
+    min-height: 0;
+    padding: 0;
+    border: 1px solid rgb(255 255 255 / 35%);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--white);
+  }
+
+  .job-dialog-close:hover,
+  .job-dialog-close:focus-visible {
+    border-color: var(--white);
+    background: rgb(255 255 255 / 10%);
+    transform: none;
+  }
+
+  .job-dialog-body {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: clamp(1.35rem, 4vw, 2.5rem);
+    background: var(--white);
+  }
+
+  .job-details,
+  .application-view {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.1rem);
+  }
+
+  .job-details[hidden],
+  .application-view[hidden] {
+    display: none;
+  }
+
+  .job-dialog-copy {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .job-dialog-copy p,
+  .job-dialog-copy ul {
+    margin: 0;
+  }
+
+  .job-section-label {
+    margin: 0;
+    color: var(--ink);
+    font-size: 0.67rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .job-dialog-copy ul {
+    display: grid;
+    gap: 0.65rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .job-dialog-copy li {
+    position: relative;
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  .job-dialog-copy li::before {
+    position: absolute;
+    top: 0.62em;
+    left: 0.1rem;
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 50%;
+    background: var(--ink);
+    content: "";
+  }
+
+  .job-apply-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: #ededed;
+  }
+
+  .job-apply-cta p:last-child {
+    margin: 0.3rem 0 0;
+    font-size: 0.9rem;
+  }
+
+  .application-back {
+    justify-self: start;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ink-soft);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+  }
+
+  .application-back:hover,
+  .application-back:focus-visible {
+    background: transparent;
+    color: var(--ink);
+    transform: none;
+    text-decoration: underline;
+  }
+
+  .application-heading:focus {
+    outline: none;
+  }
+
+  .application-heading h3 {
+    font-size: clamp(1.8rem, 4vw, 2.75rem);
+  }
+
+  .application-heading > p:last-child {
+    margin: 0.6rem 0 0;
+    font-size: 0.85rem;
+  }
+
+  .application-form {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .application-form-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .application-form input[type="file"] {
+    padding: 0.55rem;
+  }
+
+  .application-form input[type="file"]::file-selector-button {
+    margin-right: 0.75rem;
+    padding: 0.55rem 0.7rem;
+    border: 0;
+    background: #e5e5e5;
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 750;
+    cursor: pointer;
+  }
+
+  .application-field-note {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--ink-soft);
+    font-size: 0.75rem;
+  }
+
+  .application-status {
+    margin: 0;
+    padding: 0.8rem 0.9rem;
+    border-left: 3px solid #8c2525;
+    background: #f7eaea;
+    color: #671b1b;
+    font-size: 0.88rem;
+    font-weight: 750;
+  }
+
+  .application-status[data-state="success"] {
+    border-left-color: #2e6844;
+    background: #eaf4ed;
+    color: #214e32;
+  }
+
+  .application-submit {
+    width: 100%;
+  }
+
+  .application-submit:disabled {
+    cursor: wait;
+    opacity: 0.68;
+  }
+
+  .application-fineprint {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .application-fineprint a {
+    font-weight: 800;
+  }
+
+  .application-hp {
+    position: absolute;
+    left: -5000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  :global(body.careers-dialog-open) {
+    overflow: hidden;
+  }
+
+  @media (max-width: 700px) {
+    .job-listings-heading {
+      grid-template-columns: 1fr;
+      align-items: start;
+      gap: 1rem;
+    }
+
+    .job-card-footer,
+    .job-apply-cta {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .job-view-button,
+    .job-apply-cta .button {
+      width: 100%;
+    }
+
+    .application-form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .job-dialog {
+      width: calc(100vw - 16px);
+      max-height: calc(100dvh - 16px);
+      border-radius: 14px;
+    }
+
+    .job-dialog-panel {
+      max-height: calc(100dvh - 16px);
+    }
+
+    .job-dialog-header {
+      padding: 1.15rem;
+    }
+
+    .job-dialog-body {
+      padding: 1.15rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .job-card {
+      transition: none;
+    }
+  }
+</style>

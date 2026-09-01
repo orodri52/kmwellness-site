@@ -135,5 +135,6 @@ export const nav = [
       { label: 'Insurances we Accept', href: '/insurances-we-accept/' },
     ],
   },
+  { label: 'Careers', href: '/careers/' },
   { label: 'Contact Us', href: '/contact-us/' },
 ] as const;

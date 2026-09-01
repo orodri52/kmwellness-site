@@ -1,0 +1,319 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import JobListings from '../components/JobListings.astro';
+import { jobs } from '../data/jobs';
+
+const seo = {
+  title: 'Careers at KM Wellness Center | Jobs in El Paso, TX',
+  description:
+    'Explore career opportunities at KM Wellness Center in El Paso and submit your application and resume online.',
+};
+---
+
+<BaseLayout {...seo}>
+  <div class="child-page careers-page">
+    <div class="child-breadcrumb">
+      <Breadcrumbs crumbs={[{ name: 'Home', href: '/' }, { name: 'Careers', href: '/careers/' }]} />
+    </div>
+
+    <section class="careers-hero">
+      <div class="careers-hero-copy">
+        <p class="eyebrow">Careers at KM Wellness Center</p>
+        <h1>Bring your talent to work that matters.</h1>
+        <p>
+          Join a collaborative El Paso team helping people build stronger, healthier lives through
+          nutrition, movement, and thoughtful client care.
+        </p>
+        <a class="button button-light" href="#openings">View opportunities</a>
+      </div>
+
+      <div class="careers-hero-aside">
+        <p class="careers-aside-label">Why KM Wellness</p>
+        <h2>Care built around people.</h2>
+        <p>
+          Our team brings different specialties together around a shared standard: meet people with
+          care, do excellent work, and make sustainable wellness feel possible.
+        </p>
+        <dl class="careers-facts">
+          <div>
+            <dt>Based in</dt>
+            <dd>El Paso, Texas</dd>
+          </div>
+          <div>
+            <dt>Our focus</dt>
+            <dd>Whole-person wellness</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <JobListings jobs={jobs} />
+
+    <section class="careers-values" aria-labelledby="careers-values-title">
+      <div class="careers-values-heading">
+        <p class="eyebrow">How we work</p>
+        <h2 id="careers-values-title">What you can expect here.</h2>
+      </div>
+      <div class="careers-value-grid">
+        <article>
+          <span aria-hidden="true">01</span>
+          <h3>Collaborative care</h3>
+          <p>Nutrition, fitness, and client support work together toward the same goal.</p>
+        </article>
+        <article>
+          <span aria-hidden="true">02</span>
+          <h3>Thoughtful standards</h3>
+          <p>We value reliable follow-through, clear communication, and work grounded in evidence.</p>
+        </article>
+        <article>
+          <span aria-hidden="true">03</span>
+          <h3>Community impact</h3>
+          <p>Our work is rooted in helping people across El Paso feel supported and capable.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="child-cta careers-contact">
+      <div>
+        <p class="eyebrow">Questions before applying?</p>
+        <h2>We’re happy to help.</h2>
+      </div>
+      <a class="button" href="/contact-us/#send-message">
+        Email our team
+      </a>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .careers-page {
+    padding-bottom: clamp(1rem, 3vw, 2rem);
+  }
+
+  .careers-hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.78fr);
+    min-height: 420px;
+    overflow: hidden;
+    border: 1px solid #2f2f2f;
+    border-radius: 20px;
+    background:
+      radial-gradient(circle at 15% 115%, rgb(255 255 255 / 13%), transparent 24rem),
+      linear-gradient(135deg, #050505, #181818 60%, #080808);
+    box-shadow: 0 22px 58px rgb(0 0 0 / 18%);
+  }
+
+  .careers-hero::before,
+  .careers-hero::after {
+    position: absolute;
+    border: 1px solid rgb(255 255 255 / 10%);
+    border-radius: 50%;
+    content: "";
+    pointer-events: none;
+  }
+
+  .careers-hero::before {
+    bottom: -13rem;
+    left: -8rem;
+    width: 30rem;
+    height: 30rem;
+  }
+
+  .careers-hero::after {
+    bottom: -9rem;
+    left: -4rem;
+    width: 22rem;
+    height: 22rem;
+  }
+
+  .careers-hero-copy {
+    position: relative;
+    z-index: 1;
+    align-self: center;
+    padding: clamp(1.5rem, 3.4vw, 3rem);
+  }
+
+  .careers-hero-copy .eyebrow,
+  .careers-hero-copy h1 {
+    color: var(--white);
+  }
+
+  .careers-hero-copy .eyebrow {
+    color: #c9c9c9;
+  }
+
+  .careers-hero-copy h1 {
+    max-width: 560px;
+    font-size: clamp(2.25rem, 3.8vw, 3.5rem);
+  }
+
+  .careers-hero-copy > p:not(.eyebrow) {
+    max-width: 540px;
+    margin: 0.9rem 0 1.1rem;
+    color: rgb(255 255 255 / 72%);
+    font-size: clamp(0.9rem, 1.05vw, 1rem);
+  }
+
+  .careers-hero-aside {
+    position: relative;
+    z-index: 1;
+    align-self: center;
+    margin: clamp(0.75rem, 1.4vw, 1rem);
+    padding: clamp(1.15rem, 2.4vw, 1.75rem);
+    border: 1px solid rgb(255 255 255 / 14%);
+    border-radius: 16px;
+    background: rgb(255 255 255 / 8%);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%);
+    backdrop-filter: blur(12px);
+  }
+
+  .careers-aside-label {
+    margin: 0 0 0.5rem;
+    color: #c9c9c9;
+    font-size: 0.64rem;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .careers-hero-aside h2 {
+    color: var(--white);
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  }
+
+  .careers-hero-aside > p:not(.careers-aside-label) {
+    margin: 0.65rem 0 0.9rem;
+    color: rgb(255 255 255 / 70%);
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  .careers-facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin: 0;
+  }
+
+  .careers-facts div {
+    padding-top: 0.55rem;
+    border-top: 1px solid rgb(255 255 255 / 18%);
+  }
+
+  .careers-facts dt {
+    color: #a8a8a8;
+    font-size: 0.6rem;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .careers-facts dd {
+    margin: 0.15rem 0 0;
+    color: var(--white);
+    font-family: var(--serif);
+    font-size: 0.92rem;
+  }
+
+  .careers-values {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    padding: clamp(2rem, 5vw, 4.5rem);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: #e7e7e7;
+  }
+
+  .careers-values-heading h2 {
+    max-width: 440px;
+    font-size: clamp(2.3rem, 4vw, 3.9rem);
+  }
+
+  .careers-value-grid {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .careers-value-grid article {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 0.75fr) minmax(220px, 1fr);
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: rgb(255 255 255 / 72%);
+  }
+
+  .careers-value-grid span {
+    color: #777;
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+  }
+
+  .careers-value-grid h3 {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+  }
+
+  .careers-value-grid p {
+    margin: 0;
+    font-size: 0.87rem;
+  }
+
+  .careers-contact {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 900px) {
+    .careers-hero,
+    .careers-values {
+      grid-template-columns: 1fr;
+    }
+
+    .careers-hero {
+      min-height: 0;
+    }
+
+    .careers-hero-aside {
+      margin-top: 0;
+    }
+
+    .careers-values {
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .careers-hero-copy {
+      padding: 1.5rem 1.35rem;
+    }
+
+    .careers-hero-aside {
+      margin: 0 0.5rem 0.5rem;
+      padding: 1.35rem;
+    }
+
+    .careers-facts {
+      grid-template-columns: 1fr;
+    }
+
+    .careers-values {
+      padding: 1.5rem 1rem;
+    }
+
+    .careers-value-grid article {
+      grid-template-columns: 2rem 1fr;
+    }
+
+    .careers-value-grid p {
+      grid-column: 2;
+    }
+  }
+</style>

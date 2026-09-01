@@ -2693,7 +2693,10 @@ textarea:focus {
   font-size: clamp(2.8rem, 5vw, 4.8rem);
 }
 
-.site-main.flow-main[data-page-path="/thank-you/"] {
+.site-main.flow-main:is(
+  [data-page-path="/thank-you/"],
+  [data-page-path="/application-received/"]
+) {
   display: block;
   width: min(760px, calc(100vw - 40px));
   margin-top: clamp(3rem, 8vw, 7rem);
@@ -2702,6 +2705,14 @@ textarea:focus {
   border-radius: var(--radius-lg);
   background: linear-gradient(135deg, var(--white), #e8e8e8);
   box-shadow: var(--shadow);
+}
+
+.site-main.flow-main[data-page-path="/application-received/"] > .eyebrow {
+  margin-bottom: 0.8rem;
+}
+
+.site-main.flow-main[data-page-path="/application-received/"] > h1 {
+  margin-top: 0;
 }
 
 /* Terms remain word-for-word intact; each heading and its copy now follow the

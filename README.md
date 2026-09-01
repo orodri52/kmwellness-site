@@ -35,7 +35,8 @@ note in that file.)
      referenced via `import.meta.env.PUBLIC_*` (e.g. `PUBLIC_SITE_URL`, `PUBLIC_TURNSTILE_SITE_KEY`)
      must go here, since Astro/Vite inlines these into the static bundle at build time.
    - **Settings → Variables and secrets:** used only at runtime by the Pages Function
-     (`functions/api/lead.ts`), e.g. `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`.
+     (`functions/api/lead.ts` and `functions/api/apply.ts`), e.g. `RESEND_API_KEY`,
+     `TURNSTILE_SECRET_KEY`.
    - (Optional) Set `PUBLIC_SITE_URL` to your `*.pages.dev` URL while testing. Non-production hosts
      are automatically `noindex`ed (see below), so test deploys won't get indexed. Remove it (or set
      the real domain) for production.
@@ -54,10 +55,10 @@ note in that file.)
 > (another migration, a new Pages project, etc.), purge the zone cache as a standard step
 > immediately after attaching the custom domain, not just as a last resort.
 
-### KV namespace for lead form rate limiting
+### KV namespace for form rate limiting
 
-`functions/api/lead.ts` rate-limits contact-form submissions per IP (5 per 10 minutes) using a
-Workers KV binding called `RATE_LIMIT_KV`. It fails open — if the binding is missing or KV errors,
+The lead and careers endpoints rate-limit submissions per IP (5 per 10 minutes per form type) using
+a Workers KV binding called `RATE_LIMIT_KV`. They fail open — if the binding is missing or KV errors,
 submissions are still accepted. The production namespace (`kmwellness-rate-limit`) already exists
 in the Cloudflare account — create a preview namespace to match if one doesn't exist yet:
 
@@ -105,22 +106,26 @@ public/
   images/             # add og-default.jpg, logo.png, contact-og.jpg (see images/README.md)
 src/
   config/site.ts      # single source of truth: NAP, nav, brand, geo, socials
+  data/jobs.ts        # reusable careers catalog; add/close roles here
   components/
     SEO.astro         # per-page meta + canonical + noindex logic
     Schema.astro      # site-wide LocalBusiness + WebSite JSON-LD
     FaqSchema.astro   # FAQPage JSON-LD helper
     Breadcrumbs.astro # visible breadcrumb + BreadcrumbList JSON-LD
     Header.astro / Footer.astro
-    ContactForm.tsx   # React island (client:load) — wire `action` to a handler
+    ContactForm.astro # contact form with Turnstile + Resend delivery
+    JobListings.astro # job cards, details dialogs, and resume application forms
   layouts/BaseLayout.astro   # the HTML shell
   pages/              # 20 routes (see below)
 ```
 
-## Pages (20 routes)
+## Careers and job applications
 
-Home, About, Services (hub) + 7 service pages, Personal Training, Metabolic Assessment, Success
-Stories, As Featured In, Insurances, Blog post, Privacy Policy, Terms, Thank-you. The two duplicate
-nutrition URLs are **redirects**, not pages (by design).
+`src/data/jobs.ts` is the single source of truth for careers listings. Duplicate a job object and
+set `status: 'open'` to publish it; use `status: 'closed'` to remove it from the page without deleting
+the copy. Applications post to `functions/api/apply.ts`, which validates PDF/DOC/DOCX resumes up to
+5 MB and emails them as attachments to `LEAD_TO_EMAIL` using the same Resend configuration as the
+other website forms.
 
 ## Before launch — checklist
 

@@ -52,7 +52,7 @@ const mapsEmbedSrc = `https://maps.google.com/maps?q=${encodeURIComponent(fullAd
       </div>
     </div>
 
-    <div class="contact-form-card">
+    <div class="contact-form-card" id="send-message">
       <h2>Send Us a Message</h2>
       <ContactForm action="/api/lead" />
     </div>
@@ -73,6 +73,10 @@ const mapsEmbedSrc = `https://maps.google.com/maps?q=${encodeURIComponent(fullAd
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     box-shadow: 0 16px 44px rgb(0 0 0 / 8%);
+  }
+
+  .contact-form-card {
+    scroll-margin-top: 8rem;
   }
 
   .contact-details-card {

@@ -24,7 +24,10 @@ export default defineConfig({
     sitemap({
       // Keep utility/confirmation pages out of the sitemap.
       // The dedicated video sitemap is submitted separately via robots.txt.
-      filter: (page) => !page.includes('/thank-you') && !page.endsWith('/video-sitemap.xml'),
+      filter: (page) =>
+        !page.includes('/thank-you') &&
+        !page.includes('/application-received') &&
+        !page.endsWith('/video-sitemap.xml'),
     }),
   ],
 });
