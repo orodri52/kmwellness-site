@@ -74,6 +74,11 @@ export const practitioner = {
   ].filter(Boolean),
 } as const;
 
+export const shop = {
+  name: 'KM Wellness Shop',
+  url: 'https://km-wellness.printify.me/',
+} as const;
+
 // Client reviews + aggregate rating now live in src/data/reviews.ts (used by
 // ReviewsSection.astro and Schema.astro), so they can be refreshed as one
 // hand-maintained snapshot without touching this file.
@@ -136,5 +141,6 @@ export const nav = [
     ],
   },
   { label: 'Careers', href: '/careers/' },
+  { label: 'Shop', href: shop.url, external: true },
   { label: 'Contact Us', href: '/contact-us/' },
 ] as const;

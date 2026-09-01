@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadForm from '../components/LeadForm.astro';
 import ReviewsSection from '../components/ReviewsSection.astro';
+import ShopPromo from '../components/ShopPromo.astro';
 import { business } from '../config/site';
 import danielGymPortrait from '../assets/images/daniel-gym-portrait.webp';
 import medicalNutritionPhoto from '../assets/images/service-medical-nutrition.png';
@@ -298,6 +299,8 @@ const supportItems = [
         ))}
       </div>
     </section>
+
+    <ShopPromo />
 
     <section class="proof-section" aria-labelledby="proof-title">
       <div>

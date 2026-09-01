@@ -1,5 +1,6 @@
 ---
 import { business, nav, services, serviceCategories } from '../config/site';
+import ExternalLinkIcon from './ExternalLinkIcon.astro';
 
 // Group the service catalog by category, in `serviceCategories` order, for
 // the Services mega-menu. Single source of truth lives in site.ts — nothing
@@ -37,7 +38,15 @@ const serviceGroups = serviceCategories.map((category) => ({
       <ul>
         {nav.map((item) => (
           <li class:list={[{'has-children': ('children' in item && item.children) || ('mega' in item && item.mega)}]}>
-            <a href={item.href}>{item.label}</a>
+            <a
+              href={item.href}
+              target={'external' in item && item.external ? '_blank' : undefined}
+              rel={'external' in item && item.external ? 'noopener noreferrer' : undefined}
+              aria-label={'external' in item && item.external ? `${item.label} (opens in a new tab)` : undefined}
+            >
+              {item.label}
+              {'external' in item && item.external && <ExternalLinkIcon />}
+            </a>
             {'children' in item && item.children && (
               <>
                 <button
@@ -84,7 +93,10 @@ const serviceGroups = serviceCategories.map((category) => ({
       </ul>
     </nav>
 
-    <a class="button button-dark nav-cta" href="/contact-us/">Book a Consult</a>
+    <a class="button button-dark nav-cta" href="/contact-us/" aria-label="Book a consultation">
+      <span class="nav-cta-label-full">Book a Consult</span>
+      <span class="nav-cta-label-compact" aria-hidden="true">Book now</span>
+    </a>
   </div>
 </header>
 

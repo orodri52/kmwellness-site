@@ -1,5 +1,6 @@
 ---
 import { business, nav } from '../config/site';
+import ExternalLinkIcon from './ExternalLinkIcon.astro';
 const year = new Date().getFullYear();
 const a = business.address;
 ---
@@ -37,7 +38,19 @@ const a = business.address;
     <nav aria-label="Footer navigation">
       <h2>Explore</h2>
       <ul>
-        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        {nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              target={'external' in item && item.external ? '_blank' : undefined}
+              rel={'external' in item && item.external ? 'noopener noreferrer' : undefined}
+              aria-label={'external' in item && item.external ? `${item.label} (opens in a new tab)` : undefined}
+            >
+              {item.label}
+              {'external' in item && item.external && <ExternalLinkIcon />}
+            </a>
+          </li>
+        ))}
       </ul>
     </nav>
 
