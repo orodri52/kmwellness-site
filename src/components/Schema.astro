@@ -63,7 +63,9 @@ const graph = {
           },
         })),
       },
-      sameAs: [business.social.facebook, business.social.instagram],
+      // Google Business Profile link (same URL used for the "View on Google
+      // Maps" CTA on /contact-us/) plus verified social profiles.
+      sameAs: [business.social.facebook, business.social.instagram, business.mapsUrl],
       // Real client reviews, sourced from the same snapshot the ReviewsSection
       // component renders. Both blocks are only emitted once real data exists
       // in src/data/reviews.ts — never fabricated.
