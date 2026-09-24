@@ -49,12 +49,30 @@ async function verifyTurnstile(
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       body,
     });
-    const result = (await response.json()) as { success?: boolean; action?: string };
-    return result.success === true && (!result.action || result.action === 'job_application');
-  } catch {
+    const result = (await response.json()) as {
+      success?: boolean;
+      action?: string;
+      'error-codes'?: string[];
+    };
+    if (result.success !== true) {
+      console.warn('Turnstile verification failed (application form):', result['error-codes'] ?? 'unknown');
+      return false;
+    }
+    if (result.action && result.action !== 'job_application') {
+      console.warn('Turnstile action mismatch (application form):', result.action);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error(
+      'Turnstile siteverify request failed (application form):',
+      err instanceof Error ? err.message : err,
+    );
     return false;
   }
 }
+
+const MAX_BODY_BYTES = 7 * 1024 * 1024; // MAX_RESUME_BYTES (5 MB) plus multipart/field overhead.
 
 async function isRateLimited(
   kv: KVNamespaceLike | undefined,
@@ -151,6 +169,9 @@ export const onRequestPost: (context: {
     return Response.redirect(failureUrl.toString(), 303);
   };
 
+  const contentLength = Number(request.headers.get('content-length') || 0);
+  if (contentLength > MAX_BODY_BYTES) return failure('Request too large.', 413);
+
   let form: FormData;
   try {
     form = await request.formData();
@@ -162,6 +183,7 @@ export const onRequestPost: (context: {
     const value = form.get(key);
     return typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
   };
+  const stripCrlf = (value: string) => value.replace(/[\r\n]+/g, ' ');
 
   // Honeypot fields are not visible to real applicants. Silently accept bot
   // submissions so the filter is not revealed.
@@ -336,7 +358,7 @@ export const onRequestPost: (context: {
       from,
       to: [to],
       reply_to: email,
-      subject: `Job application: ${position} — ${name}`,
+      subject: stripCrlf(`Job application: ${position} — ${name}`),
       html,
       text,
       attachments: [

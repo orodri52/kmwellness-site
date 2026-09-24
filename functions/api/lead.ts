@@ -45,12 +45,19 @@ async function verifyTurnstile(token: string, secret: string, remoteip?: string)
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       body,
     });
-    const data = (await res.json()) as { success?: boolean };
-    return data.success === true;
-  } catch {
+    const data = (await res.json()) as { success?: boolean; 'error-codes'?: string[] };
+    if (data.success !== true) {
+      console.warn('Turnstile verification failed (lead form):', data['error-codes'] ?? 'unknown');
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error('Turnstile siteverify request failed (lead form):', err instanceof Error ? err.message : err);
     return false;
   }
 }
+
+const MAX_BODY_BYTES = 50 * 1024; // No file uploads on this form; generous cap on text fields.
 
 // IP-based rate limit on top of the honeypot + Turnstile checks — a defense
 // against a bot that has a valid solved Turnstile token. Fails OPEN (never
@@ -88,13 +95,17 @@ export const onRequestPost: (ctx: {
         })
       : Response.redirect(new URL('/contact-us/?error=1', request.url).toString(), 303);
 
+  const contentLength = Number(request.headers.get('content-length') || 0);
+  if (contentLength > MAX_BODY_BYTES) return fail('Request too large.', 413);
+
   let form: FormData;
   try {
     form = await request.formData();
   } catch {
     return fail('Invalid form submission.');
   }
-  const get = (k: string) => (form.get(k)?.toString() ?? '').trim().slice(0, 2000);
+  const get = (k: string, maxLength = 2000) => (form.get(k)?.toString() ?? '').trim().slice(0, maxLength);
+  const stripCrlf = (s: string) => s.replace(/[\r\n]+/g, ' ');
 
   // Honeypot: real users never fill this hidden field. Silently "succeed" so
   // bots don't learn they were blocked, but send nothing.
@@ -116,7 +127,7 @@ export const onRequestPost: (ctx: {
   const hear = get('hear');
   const message = get('message');
   const source = get('source') || 'website';
-  const turnstileToken = get('cf-turnstile-response');
+  const turnstileToken = get('cf-turnstile-response', 4000);
 
   if (!name || !email || !phone) return fail('Please provide your name, email, and phone.');
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail('Please provide a valid email.');
@@ -222,7 +233,7 @@ export const onRequestPost: (ctx: {
       from,
       to: [to],
       reply_to: email,
-      subject: `New lead: ${name}${service ? ` — ${service}` : ''}`,
+      subject: stripCrlf(`New lead: ${name}${service ? ` — ${service}` : ''}`),
       html,
       text,
     }),
